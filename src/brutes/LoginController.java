@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -34,6 +35,8 @@ public class LoginController implements Initializable {
     private Session session;
     
     @FXML
+    private AnchorPane root;
+    @FXML
     private Button connexion;
     @FXML
     private TextField login;
@@ -41,6 +44,8 @@ public class LoginController implements Initializable {
     private PasswordField password;
     @FXML
     private ProgressIndicator loading;
+    @FXML
+    private Text logError;
     
     @FXML
     private void handleKeyPressed(KeyEvent e){
@@ -55,6 +60,10 @@ public class LoginController implements Initializable {
         Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Handle");
         this.login();
     }
+    @FXML
+    private void handleInputClick(){
+        logError.setVisible(false);
+    }
     
     private synchronized void login(){
         Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Login");
@@ -64,20 +73,20 @@ public class LoginController implements Initializable {
         this.password.setDisable(true);
         this.connexion.setDisable(true);
         
-        final LoginTask loginTask = new LoginTask();
+        final LoginTask loginTask = new LoginTask(this.login.getText(), this.password.getText());
         new Thread(loginTask).start();
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
-                    session = loginTask.getSession();
-                    Logger.getLogger(LoginController.class.getName()).log(Level.INFO, session.getToken());
+                    SceneManager.getInstance().showFight(loginTask.getSession());
                     this.reactiveLogin();
                 }
                 else if(newState == Worker.State.FAILED){
                     loginTask.cancel();
                     Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Thread failed");
+                    logError.setVisible(true);
                     this.reactiveLogin();
                 }
             }   
