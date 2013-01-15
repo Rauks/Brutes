@@ -18,7 +18,7 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(this.getClass().getResource("Main.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("Login.fxml"));
         
         Scene scene = new Scene(root);
         
