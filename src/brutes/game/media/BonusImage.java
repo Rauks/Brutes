@@ -8,6 +8,6 @@ package brutes.game.media;
  *
  * @author Karl
  */
-public class BonusImage extends Image{
+public class BonusImage extends DataImage{
     
 }

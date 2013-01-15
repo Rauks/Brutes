@@ -16,6 +16,6 @@ public class Session {
     }
 
     public String getToken() {
-        return token;
+        return this.token;
     }
 }
