@@ -17,7 +17,7 @@
           <children>
             <Label text="Login">
               <labelFor>
-                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" />
+                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" onMouseClicked="#handleInputClick" />
               </labelFor>
             </Label>
             <fx:reference source="login" />
@@ -27,7 +27,7 @@
           <children>
             <Label text="Password">
               <labelFor>
-                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" />
+                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" onMouseClicked="#handleInputClick" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
