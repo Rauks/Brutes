@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleConnexionAction" prefHeight="350.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
   <children>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
       <children>
@@ -16,7 +16,7 @@
           <children>
             <Label text="Login">
               <labelFor>
-                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" />
+                <TextField fx:id="login" />
               </labelFor>
             </Label>
             <fx:reference source="login" />
@@ -26,7 +26,7 @@
           <children>
             <Label text="Password">
               <labelFor>
-                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" />
+                <PasswordField fx:id="password" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
