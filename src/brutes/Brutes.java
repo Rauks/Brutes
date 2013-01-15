@@ -19,8 +19,8 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        SceneManager.setStage(stage);
-        SceneManager.getInstance().showLogin();
+        ScenesContext.getInstance().setStage(stage);
+        ScenesContext.getInstance().showLogin();
     }
 
     /**
