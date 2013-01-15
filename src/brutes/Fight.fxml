@@ -154,15 +154,15 @@
           <menus>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
-                <MenuItem mnemonicParsing="false" text="Gagner" />
-                <MenuItem mnemonicParsing="false" text="Perdre" />
-                <MenuItem mnemonicParsing="false" text="Aléatoire" />
-                <MenuItem mnemonicParsing="false" text="Loyale" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
               <items>
-                <MenuItem mnemonicParsing="false" text="Deconnexion" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>
           </menus>
