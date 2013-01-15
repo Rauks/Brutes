@@ -4,6 +4,7 @@
  */
 package brutes;
 
+import brutes.user.Session;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,12 +19,8 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(this.getClass().getResource("Login.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+        SceneManager.setStage(stage);
+        SceneManager.getInstance().showLogin();
     }
 
     /**
