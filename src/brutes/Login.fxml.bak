@@ -41,7 +41,7 @@
             <StackPane>
               <children>
                 <ProgressIndicator fx:id="loading" prefHeight="22.0" prefWidth="22.0" translateX="60.0" visible="false" />
-                <Button fx:id="connexion" mnemonicParsing="false" onAction="handleConnexionAction" text="Connexion" />
+                <Button fx:id="connexion" mnemonicParsing="false" onAction="handleButtonAction" text="Connexion" />
               </children>
             </StackPane>
           </children>
