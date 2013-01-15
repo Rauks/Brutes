@@ -17,17 +17,24 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class SceneManager {
-    private final static SceneManager instance = new SceneManager();
+public class ScenesContext {
+    private final static ScenesContext instance = new ScenesContext();
     
     private Stage stage;
+    private Session session;
     
-    public static void setStage(Stage stage){
-        SceneManager.getInstance().stage = stage;
+    public static ScenesContext getInstance(){
+        return ScenesContext.instance;
     }
     
-    public static SceneManager getInstance(){
-        return SceneManager.instance;
+    public void setStage(Stage stage){
+        ScenesContext.getInstance().stage = stage;
+    }
+    public void setSession(Session session){
+        this.session = session;
+    }
+    public Session getSession(){
+        return this.session;
     }
     
     private void show(Parent root){
@@ -41,7 +48,7 @@ public class SceneManager {
             Parent root = FXMLLoader.load(this.getClass().getResource("Login.fxml"));
             show(root);
         } catch (IOException ex) {
-            Logger.getLogger(SceneManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScenesContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void showFight(Session session){
@@ -49,7 +56,7 @@ public class SceneManager {
             Parent root = FXMLLoader.load(this.getClass().getResource("Fight.fxml"));
             show(root);
         } catch (IOException ex) {
-            Logger.getLogger(SceneManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScenesContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
