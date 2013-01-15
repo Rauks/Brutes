@@ -80,7 +80,7 @@ public class LoginController implements Initializable {
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
-                    SceneManager.getInstance().showFight(loginTask.getSession());
+                    ScenesContext.getInstance().showFight(loginTask.getSession());
                     this.reactiveLogin();
                 }
                 else if(newState == Worker.State.FAILED){
