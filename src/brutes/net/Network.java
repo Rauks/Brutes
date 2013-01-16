@@ -24,7 +24,7 @@ public class Network{
     private NetworkReader reader;
     private NetworkWriter writer;
     
-    public Network(Socket connection){
+    public Network(Socket connection) throws IOException{
         this.connection = connection;
         this.reader = new NetworkReader(this.connection.getInputStream());
         this.writer = new NetworkWriter(this.connection.getOutputStream());
