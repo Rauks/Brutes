@@ -98,10 +98,6 @@ public class FightController implements Initializable {
         Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
     }
     @FXML
-    private void handleMenuFightRegular(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
-    }
-    @FXML
     private void handleMenuDisconnect(ActionEvent e){
         Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
         ScenesContext.getInstance().setSession(null);
