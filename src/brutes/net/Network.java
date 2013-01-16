@@ -12,6 +12,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,14 +37,24 @@ public class Network{
                 .writeString(user)
                 .writeString(password)
                 .send();
-        //TODO : input stream
-        return "dummyToken";
+        this.reader.readMessageSize();
+        this.reader.readDiscriminant();
+        return this.reader.readString();
     }
     public void readLogin(){//Test purpose
         System.out.println(this.reader.readMessageSize());
         System.out.println(this.reader.readDiscriminant());
-        System.out.println(this.reader.readString());
-        System.out.println(this.reader.readString());
+        String login = this.reader.readString();
+        System.out.println(login);
+        String password = this.reader.readString();
+        System.out.println(password);
+
+        String token = login + '@' + password;
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, token);
+
+        this.writer.writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
+                .writeString(token)
+                .send();
     }
     
     public void disconnect(){

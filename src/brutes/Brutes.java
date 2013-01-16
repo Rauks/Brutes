@@ -4,7 +4,13 @@
  */
 package brutes;
 
+import brutes.net.Network;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,6 +22,24 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        new Thread(){
+            @Override
+            public void run(){
+                try {
+                    ServerSocket sockserv = new ServerSocket (42666);
+                    System.out.println("Server up");
+                    while(true){
+                        Socket sockcli = sockserv.accept();
+                        Network n = new Network(sockcli);
+                        n.readLogin();
+
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
+        
         ScenesContext.getInstance().setStage(stage);
         ScenesContext.getInstance().showLogin();
     }

@@ -62,8 +62,6 @@ class NetworkWriter {
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
             int messageSize = baos.size() + Protocol.SIZE_LONGINT;
-            System.out.println(baos.size());
-            System.out.println(baos.toByteArray().length);
             message.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(messageSize).array());
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();
