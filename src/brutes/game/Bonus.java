@@ -13,12 +13,12 @@ import brutes.game.media.BonusImage;
 public class Bonus {
     private int id;
     private String name;
-    private int level;
-    private int strength;
-    private int speed;
+    private short level;
+    private short strength;
+    private short speed;
     private int imageID;
 
-    public Bonus(int id, String name, int level, int strength, int speed, int imageID) {
+    public Bonus(int id, String name, short level, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -33,13 +33,13 @@ public class Bonus {
     public String getName() {
         return name;
     }
-    public int getLevel() {
+    public short getLevel() {
         return level;
     }
-    public int getStrength() {
+    public short getStrength() {
         return strength;
     }
-    public int getSpeed() {
+    public short getSpeed() {
         return speed;
     }
     public int getImage() {
