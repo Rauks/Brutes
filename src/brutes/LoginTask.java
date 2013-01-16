@@ -4,6 +4,7 @@
  */
 package brutes;
 
+import brutes.net.Network;
 import brutes.user.Session;
 import javafx.concurrent.Task;
 
@@ -14,15 +15,13 @@ import javafx.concurrent.Task;
 public class LoginTask extends Task{
     private String login;
     private String password;
+    private String host;
     private Session session;
 
-    public LoginTask(String login, String password) {
+    public LoginTask(String host, String login, String password) {
         this.login = login;
         this.password = password;
-    }
-    
-    public Session getSession(){
-        return this.session;
+        this.host = host;
     }
     
     @Override
@@ -30,10 +29,11 @@ public class LoginTask extends Task{
         if(this.login.isEmpty() || this.password.isEmpty()){
             throw new Exception("Bad login");
         }
-        this.session = new Session(this.toString());
+        Network.getInstance().setServer(this.host);
         
-        //TODO : True login
+        //TODO : login stuff
         
+        ScenesContext.getInstance().setSession(new Session(this.toString()));
         return null;
     }
 }

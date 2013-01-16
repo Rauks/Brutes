@@ -43,6 +43,8 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField password;
     @FXML
+    private TextField server;
+    @FXML
     private ProgressIndicator loading;
     @FXML
     private Text logError;
@@ -73,14 +75,13 @@ public class LoginController implements Initializable {
         this.password.setDisable(true);
         this.connexion.setDisable(true);
         
-        final LoginTask loginTask = new LoginTask(this.login.getText(), this.password.getText());
+        final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
         new Thread(loginTask).start();
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
-                    ScenesContext.getInstance().setSession(loginTask.getSession());
                     ScenesContext.getInstance().showFight();
                     this.reactiveLogin();
                 }

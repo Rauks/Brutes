@@ -11,11 +11,11 @@
 
 <AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
   <children>
-    <VBox spacing="20.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
+    <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
       <children>
         <VBox>
           <children>
-            <Label text="Login">
+            <Label text="Identifiant">
               <labelFor>
                 <TextField fx:id="login" onKeyPressed="#handleKeyPressed" onMouseClicked="#handleInputClick" />
               </labelFor>
@@ -25,12 +25,22 @@
         </VBox>
         <VBox>
           <children>
-            <Label text="Password">
+            <Label text="Mot de passe">
               <labelFor>
                 <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" onMouseClicked="#handleInputClick" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
+          </children>
+        </VBox>
+        <VBox>
+          <children>
+            <Label text="Serveur">
+              <labelFor>
+                <TextField id="login" fx:id="server" onKeyPressed="#handleKeyPressed" onMouseClicked="#handleInputClick" text="localhost" />
+              </labelFor>
+            </Label>
+            <fx:reference source="server" />
           </children>
         </VBox>
         <HBox alignment="TOP_CENTER">
