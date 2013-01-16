@@ -51,7 +51,6 @@ public class LoginController implements Initializable {
     
     @FXML
     private void handleKeyPressed(KeyEvent e){
-        Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Handle");
         KeyCode key = e.getCode();
         if(key == KeyCode.ENTER){
             this.login();
@@ -87,14 +86,12 @@ public class LoginController implements Initializable {
                 }
                 else if(newState == Worker.State.FAILED){
                     loginTask.cancel();
-                    Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Thread failed");
                     logError.setVisible(true);
                     this.reactiveLogin();
                 }
             }   
 
             private void reactiveLogin() {
-                Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Reactive login");
                 login.setDisable(false);
                 password.setDisable(false);
                 connexion.setDisable(false);

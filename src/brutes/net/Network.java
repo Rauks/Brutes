@@ -182,13 +182,27 @@ public class Network{
         System.out.println(login);
         String password = this.reader.readString();
         System.out.println(password);
+        
+        if(login.equals("kikoo")){
+            this.writer.writeDiscriminant(Protocol.ERROR_SRLY_WTF)
+                    .send();
+        }
+        else if(login.isEmpty()){
+            this.writer.writeDiscriminant(Protocol.ERROR_LOGIN_NOT_FOUND)
+                    .send();
+        }
+        else if(password.isEmpty()){
+            this.writer.writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
+                    .send();
+        }
+        else{
+            String token = login + '@' + password;
+            Logger.getLogger(Network.class.getName()).log(Level.INFO, "TEST SERVER : generated token #" + token);
 
-        String token = login + '@' + password;
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, token);
-
-        this.writer.writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                .writeString(token)
-                .send();
+            this.writer.writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
+                    .writeString(token)
+                    .send();
+        }
     }
     
     public void disconnect(){
