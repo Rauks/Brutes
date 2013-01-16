@@ -49,7 +49,8 @@ class NetworkWriter {
         return this;
     }
     public NetworkWriter writeString(String value){
-        try {        
+        try {
+            this.writeShortInt((short)value.length());
             this.baos.write(value.getBytes(Charset.forName("UTF-8")));
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
