@@ -21,9 +21,13 @@ import java.util.logging.Logger;
  */
 public class Network{
     private Socket connection;
+    private NetworkReader reader;
+    private NetworkWriter writer;
     
     public Network(Socket connection){
         this.connection = connection;
+        this.reader = new NetworkReader(this.connection.getInputStream());
+        this.writer = new NetworkWriter(this.connection.getOutputStream());
     }
     
     public String login(String user, String password){
