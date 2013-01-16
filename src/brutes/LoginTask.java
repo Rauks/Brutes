@@ -6,6 +6,8 @@ package brutes;
 
 import brutes.net.Network;
 import brutes.user.Session;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Task;
 
 /**
@@ -26,14 +28,18 @@ public class LoginTask extends Task{
     
     @Override
     protected Void call() throws Exception {
+        try{
         if(this.login.isEmpty() || this.password.isEmpty()){
             throw new Exception("Bad login");
         }
         ScenesContext.getInstance().getNetwork().setServer(this.host);
-        
+        ScenesContext.getInstance().getNetwork().login(this.login, this.password);
         //TODO : login stuff
         
         ScenesContext.getInstance().setSession(new Session(this.toString()));
+        } catch(Exception ex){
+            Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, null, ex);
+        }
         return null;
     }
 }

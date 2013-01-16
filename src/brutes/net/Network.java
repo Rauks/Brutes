@@ -32,6 +32,7 @@ public class Network{
             message.write(ByteBuffer.allocate(32).putInt(datas.size()).array());
             message.write(datas.toByteArray());
             this.socket.getOutputStream().write(message.toByteArray());
+            System.out.print(message.toByteArray());
             //TODO : input stream
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
