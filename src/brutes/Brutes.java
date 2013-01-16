@@ -4,11 +4,8 @@
  */
 package brutes;
 
-import brutes.user.Session;
+import java.nio.charset.Charset;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
