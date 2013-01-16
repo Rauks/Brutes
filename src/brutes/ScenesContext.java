@@ -51,7 +51,7 @@ public class ScenesContext {
             Logger.getLogger(ScenesContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void showFight(Session session){
+    public void showFight(){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("Fight.fxml"));
             show(root);
