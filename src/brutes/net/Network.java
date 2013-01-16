@@ -9,5 +9,9 @@ package brutes.net;
  * @author Karl
  */
 public class Network {
+    public final static Network instance = new Network();
     
+    public static Network getInstance(){
+        return Network.instance;
+    }
 }
