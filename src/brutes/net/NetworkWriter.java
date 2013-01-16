@@ -32,33 +32,17 @@ class NetworkWriter {
         }
         return this;
     }
-    public NetworkWriter writeChar(char value){
+    public NetworkWriter writeShortInt(short value){
         try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_CHAR).putChar(value).array());
+            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_SHORTINT).putShort(value).array());
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
         return this;
     }
-    public NetworkWriter writeShortInt(int value){
+    public NetworkWriter writeLongInt(long value){
         try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_SHORTINT).putInt(value).array());
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
-        }
-        return this;
-    }
-    public NetworkWriter writeLongInt(int value){
-        try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(value).array());
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
-        }
-        return this;
-    }
-    public NetworkWriter writeFloat(float value){
-        try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putFloat(value).array());
+            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putLong(value).array());
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }

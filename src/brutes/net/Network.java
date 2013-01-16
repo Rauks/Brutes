@@ -31,24 +31,12 @@ public class Network{
     }
     
     public String login(String user, String password){
-        try {
-            ByteArrayOutputStream datas = new ByteArrayOutputStream();
-            datas.write(ByteBuffer.allocate(8).putInt(Protocol.D_LOGIN).array());
-            datas.write(user.getBytes(Charset.forName("UTF-8")));
-            datas.write(password.getBytes(Charset.forName("UTF-8")));
-            ByteArrayOutputStream message = new ByteArrayOutputStream();
-            message.write(ByteBuffer.allocate(32).putInt(datas.size()).array());
-            message.write(datas.toByteArray());
-            //this.socket.getOutputStream().write(message.toByteArray());
-            for(int i = 0; i < message.toByteArray().length; i++){
-                System.out.print(Byte.toString(message.toByteArray()[i]));
-            }
-            //TODO : input stream
-            return "dummyToken";
-        } catch (IOException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        this.writer.writeDiscriminant(Protocol.D_LOGIN)
+                .writeString(user)
+                .writeString(password)
+                .send();
+        //TODO : input stream
+        return "dummyToken";
     }
     
     public void disconnect(){
