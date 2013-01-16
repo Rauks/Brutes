@@ -30,15 +30,19 @@ public class LoginTask extends Task{
     @Override
     protected Void call() throws Exception {
         try{
-            if(this.login.isEmpty() || this.password.isEmpty()){
-                throw new Exception("Bad login");
-            }
-            ScenesContext.getInstance().setNetwork(new Network(new Socket(host, Protocol.CONNECTION_PORT)));
+            Socket socket = new Socket(host, Protocol.CONNECTION_PORT);
+            ScenesContext.getInstance().setNetwork(new Network(socket));
+        } catch(Exception ex){
+            Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, "Host not found");
+            throw new Exception("Login task failed at server connection");
+        }
+        try{
             String token = ScenesContext.getInstance().getNetwork().sendLogin(this.login, this.password);
             ScenesContext.getInstance().setSession(new Session(token));
         } catch(Exception ex){
-            Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, "Task failed", ex);
-            throw new Exception("Task failed");
+            ScenesContext.getInstance().getNetwork().disconnect();
+            Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, ex.getMessage());
+            throw new Exception("Login task failed at login");
         }
         return null;
     }

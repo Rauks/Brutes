@@ -32,14 +32,22 @@ public class Network{
         this.writer = new NetworkWriter(this.connection.getOutputStream());
     }
     
-    public String sendLogin(String user, String password){
+    public String sendLogin(String user, String password) throws Exception{
         this.writer.writeDiscriminant(Protocol.D_LOGIN)
                 .writeString(user)
                 .writeString(password)
                 .send();
         this.reader.readMessageSize();
-        this.reader.readDiscriminant();
-        return this.reader.readString();
+        switch(this.reader.readDiscriminant()){
+            case Protocol.R_LOGIN_SUCCESS:
+                return this.reader.readString();
+            case Protocol.ERROR_LOGIN_NOT_FOUND:
+                throw new Exception("Invalid login");
+            case Protocol.ERROR_WRONG_PASSWORD:
+                throw new Exception("Wrong password");
+            default:
+                throw new Exception("Invalid server response");
+        }
     }
     public void readLogin(){//Test purpose
         System.out.println(this.reader.readMessageSize());
@@ -59,7 +67,9 @@ public class Network{
     
     public void disconnect(){
         try {
-            this.connection.close();
+            if(this.connection != null){
+                this.connection.close();
+            }
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }

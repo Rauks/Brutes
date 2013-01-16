@@ -32,7 +32,7 @@ class NetworkReader {
         } catch (IOException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Protocol.R_ERROR;
+        return Protocol.ERROR;
     }
     public short readShortInt(){
         try {
