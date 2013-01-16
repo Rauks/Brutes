@@ -58,16 +58,12 @@ public class LoginController implements Initializable {
     }
     @FXML
     private void handleConnexionAction(ActionEvent e){
-        Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Handle");
-        this.login();
-    }
-    @FXML
-    private void handleInputClick(){
         logError.setVisible(false);
+        this.login();
     }
     
     private synchronized void login(){
-        Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Login");
+        Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Login thread");
         
         this.loading.setVisible(true);
         this.login.setDisable(true);
