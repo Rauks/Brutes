@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,10 +26,13 @@ class NetworkReader {
     public long readMessageSize() throws IOException{
         return this.readLongInt();
     }
-    public byte readDiscriminant() throws IOException{
+    public byte readByte() throws IOException{
         byte[] b = new byte[1];
         this.is.read(b);
         return b[0];
+    }
+    public byte readDiscriminant() throws IOException{
+        return this.readByte();
     }
     public short readShortInt() throws IOException{
         byte[] b = new byte[Protocol.SIZE_SHORTINT];
@@ -58,5 +62,29 @@ class NetworkReader {
         byte[] b = new byte[1];
         this.is.read(b);
         return (b[0] != 0x00);
+    }
+    public ArrayList readArray() throws IOException{
+        short nbElements = this.readShortInt();
+        byte type = this.readByte();
+        ArrayList list = new ArrayList();
+        for(int i = 0; i < nbElements; i++){
+            switch(type){
+                case Protocol.TYPE_BOOLEAN:
+                    list.add(this.readBoolean());
+                    break;
+                case Protocol.TYPE_LONG:
+                    list.add(this.readLongInt());
+                    break;
+                case Protocol.TYPE_SHORT:
+                    list.add(this.readShortInt());
+                    break;
+                case Protocol.TYPE_STRING:
+                    list.add(this.readString());
+                    break;
+                default:
+                    throw new IOException("Array type invalid or not supported");
+            }
+        }
+        return list; 
     }
 }

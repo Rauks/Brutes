@@ -19,13 +19,13 @@ public abstract class Protocol {
     public static final int SIZE_FLOAT = 4;
     
     //Codes des types primitifs
-    public static final byte TYPE_BOOL = (byte)0x01;
+    public static final byte TYPE_BOOLEAN = (byte)0x01;
     public static final byte TYPE_CHAR = (byte)0x02;
     public static final byte TYPE_SHORT = (byte)0x03;
     public static final byte TYPE_LONG = (byte)0x04;
     public static final byte TYPE_FLOAT = (byte)0x05;
     public static final byte TYPE_STRING = (byte)0x06;
-    public static final byte Type_IMG = (byte)0x07;
+    public static final byte TYPE_IMG = (byte)0x07;
     
     //Discriminants clients > serveur
     public static final byte D_LOGIN = (byte)0x80;
