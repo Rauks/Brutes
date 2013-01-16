@@ -21,7 +21,7 @@ public class Character {
     private int imageID;
     private ArrayList<Integer> bonusesID;
 
-    public Character(int id, String name, int level, int life, int strength, int speed, int imageID) {
+    public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -30,7 +30,7 @@ public class Character {
         this.speed = speed;
         this.imageID = imageID;
     }
-    public Character(int id, String name, int level, int life, int strength, int speed, int imageID, ArrayList<Integer> bonusesID) {
+    public Character(int id, String name, short level, short life, short strength, short speed, int imageID, ArrayList<Integer> bonusesID) {
         this(id, name, level, life, strength, speed, imageID);
         this.bonusesID = bonusesID;
     }
@@ -45,16 +45,16 @@ public class Character {
     public String getName() {
         return name;
     }
-    public int getLevel() {
+    public short getLevel() {
         return level;
     }
-    public int getLife() {
+    public short getLife() {
         return life;
     }
-    public int getStrength() {
+    public short getStrength() {
         return strength;
     }
-    public int getSpeed() {
+    public short getSpeed() {
         return speed;
     }
     public int getImageID() {
