@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Karl
  */
 public class Network{
-    public final static Network instance = new Network();
+    private final static Network instance = new Network();
     
     private Socket socket;
     
@@ -36,4 +36,11 @@ public class Network{
         }
     }
     
+    public void disconnect(){
+        try {
+            this.socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

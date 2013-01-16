@@ -4,6 +4,7 @@
  */
 package brutes;
 
+import brutes.net.Network;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -100,6 +101,7 @@ public class FightController implements Initializable {
     @FXML
     private void handleMenuDisconnect(ActionEvent e){
         Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        Network.getInstance().disconnect();
         ScenesContext.getInstance().setSession(null);
         ScenesContext.getInstance().showLogin();
     }
