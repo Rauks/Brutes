@@ -18,25 +18,25 @@ public class Character {
     private int life;
     private int strength;
     private int speed;
-    private CharacterImage image;
-    private ArrayList<Bonus> bonuses;
+    private int imageID;
+    private ArrayList<Integer> bonusesID;
 
-    public Character(int id, String name, int level, int life, int strength, int speed, CharacterImage image) {
+    public Character(int id, String name, int level, int life, int strength, int speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
         this.life = life;
         this.strength = strength;
         this.speed = speed;
-        this.image = image;
+        this.imageID = imageID;
     }
-    public Character(int id, String name, int level, int life, int strength, int speed, CharacterImage image, ArrayList<Bonus> bonuses){
-        this(id, name, level, life, strength, speed, image);
-        this.bonuses = bonuses;
+    public Character(int id, String name, int level, int life, int strength, int speed, int imageID, ArrayList<Integer> bonusesID) {
+        this(id, name, level, life, strength, speed, imageID);
+        this.bonusesID = bonusesID;
     }
     
-    public void addBonus(Bonus bonus){
-        this.bonuses.add(bonus);
+    public void addBonus(int bonus){
+        this.bonusesID.add(new Integer(bonus));
     }
 
     public int getId() {
@@ -57,10 +57,10 @@ public class Character {
     public int getSpeed() {
         return speed;
     }
-    public CharacterImage getImage() {
-        return image;
+    public int getImageID() {
+        return imageID;
     }
-    public ArrayList<Bonus> getBonuses() {
-        return bonuses;
+    public ArrayList<Integer> getBonuseIDs() {
+        return bonusesID;
     }
 }
