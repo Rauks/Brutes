@@ -34,7 +34,7 @@ public class LoginTask extends Task{
                 throw new Exception("Bad login");
             }
             ScenesContext.getInstance().setNetwork(new Network(new Socket(host, Protocol.CONNECTION_PORT)));
-            String token = ScenesContext.getInstance().getNetwork().login(this.login, this.password);
+            String token = ScenesContext.getInstance().getNetwork().sendLogin(this.login, this.password);
             ScenesContext.getInstance().setSession(new Session(token));
         } catch(Exception ex){
             Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, "Task failed", ex);

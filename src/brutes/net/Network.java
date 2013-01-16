@@ -32,7 +32,7 @@ public class Network{
         this.writer = new NetworkWriter(this.connection.getOutputStream());
     }
     
-    public String login(String user, String password){
+    public String sendLogin(String user, String password){
         this.writer.writeDiscriminant(Protocol.D_LOGIN)
                 .writeString(user)
                 .writeString(password)
