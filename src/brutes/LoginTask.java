@@ -20,7 +20,6 @@ public class LoginTask extends Task{
     private String login;
     private String password;
     private String host;
-    private Session session;
 
     public LoginTask(String host, String login, String password) {
         this.login = login;

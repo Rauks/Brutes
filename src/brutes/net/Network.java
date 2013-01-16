@@ -23,7 +23,7 @@ public class Network{
     private Socket connection;
     
     public Network(Socket connection){
-        
+        this.connection = connection;
     }
     
     public String login(String user, String password){
