@@ -8,7 +8,7 @@ package brutes.net;
  *
  * @author Karl
  */
-abstract class Protocol {
+public abstract class Protocol {
     //Network datas
     public static int CONNECTION_PORT = 42666;
     

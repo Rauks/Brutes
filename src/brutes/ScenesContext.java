@@ -25,10 +25,6 @@ public class ScenesContext {
     private Session session;
     private Network network;
     
-    private ScenesContext(){
-        this.network = new Network();
-    }
-    
     public static ScenesContext getInstance(){
         return ScenesContext.instance;
     }
