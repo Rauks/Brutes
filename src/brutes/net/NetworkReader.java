@@ -70,13 +70,13 @@ class NetworkReader {
         for(int i = 0; i < nbElements; i++){
             switch(type){
                 case Protocol.TYPE_BOOLEAN:
-                    list.add(this.readBoolean());
+                    list.add(this.readBoolean()?Boolean.TRUE:Boolean.FALSE);
                     break;
                 case Protocol.TYPE_LONG:
-                    list.add(this.readLongInt());
+                    list.add(new Integer(this.readLongInt()));
                     break;
                 case Protocol.TYPE_SHORT:
-                    list.add(this.readShortInt());
+                    list.add(new Short(this.readShortInt()));
                     break;
                 case Protocol.TYPE_STRING:
                     list.add(this.readString());
