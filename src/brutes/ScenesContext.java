@@ -37,7 +37,8 @@ public class ScenesContext {
     }
     public Session getSession(){
         return this.session;
-    }public Network getNetwork() {
+    }
+    public Network getNetwork() {
         return network;
     }
     public void setNetwork(Network network) {
