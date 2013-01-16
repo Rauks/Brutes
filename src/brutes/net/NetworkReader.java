@@ -21,6 +21,9 @@ class NetworkReader {
         this.is = is;
     }
     
+    public long readMessageSize(){
+        return this.readLongInt();
+    }
     public int readDiscriminant(){
         try {
             byte[] b = new byte[Protocol.SIZE_DISCRININANT];
