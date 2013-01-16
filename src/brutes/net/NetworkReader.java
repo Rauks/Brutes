@@ -24,12 +24,11 @@ class NetworkReader {
     public long readMessageSize(){
         return this.readLongInt();
     }
-    public int readDiscriminant(){
+    public byte readDiscriminant(){
         try {
-            byte[] b = new byte[Protocol.SIZE_DISCRININANT];
+            byte[] b = new byte[1];
             this.is.read(b);
-            ByteBuffer bb = ByteBuffer.wrap(b);
-            return bb.getInt();
+            return b[0];
         } catch (IOException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,12 +45,12 @@ class NetworkReader {
         }
         return 0;
     }
-    public long readLongInt(){
+    public int readLongInt(){
         try {
             byte[] b = new byte[Protocol.SIZE_LONGINT];
             this.is.read(b);
             ByteBuffer bb = ByteBuffer.wrap(b);
-            return bb.getLong();
+            return bb.getInt();
         } catch (IOException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
         }

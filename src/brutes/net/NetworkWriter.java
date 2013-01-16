@@ -24,9 +24,9 @@ class NetworkWriter {
         this.os = os;
         this.baos = new ByteArrayOutputStream();
     }
-    public NetworkWriter writeDiscriminant(int value){
+    public NetworkWriter writeDiscriminant(byte value){
         try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_DISCRININANT).putInt(value).array());
+            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_DISCRININANT).put(value).array());
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
@@ -40,9 +40,9 @@ class NetworkWriter {
         }
         return this;
     }
-    public NetworkWriter writeLongInt(long value){
+    public NetworkWriter writeLongInt(int value){
         try {
-            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putLong(value).array());
+            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(value).array());
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
@@ -61,8 +61,10 @@ class NetworkWriter {
     public void send(){
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
-            int messageSize = baos.size() + Protocol.MESSAGE_SIZE;
-            message.write(ByteBuffer.allocate(Protocol.MESSAGE_SIZE).putInt(messageSize).array());
+            int messageSize = baos.size() + Protocol.SIZE_LONGINT;
+            System.out.println(baos.size());
+            System.out.println(baos.toByteArray().length);
+            message.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(messageSize).array());
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();
             this.os.write(send);
