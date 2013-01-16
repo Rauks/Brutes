@@ -4,6 +4,7 @@
  */
 package brutes;
 
+import brutes.net.Network;
 import brutes.user.Session;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,6 +23,7 @@ public class ScenesContext {
     
     private Stage stage;
     private Session session;
+    private Network network;
     
     public static ScenesContext getInstance(){
         return ScenesContext.instance;
@@ -35,6 +37,11 @@ public class ScenesContext {
     }
     public Session getSession(){
         return this.session;
+    }public Network getNetwork() {
+        return network;
+    }
+    public void setNetwork(Network network) {
+        this.network = network;
     }
     
     private void show(Parent root){

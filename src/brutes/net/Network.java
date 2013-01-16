@@ -20,16 +20,7 @@ import java.util.logging.Logger;
  * @author Karl
  */
 public class Network{
-    private final static Network instance = new Network();
-    
     private Socket socket;
-    
-    public static Network getInstance(){
-        if(Network.instance.socket == null) {
-            Logger.getLogger(Network.class.getName()).log(Level.WARNING, "no connected socket");
-        }
-        return Network.instance;
-    }
     
     public void login(String user, String password){
         try {

@@ -29,7 +29,7 @@ public class LoginTask extends Task{
         if(this.login.isEmpty() || this.password.isEmpty()){
             throw new Exception("Bad login");
         }
-        Network.getInstance().setServer(this.host);
+        ScenesContext.getInstance().getNetwork().setServer(this.host);
         
         //TODO : login stuff
         
