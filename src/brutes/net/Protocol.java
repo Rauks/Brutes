@@ -11,6 +11,13 @@ package brutes.net;
 public abstract class Protocol {
     //Network datas
     public static int CONNECTION_PORT = 42666;
+    public static int SIZE_DISCRININANT = 8;
+    public static int SIZE_BOOL = 8;
+    public static int SIZE_CHAR = 8;
+    public static int SIZE_SHORTINT = 16;
+    public static int SIZE_LONGINT = 32;
+    public static int SIZE_FLOAT = 32;
+    public static int MESSAGE_SIZE = Protocol.SIZE_LONGINT;
     
     //Codes des types primitifs
     public static int TYPE_BOOL = 0x01;
