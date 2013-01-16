@@ -35,8 +35,8 @@ public abstract class Protocol {
     public static final byte D_UPDATE_CHARACTER = (byte)0x91;
     public static final byte D_DELETE_CHARACTER = (byte)0x92;
     
-    public static final byte D_GET_MY_CHARACTER = (byte)0xA0;
-    public static final byte D_GET_CHALLENGER = (byte)0xA1;
+    public static final byte D_GET_MY_CHARACTER_ID = (byte)0xA0;
+    public static final byte D_GET_CHALLENGER_CHARACTER_ID = (byte)0xA1;
     
     public static final byte D_CHEAT_FIGHT_WIN = (byte)0xB0;
     public static final byte D_CHEAT_FIGHT_LOOSE = (byte)0xB1;
