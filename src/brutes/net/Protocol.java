@@ -9,6 +9,9 @@ package brutes.net;
  * @author Karl
  */
 abstract class Protocol {
+    //Network datas
+    public static int CONNECTION_PORT = 42666;
+    
     //Codes des types primitifs
     public static int TYPE_BOOL = 0x01;
     public static int TYPE_CHAR = 0x02;
