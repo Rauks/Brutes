@@ -16,15 +16,15 @@ public class Bonus {
     private int level;
     private int strength;
     private int speed;
-    private BonusImage image;
+    private int imageID;
 
-    public Bonus(int id, String name, int level, int strength, int speed, BonusImage image) {
+    public Bonus(int id, String name, int level, int strength, int speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
         this.strength = strength;
         this.speed = speed;
-        this.image = image;
+        this.imageID = imageID;
     }
 
     public int getId() {
@@ -42,7 +42,7 @@ public class Bonus {
     public int getSpeed() {
         return speed;
     }
-    public BonusImage getImage() {
-        return image;
+    public int getImage() {
+        return imageID;
     }
 }
