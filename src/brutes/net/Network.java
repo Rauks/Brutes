@@ -38,6 +38,12 @@ public class Network{
         //TODO : input stream
         return "dummyToken";
     }
+    public void readLogin(){//Test purpose
+        System.out.println(this.reader.readMessageSize());
+        System.out.println(this.reader.readDiscriminant());
+        System.out.println(this.reader.readString());
+        System.out.println(this.reader.readString());
+    }
     
     public void disconnect(){
         try {
