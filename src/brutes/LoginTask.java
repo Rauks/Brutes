@@ -4,6 +4,8 @@
  */
 package brutes;
 
+import brutes.net.ErrorResponseException;
+import brutes.net.InvalidResponseException;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import brutes.user.Session;
@@ -39,10 +41,14 @@ public class LoginTask extends Task{
         try{
             String token = ScenesContext.getInstance().getNetwork().sendLogin(this.login, this.password);
             ScenesContext.getInstance().setSession(new Session(token));
-        } catch(Exception ex){
+        } catch(ErrorResponseException ex){
+            ScenesContext.getInstance().getNetwork().disconnect();
+            Logger.getLogger(LoginTask.class.getName()).log(Level.INFO, ex.getMessage());
+            throw new Exception("Login task failed at login/password validation");
+        } catch(InvalidResponseException ex){
             ScenesContext.getInstance().getNetwork().disconnect();
             Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, ex.getMessage());
-            throw new Exception("Login task failed at login");
+            throw new Exception("Login task failed at server response");
         }
         return null;
     }
