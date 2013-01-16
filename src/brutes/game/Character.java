@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class Character {
     private int id;
     private String name;
-    private int level;
-    private int life;
-    private int strength;
-    private int speed;
+    private short level;
+    private short life;
+    private short strength;
+    private short speed;
     private int imageID;
     private ArrayList<Integer> bonusesID;
 
