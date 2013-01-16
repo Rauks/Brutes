@@ -54,4 +54,9 @@ class NetworkReader {
         }
         return out;
     }
+    public boolean readBoolean() throws IOException {
+        byte[] b = new byte[1];
+        this.is.read(b);
+        return (b[0] != 0x00);
+    }
 }

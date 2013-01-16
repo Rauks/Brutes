@@ -57,6 +57,15 @@ class NetworkWriter {
         }
         return this;
     }
+    public NetworkWriter writeBoolean(boolean value){
+        try {
+            byte bool = (byte)(value?0xFF:0x00);
+            this.baos.write(ByteBuffer.allocate(Protocol.SIZE_BOOLEAN).put(bool).array());
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
+        }
+        return this;
+    }
     
     public void send(){
         try {

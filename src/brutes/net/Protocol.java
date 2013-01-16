@@ -12,7 +12,7 @@ public abstract class Protocol {
     //Network datas
     public static final int CONNECTION_PORT = 42666;
     public static final int SIZE_DISCRININANT = 1;
-    public static final int SIZE_BOOL = 1;
+    public static final int SIZE_BOOLEAN = 1;
     public static final int SIZE_CHAR = 1;
     public static final int SIZE_SHORTINT = 2;
     public static final int SIZE_LONGINT = 4;
