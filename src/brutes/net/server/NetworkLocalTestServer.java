@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-public class NetworkServer extends Network{
-    public NetworkServer(Socket connection) throws IOException{
+public class NetworkLocalTestServer extends Network{
+    public NetworkLocalTestServer(Socket connection) throws IOException{
         super(connection);
     }
     

@@ -5,7 +5,7 @@
 package brutes;
 
 import brutes.net.Network;
-import brutes.net.server.NetworkServer;
+import brutes.net.server.NetworkLocalTestServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -30,7 +30,7 @@ public class Brutes extends Application {
                     System.out.println("Server up");
                     while(true){
                         Socket sockcli = sockserv.accept();
-                        NetworkServer n = new NetworkServer(sockcli);
+                        NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
                         n.readLogin();
 
                     }
