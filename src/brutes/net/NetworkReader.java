@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-class NetworkReader {
+public class NetworkReader {
     private InputStream is;
 
     public NetworkReader(InputStream is) {

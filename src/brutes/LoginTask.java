@@ -4,8 +4,8 @@
  */
 package brutes;
 
-import brutes.net.ErrorResponseException;
-import brutes.net.InvalidResponseException;
+import brutes.net.client.ErrorResponseException;
+import brutes.net.client.InvalidResponseException;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import brutes.user.Session;

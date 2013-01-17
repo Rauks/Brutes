@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-class NetworkWriter {    
+public class NetworkWriter {    
     private OutputStream os;
     private ByteArrayOutputStream baos;
 
