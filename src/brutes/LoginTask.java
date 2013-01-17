@@ -44,7 +44,7 @@ public class LoginTask extends Task{
             ScenesContext.getInstance().setSession(new Session(token));
         } catch(ErrorResponseException ex){
             ScenesContext.getInstance().getNetwork().disconnect();
-            Logger.getLogger(LoginTask.class.getName()).log(Level.INFO, ex.getMessage());
+            Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, ex.getMessage());
             throw new Exception("Login task failed at login/password validation");
         } catch(InvalidResponseException ex){
             ScenesContext.getInstance().getNetwork().disconnect();

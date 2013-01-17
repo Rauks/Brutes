@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-public abstract class Network{
+public class Network{
     private Socket connection;
     private NetworkReader reader;
     private NetworkWriter writer;
