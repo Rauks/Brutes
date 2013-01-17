@@ -4,7 +4,6 @@
  */
 package brutes;
 
-import brutes.net.Network;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
