@@ -8,6 +8,7 @@ import brutes.net.client.ErrorResponseException;
 import brutes.net.client.InvalidResponseException;
 import brutes.net.Network;
 import brutes.net.Protocol;
+import brutes.net.client.NetworkClient;
 import brutes.user.Session;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -33,7 +34,7 @@ public class LoginTask extends Task{
     protected Void call() throws Exception {
         try{
             Socket socket = new Socket(host, Protocol.CONNECTION_PORT);
-            ScenesContext.getInstance().setNetwork(new Network(socket));
+            ScenesContext.getInstance().setNetwork(new NetworkClient(socket));
         } catch(Exception ex){
             Logger.getLogger(LoginTask.class.getName()).log(Level.WARNING, "Host not found");
             throw new Exception("Login task failed at server connection");
