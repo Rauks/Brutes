@@ -24,6 +24,12 @@ class NetworkWriter {
         this.os = os;
         this.baos = new ByteArrayOutputStream();
     }
+    
+    public void flush() throws IOException{
+        this.baos.flush();
+        this.os.flush();
+    }
+    
     public NetworkWriter writeDiscriminant(byte value){
         try {
             this.baos.write(ByteBuffer.allocate(Protocol.SIZE_DISCRININANT).put(value).array());
@@ -75,8 +81,7 @@ class NetworkWriter {
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();
             this.os.write(send);
-            this.os.flush();
-            this.baos.flush();
+            this.flush();
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
