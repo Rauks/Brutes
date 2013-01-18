@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
+<AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
   <children>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
       <children>
@@ -48,7 +48,11 @@
             <StackPane>
               <children>
                 <ProgressIndicator fx:id="loading" prefHeight="22.0" prefWidth="22.0" translateX="60.0" visible="false" />
-                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Login invalide" translateX="110.0" visible="false" />
+                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="150.0" visible="false" wrappingWidth="150.0">
+                  <StackPane.margin>
+                    <Insets />
+                  </StackPane.margin>
+                </Text>
                 <Button fx:id="connexion" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
               </children>
             </StackPane>

@@ -23,7 +23,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 /**
@@ -32,10 +31,6 @@ import javafx.scene.text.Text;
  * @author Karl
  */
 public class LoginController implements Initializable {
-    private Session session;
-    
-    @FXML
-    private AnchorPane root;
     @FXML
     private Button connexion;
     @FXML
@@ -71,6 +66,8 @@ public class LoginController implements Initializable {
         this.connexion.setDisable(true);
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
+        this.logError.textProperty().bind(loginTask.statusMessageProperty());
+        
         new Thread(loginTask).start();
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
