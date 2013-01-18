@@ -10,8 +10,6 @@ import brutes.net.client.InvalidResponseException;
 import brutes.net.client.NetworkClient;
 import brutes.user.Session;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.concurrent.Task;
