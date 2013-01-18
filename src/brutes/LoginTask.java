@@ -24,9 +24,10 @@ public class LoginTask extends Task{
     private String login;
     private String password;
     private String host;
-    private ReadOnlyStringWrapper statusMessage = new ReadOnlyStringWrapper();
+    private ReadOnlyStringWrapper statusMessage;
 
     public LoginTask(String host, String login, String password) {
+        this.statusMessage = new ReadOnlyStringWrapper();
         this.login = login;
         this.password = password;
         this.host = host;
