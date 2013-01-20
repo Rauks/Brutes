@@ -4,13 +4,9 @@
  */
 package brutes.net;
 
-import brutes.net.client.InvalidResponseException;
-import brutes.net.client.ErrorResponseException;
-import brutes.game.Bonus;
-import brutes.game.Character;
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-public class Network{
+public class Network implements Closeable{
     private Socket connection;
     private NetworkReader reader;
     private NetworkWriter writer;
@@ -29,7 +25,7 @@ public class Network{
         this.writer = new NetworkWriter(this.connection.getOutputStream());
     }
     
-    protected Socket getConnection(){
+    protected Socket getSocket(){
         return this.connection;
     }
     protected NetworkReader getReader(){
@@ -38,12 +34,11 @@ public class Network{
     protected NetworkWriter getWriter(){
         return this.writer;
     }
-    
-    public void disconnect(){
+
+    @Override
+    public void close() throws IOException {
         try {
-            if(this.connection != null){
-                this.connection.close();
-            }
+            this.connection.close();
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }

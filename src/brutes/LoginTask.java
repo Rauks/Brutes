@@ -9,7 +9,11 @@ import brutes.net.client.ErrorResponseException;
 import brutes.net.client.InvalidResponseException;
 import brutes.net.client.NetworkClient;
 import brutes.user.Session;
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.concurrent.Task;
@@ -35,30 +39,26 @@ public class LoginTask extends Task{
         return this.statusMessage;
     }
     
-    
     @Override
     protected Void call() throws Exception {
-        this.statusMessage.setValue("Login started");
         try{
-            Socket socket = new Socket(host, Protocol.CONNECTION_PORT);
-            ScenesContext.getInstance().setNetwork(new NetworkClient(socket));
-        } catch(Exception ex){
-            this.statusMessage.setValue("Host not found");
-            throw new Exception("Login task failed at server connection");
-        }
-        try{
-            String token = ScenesContext.getInstance().getNetwork().sendLogin(this.login, this.password);
-            ScenesContext.getInstance().setSession(new Session(token));
+            String token;
+            try (NetworkClient connection = new NetworkClient(new Socket(this.host, Protocol.CONNECTION_PORT))) {
+                token = connection.sendLogin(this.login, this.password);
+                ScenesContext.getInstance().setSession(new Session(this.host, token));
+            } catch (UnknownHostException ex) {
+                this.statusMessage.set("Serveur invalide");
+                throw new Exception("Login task failed at server connection");
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch(ErrorResponseException ex){
-            ScenesContext.getInstance().getNetwork().disconnect();
-            this.statusMessage.setValue(ex.getMessage());
+            this.statusMessage.set(ex.getMessage());
             throw new Exception("Login task failed at login/password validation");
         } catch(InvalidResponseException ex){
-            ScenesContext.getInstance().getNetwork().disconnect();
-            this.statusMessage.setValue(ex.getMessage());
+            this.statusMessage.set(ex.getMessage());
             throw new Exception("Login task failed at server response");
         }
-        this.statusMessage.setValue("Loged");
         return null;
     }
 }

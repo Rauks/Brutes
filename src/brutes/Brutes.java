@@ -4,6 +4,8 @@
  */
 package brutes;
 
+import brutes.net.Protocol;
+import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,8 +32,7 @@ public class Brutes extends Application {
                     while(true){
                         Socket sockcli = sockserv.accept();
                         NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
-                        n.readLogin();
-
+                        n.read();
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);

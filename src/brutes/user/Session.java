@@ -11,12 +11,14 @@ import brutes.game.ObservableCharacter;
  * @author Karl
  */
 public class Session {
+    private String server;
     private String token;
     private ObservableCharacter me;
     private ObservableCharacter chalenger;
 
-    public Session(String token) {
+    public Session(String server, String token) {
         this.token = token;
+        this.server = server;
         this.me = new ObservableCharacter();
         this.chalenger = new ObservableCharacter();
     }
@@ -24,10 +26,13 @@ public class Session {
     public String getToken() {
         return this.token;
     }
+    public String getServer() {
+        return this.server;
+    }
     public ObservableCharacter getMyCharacter(){
         return this.me;
     }
-    public ObservableCharacter getChalengerCharacter(){
+    public ObservableCharacter getChallengerCharacter(){
         return this.chalenger;
     }
 }

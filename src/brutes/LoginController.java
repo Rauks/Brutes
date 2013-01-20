@@ -5,10 +5,19 @@ package brutes;
  * and open the template in the editor.
  */
 
+import brutes.net.Protocol;
+import brutes.net.client.ErrorResponseException;
+import brutes.net.client.InvalidResponseException;
+import brutes.net.client.NetworkClient;
+import brutes.user.Session;
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -62,6 +71,7 @@ public class LoginController implements Initializable {
         this.loading.setVisible(true);
         this.login.setDisable(true);
         this.password.setDisable(true);
+        this.server.setDisable(true);
         this.connexion.setDisable(true);
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
@@ -86,6 +96,7 @@ public class LoginController implements Initializable {
             private void reactiveLogin() {
                 login.setDisable(false);
                 password.setDisable(false);
+                server.setDisable(false);
                 connexion.setDisable(false);
                 loading.setVisible(false);
             }
