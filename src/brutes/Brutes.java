@@ -30,8 +30,7 @@ public class Brutes extends Application {
                     while(true){
                         Socket sockcli = sockserv.accept();
                         NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
-                        n.readLogin();
-
+                        n.read();
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
