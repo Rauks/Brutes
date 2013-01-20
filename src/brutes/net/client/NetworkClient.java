@@ -5,11 +5,13 @@
 package brutes.net.client;
 
 import brutes.game.Bonus;
+import brutes.game.Character;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -144,7 +146,16 @@ public class NetworkClient extends Network{
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readShortInt();
                 ArrayList<Integer> bonusesID = (ArrayList<Integer>) this.getReader().readArray();
-                return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonusesID);
+                Bonus[] bonuses = new Bonus[Character.MAX_BONUSES];
+                for(int i = 0; i < Character.MAX_BONUSES; i++){
+                    if(bonusesID.size() > i){
+                        bonuses[i] = this.getDataBonus(bonusesID.get(i));
+                    }
+                    else{
+                        bonuses[i] = Bonus.EMPTY_BONUS;
+                    }
+                }
+                return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonuses);
             default:
                 throw new InvalidResponseException();
         }

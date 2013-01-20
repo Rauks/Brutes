@@ -4,7 +4,6 @@
  */
 package brutes.game;
 
-import brutes.game.media.CharacterImage;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +11,8 @@ import java.util.ArrayList;
  * @author Karl
  */
 public class Character {
+    public static final int MAX_BONUSES = 3;
+    
     private int id;
     private String name;
     private short level;
@@ -19,7 +20,7 @@ public class Character {
     private short strength;
     private short speed;
     private int imageID;
-    private ArrayList<Integer> bonusesID;
+    private Bonus[] bonuses;
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
@@ -29,38 +30,39 @@ public class Character {
         this.strength = strength;
         this.speed = speed;
         this.imageID = imageID;
+        this.bonuses = new Bonus[Character.MAX_BONUSES];
     }
-    public Character(int id, String name, short level, short life, short strength, short speed, int imageID, ArrayList<Integer> bonusesID) {
+    public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
         this(id, name, level, life, strength, speed, imageID);
-        this.bonusesID = bonusesID;
+        this.bonuses = bonuses;
     }
     
-    public void addBonus(int bonus){
-        this.bonusesID.add(new Integer(bonus));
+    public void addBonus(Bonus b){
+        this.bonuses[this.bonuses.length] = b;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
     public String getName() {
-        return name;
+        return this.name;
     }
     public short getLevel() {
-        return level;
+        return this.level;
     }
     public short getLife() {
-        return life;
+        return this.life;
     }
     public short getStrength() {
-        return strength;
+        return this.strength;
     }
     public short getSpeed() {
-        return speed;
+        return this.speed;
     }
     public int getImageID() {
-        return imageID;
+        return this.imageID;
     }
-    public ArrayList<Integer> getBonuseIDs() {
-        return bonusesID;
+    public Bonus[] getBonuses() {
+        return this.bonuses;
     }
 }

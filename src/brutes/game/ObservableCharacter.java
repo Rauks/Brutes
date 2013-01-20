@@ -6,8 +6,6 @@ package brutes.game;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyListProperty;
-import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -23,7 +21,7 @@ public class ObservableCharacter {
     private ReadOnlyIntegerWrapper strength;
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper imageID;
-    private ReadOnlyListWrapper<Integer> bonusesID;
+    private ObservableBonus[] bonuses;
     
     public ObservableCharacter(){
         this.id = new ReadOnlyIntegerWrapper();
@@ -33,7 +31,10 @@ public class ObservableCharacter {
         this.strength = new ReadOnlyIntegerWrapper();
         this.speed = new ReadOnlyIntegerWrapper();
         this.imageID = new ReadOnlyIntegerWrapper();
-        this.bonusesID = new ReadOnlyListWrapper<>();
+        this.bonuses = new ObservableBonus[Character.MAX_BONUSES];
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            this.bonuses[i] = new ObservableBonus();
+        }
     }
     
     public void loadCharacter(Character c){
@@ -44,9 +45,20 @@ public class ObservableCharacter {
         this.strength.set(c.getStrength());
         this.speed.set(c.getSpeed());
         this.imageID.set(c.getImageID());
-        this.bonusesID.setAll(c.getBonuseIDs());
+        Bonus[] bonus = c.getBonuses();
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            if(bonus[i] != null){
+                this.bonuses[i].loadBonus(bonus[i]);
+            }
+            else{
+                this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
+            }
+        }
     }
 
+    public ObservableBonus getBonus(int id){
+        return this.bonuses[id];
+    }
     public ReadOnlyIntegerProperty getId() {
         return this.id;
     }
@@ -68,7 +80,4 @@ public class ObservableCharacter {
     public ReadOnlyIntegerProperty getImageID() {
         return this.imageID;
     }
-    public ReadOnlyListProperty<Integer> getBonusesID() {
-        return this.bonusesID;
-    } 
 }

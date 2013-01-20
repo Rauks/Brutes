@@ -11,6 +11,8 @@ import brutes.game.media.BonusImage;
  * @author Karl
  */
 public class Bonus {
+    public static final Bonus EMPTY_BONUS = new Bonus();
+
     private int id;
     private String name;
     private short level;
@@ -18,6 +20,9 @@ public class Bonus {
     private short speed;
     private int imageID;
 
+    private Bonus(){
+    }
+    
     public Bonus(int id, String name, short level, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
