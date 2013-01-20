@@ -4,8 +4,11 @@
  */
 package brutes.game;
 
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
 /**
@@ -43,4 +46,29 @@ public class ObservableCharacter {
         this.imageID.set(c.getImageID());
         this.bonusesID.setAll(c.getBonuseIDs());
     }
+
+    public ReadOnlyIntegerProperty getId() {
+        return id;
+    }
+    public ReadOnlyStringProperty getName() {
+        return name;
+    }
+    public ReadOnlyIntegerProperty getLevel() {
+        return level;
+    }
+    public ReadOnlyIntegerProperty getLife() {
+        return life;
+    }
+    public ReadOnlyIntegerProperty getStrength() {
+        return strength;
+    }
+    public ReadOnlyIntegerProperty getSpeed() {
+        return speed;
+    }
+    public ReadOnlyIntegerProperty getImageID() {
+        return imageID;
+    }
+    public ReadOnlyListProperty<Integer> getBonusesID() {
+        return bonusesID;
+    } 
 }
