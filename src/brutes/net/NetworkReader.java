@@ -63,28 +63,52 @@ public class NetworkReader {
         this.is.read(b);
         return (b[0] != 0x00);
     }
-    public ArrayList readArray() throws IOException{
+    public boolean[] readBooleanArray() throws IOException{
         short nbElements = this.readShortInt();
         byte type = this.readByte();
-        ArrayList list = new ArrayList();
-        for(int i = 0; i < nbElements; i++){
-            switch(type){
-                case Protocol.TYPE_BOOLEAN:
-                    list.add(this.readBoolean()?Boolean.TRUE:Boolean.FALSE);
-                    break;
-                case Protocol.TYPE_LONG:
-                    list.add(new Integer(this.readLongInt()));
-                    break;
-                case Protocol.TYPE_SHORT:
-                    list.add(new Short(this.readShortInt()));
-                    break;
-                case Protocol.TYPE_STRING:
-                    list.add(this.readString());
-                    break;
-                default:
-                    throw new IOException("Array type invalid or not supported");
-            }
+        if(type != Protocol.TYPE_BOOLEAN){
+            throw new IOException(NetworkException.ARRAY_TYPE);
         }
-        return list; 
+        boolean[] array = new boolean[nbElements];
+        for(int i = 0; i < nbElements; i++){
+            array[i] = this.readBoolean();
+        }
+        return array;
+    }
+    public int[] readLongIntArray() throws IOException{
+        short nbElements = this.readShortInt();
+        byte type = this.readByte();
+        if(type != Protocol.TYPE_LONG){
+            throw new IOException(NetworkException.ARRAY_TYPE);
+        }
+        int[] array = new int[nbElements];
+        for(int i = 0; i < nbElements; i++){
+            array[i] = this.readLongInt();
+        }
+        return array;
+    }
+    public short[] readShortIntArray() throws IOException{
+        short nbElements = this.readShortInt();
+        byte type = this.readByte();
+        if(type != Protocol.TYPE_SHORT){
+            throw new IOException(NetworkException.ARRAY_TYPE);
+        }
+        short[] array = new short[nbElements];
+        for(int i = 0; i < nbElements; i++){
+            array[i] = this.readShortInt();
+        }
+        return array;
+    }
+    public String[] readStringArray() throws IOException{
+        short nbElements = this.readShortInt();
+        byte type = this.readByte();
+        if(type != Protocol.TYPE_BOOLEAN){
+            throw new IOException(NetworkException.ARRAY_TYPE);
+        }
+        String[] array = new String[nbElements];
+        for(int i = 0; i < nbElements; i++){
+            array[i] = this.readString();
+        }
+        return array;
     }
 }

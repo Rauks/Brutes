@@ -166,11 +166,11 @@ public class NetworkClient extends Network{
                 short strength = this.getReader().readShortInt();
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readShortInt();
-                ArrayList<Integer> bonusesID = (ArrayList<Integer>) this.getReader().readArray();
+                int[] bonusesID = this.getReader().readLongIntArray();
                 Bonus[] bonuses = new Bonus[Character.MAX_BONUSES];
                 for(int i = 0; i < Character.MAX_BONUSES; i++){
-                    if(bonusesID.size() > i){
-                        bonuses[i] = this.getDataBonus(bonusesID.get(i));
+                    if(bonusesID.length > i){
+                        bonuses[i] = this.getDataBonus(bonusesID[i]);
                     }
                     else{
                         bonuses[i] = Bonus.EMPTY_BONUS;
