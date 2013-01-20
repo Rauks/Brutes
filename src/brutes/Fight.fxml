@@ -65,7 +65,7 @@
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                   <children>
-                    <Text id="bonus2" fx:id="muBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" />
+                    <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" />
                     <ImageView fx:id="myBonus2Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>

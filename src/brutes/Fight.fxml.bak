@@ -121,7 +121,7 @@
               </VBox.margin>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.margin="$x2">
+            <HBox prefHeight="100.0" prefWidth="200.0">
               <children>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                   <children>
@@ -142,6 +142,9 @@
                   </children>
                 </VBox>
               </children>
+              <VBox.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x2" />
+              </VBox.margin>
             </HBox>
           </children>
           <padding>
@@ -162,6 +165,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
               <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterNew" text="Nouvelle Brute" />
+                <MenuItem disable="true" mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer Brute" />
+                <MenuItem disable="true" mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer Brute" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>
