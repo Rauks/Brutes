@@ -10,6 +10,6 @@ package brutes.net.client;
  */
 public class InvalidResponseException extends Exception{
     public InvalidResponseException(){
-        super("Invalid server response");
+        super("Erreur du serveur");
     }
 }
