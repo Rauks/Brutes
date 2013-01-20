@@ -4,6 +4,7 @@
  */
 package brutes;
 
+import brutes.game.ObservableCharacter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -111,5 +112,25 @@ public class FightController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Session token : " + ScenesContext.getInstance().getSession().getToken());
+        ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
+        ObservableCharacter ch = ScenesContext.getInstance().getSession().getChalengerCharacter();
+        
+        this.myName.textProperty().bind(me.getName());
+        this.myLevel.textProperty().bind(me.getLevel().asString());
+        this.myLifes.textProperty().bind(me.getLife().asString());
+        this.myStrength.textProperty().bind(me.getStrength().asString());
+        this.mySpeed.textProperty().bind(me.getSpeed().asString());
+        this.myBonus1.textProperty().bind(me.getBonus(0).getName());
+        this.myBonus2.textProperty().bind(me.getBonus(1).getName());
+        this.myBonus3.textProperty().bind(me.getBonus(2).getName());
+        
+        this.chName.textProperty().bind(ch.getName());
+        this.chLevel.textProperty().bind(ch.getLevel().asString());
+        this.chLifes.textProperty().bind(ch.getLife().asString());
+        this.chStrength.textProperty().bind(ch.getStrength().asString());
+        this.chSpeed.textProperty().bind(ch.getSpeed().asString());
+        this.chBonus1.textProperty().bind(ch.getBonus(0).getName());
+        this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
+        this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
     }    
 }

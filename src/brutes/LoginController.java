@@ -5,7 +5,6 @@ package brutes;
  * and open the template in the editor.
  */
 
-import brutes.user.Session;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
