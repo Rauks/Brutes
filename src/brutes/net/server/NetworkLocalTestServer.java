@@ -20,17 +20,71 @@ public class NetworkLocalTestServer extends Network{
         super(connection);
     }
     
-    public void readLogin() throws IOException{//Test purpose
+    public void read() throws IOException{
         this.getReader().readMessageSize();
-        this.getReader().readDiscriminant();
+        switch(this.getReader().readDiscriminant()){
+            case Protocol.D_CHEAT_FIGHT_LOOSE:
+                this.readCheatFightLoose();
+                break;
+            case Protocol.D_CHEAT_FIGHT_RANDOM:
+                this.readCheatFightRandom();
+                break;
+            case Protocol.D_CHEAT_FIGHT_WIN:
+                this.readCheatFightWin();
+                break;
+            case Protocol.D_CREATE_CHARACTER:
+                break;
+            case Protocol.D_DELETE_CHARACTER:
+                break;
+            case Protocol.D_DO_FIGHT:
+                this.readDoFight();
+                break;
+            case Protocol.D_GET_BONUS:
+                break;
+            case Protocol.D_GET_CHALLENGER_CHARACTER_ID:
+                break;
+            case Protocol.D_GET_CHARACTER:
+                break;
+            case Protocol.D_GET_MY_CHARACTER_ID:
+                break;
+            case Protocol.D_LOGIN:
+                this.readLogin();
+                break;
+            case Protocol.D_LOGOUT:
+                break;
+            case Protocol.D_UPDATE_CHARACTER:
+                break;
+            default:
+                this.getWriter().writeDiscriminant(Protocol.ERROR_SRLY_WTF).send();
+        }
+    }
+    
+    private void readCheatFightWin(){
+        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
+                .writeBoolean(true)
+                .send();
+    }
+    private void readCheatFightLoose(){
+        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
+                .writeBoolean(false)
+                .send();
+    }
+    private void readCheatFightRandom(){
+        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
+                .writeBoolean(Math.random() < 0.5)
+                .send();
+    }
+    private void readDoFight(){
+        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
+                .writeBoolean(true)
+                .send();
+    }
+    
+    private void readLogin() throws IOException{
         String login = this.getReader().readString();
         String password = this.getReader().readString();
         
-        if(login.equals("kikoo")){
-            this.getWriter().writeDiscriminant(Protocol.ERROR_SRLY_WTF)
-                    .send();
-        }
-        else if(login.isEmpty()){
+        if(login.isEmpty()){
             this.getWriter().writeDiscriminant(Protocol.ERROR_LOGIN_NOT_FOUND)
                     .send();
         }
@@ -40,8 +94,6 @@ public class NetworkLocalTestServer extends Network{
         }
         else{
             String token = login + '@' + password;
-            Logger.getLogger(Network.class.getName()).log(Level.INFO, "TEST SERVER : generated token #" + token);
-
             this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
                     .writeString(token)
                     .send();
