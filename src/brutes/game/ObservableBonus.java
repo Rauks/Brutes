@@ -4,7 +4,9 @@
  */
 package brutes.game;
 
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
 /**
@@ -36,5 +38,23 @@ public class ObservableBonus {
         this.speed.set(b.getSpeed());
         this.imageID.set(b.getImage());
     }
-    
+
+    public ReadOnlyIntegerProperty getId() {
+        return this.id;
+    }
+    public ReadOnlyStringProperty getName() {
+        return this.name;
+    }
+    public ReadOnlyIntegerProperty getLevel() {
+        return this.level;
+    }
+    public ReadOnlyIntegerProperty getStrength() {
+        return this.strength;
+    }
+    public ReadOnlyIntegerProperty getSpeed() {
+        return this.speed;
+    }
+    public ReadOnlyIntegerProperty getImageID() {
+        return this.imageID;
+    }
 }

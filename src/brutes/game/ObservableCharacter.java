@@ -48,27 +48,27 @@ public class ObservableCharacter {
     }
 
     public ReadOnlyIntegerProperty getId() {
-        return id;
+        return this.id;
     }
     public ReadOnlyStringProperty getName() {
-        return name;
+        return this.name;
     }
     public ReadOnlyIntegerProperty getLevel() {
-        return level;
+        return this.level;
     }
     public ReadOnlyIntegerProperty getLife() {
-        return life;
+        return this.life;
     }
     public ReadOnlyIntegerProperty getStrength() {
-        return strength;
+        return this.strength;
     }
     public ReadOnlyIntegerProperty getSpeed() {
-        return speed;
+        return this.speed;
     }
     public ReadOnlyIntegerProperty getImageID() {
-        return imageID;
+        return this.imageID;
     }
     public ReadOnlyListProperty<Integer> getBonusesID() {
-        return bonusesID;
+        return this.bonusesID;
     } 
 }
