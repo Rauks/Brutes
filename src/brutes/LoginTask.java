@@ -39,7 +39,6 @@ public class LoginTask extends Task{
         return this.statusMessage;
     }
     
-    
     @Override
     protected Void call() throws Exception {
         try{
@@ -49,11 +48,16 @@ public class LoginTask extends Task{
                 ScenesContext.getInstance().setSession(new Session(this.host, token));
             } catch (UnknownHostException ex) {
                 this.statusMessage.set("Serveur invalide");
+                throw new Exception("Login task failed at server connection");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch( ErrorResponseException | InvalidResponseException ex){
+        } catch(ErrorResponseException ex){
             this.statusMessage.set(ex.getMessage());
+            throw new Exception("Login task failed at login/password validation");
+        } catch(InvalidResponseException ex){
+            this.statusMessage.set(ex.getMessage());
+            throw new Exception("Login task failed at server response");
         }
         return null;
     }
