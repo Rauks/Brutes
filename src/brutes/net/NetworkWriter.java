@@ -27,6 +27,7 @@ public class NetworkWriter {
     }
     
     public void flush() throws IOException{
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Flush");
         this.baos.flush();
         this.os.flush();
     }
@@ -36,6 +37,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeByte(byte value){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Byte  : {0}", value);
         try {
             this.baos.write(ByteBuffer.allocate(Protocol.SIZE_BYTE).put(value).array());
         } catch (IOException ex) {
@@ -44,6 +46,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeShortInt(short value){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Short  : {0}", value);
         try {
             this.baos.write(ByteBuffer.allocate(Protocol.SIZE_SHORTINT).putShort(value).array());
         } catch (IOException ex) {
@@ -52,6 +55,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeLongInt(int value){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Long  : {0}", value);
         try {
             this.baos.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(value).array());
         } catch (IOException ex) {
@@ -60,6 +64,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeString(String value){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "String  : {0}", value);
         try {
             this.writeShortInt((short)value.length());
             this.baos.write(value.getBytes(Charset.forName("UTF-8")));
@@ -69,6 +74,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeBoolean(boolean value){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Boolean  : {0}", value);
         try {
             byte bool = (byte)(value?0xFF:0x00);
             this.baos.write(ByteBuffer.allocate(Protocol.SIZE_BOOLEAN).put(bool).array());
@@ -78,6 +84,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeBooleanArray(boolean[] array){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Array : Boolean");
         this.writeShortInt((short)array.length);
         this.writeByte(Protocol.TYPE_BOOLEAN);
         for(int i = 0; i < array.length; i++){
@@ -86,6 +93,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeLongIntArray(int[] array){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Array : Long");
         this.writeShortInt((short)array.length);
         this.writeByte(Protocol.TYPE_LONG);
         for(int i = 0; i < array.length; i++){
@@ -94,6 +102,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeShortIntArray(short[] array){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Array : Short");
         this.writeShortInt((short)array.length);
         this.writeByte(Protocol.TYPE_SHORT);
         for(int i = 0; i < array.length; i++){
@@ -102,6 +111,7 @@ public class NetworkWriter {
         return this;
     }
     public NetworkWriter writeStringArray(String[] array){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Array : String");
         this.writeShortInt((short)array.length);
         this.writeByte(Protocol.TYPE_STRING);
         for(int i = 0; i < array.length; i++){
@@ -111,6 +121,7 @@ public class NetworkWriter {
     }
     
     public void send(){
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Message sending...");
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
             int messageSize = baos.size() + Protocol.SIZE_LONGINT;
@@ -122,5 +133,6 @@ public class NetworkWriter {
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Message send");
     }
 }

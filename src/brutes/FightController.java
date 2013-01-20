@@ -5,6 +5,12 @@
 package brutes;
 
 import brutes.game.ObservableCharacter;
+import brutes.net.Protocol;
+import brutes.net.client.ErrorResponseException;
+import brutes.net.client.InvalidResponseException;
+import brutes.net.client.NetworkClient;
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -72,36 +78,99 @@ public class FightController implements Initializable {
     
     @FXML
     private void handleMenuFightWin(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuFightLoose(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuFightRandom(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuFightRegular(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendDoFight(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuCharacterNew(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendCreateCharacter(ScenesContext.getInstance().getSession().getToken(), "Test");
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuCharacterUpdate(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), "Test");
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuCharacterDelete(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendDeleteCharacter(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleMenuDisconnect(ActionEvent e){
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Handle");
-        ScenesContext.getInstance().getNetwork().disconnect();
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ScenesContext.getInstance().setSession(null);
         ScenesContext.getInstance().showLogin();
     }
@@ -111,9 +180,8 @@ public class FightController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Logger.getLogger(FightController.class.getName()).log(Level.INFO, "Session token : " + ScenesContext.getInstance().getSession().getToken());
         ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
-        ObservableCharacter ch = ScenesContext.getInstance().getSession().getChalengerCharacter();
+        ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
         
         this.myName.textProperty().bind(me.getName());
         this.myLevel.textProperty().bind(me.getLevel().asString());
@@ -132,5 +200,49 @@ public class FightController implements Initializable {
         this.chBonus1.textProperty().bind(ch.getBonus(0).getName());
         this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
+        
+        int myId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                myId = connection.sendGetMyCharacterId(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(myId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    me.loadCharacter(connection.getDataCharacter(myId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        int chId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                chId = connection.sendGetChallengerCharacterId(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(chId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    ch.loadCharacter(connection.getDataCharacter(chId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }    
 }

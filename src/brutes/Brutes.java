@@ -4,6 +4,8 @@
  */
 package brutes;
 
+import brutes.net.Protocol;
+import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
 import java.io.IOException;
 import java.net.ServerSocket;

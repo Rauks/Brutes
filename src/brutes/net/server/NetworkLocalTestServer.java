@@ -19,8 +19,11 @@ public class NetworkLocalTestServer extends Network{
     }
     
     public void read() throws IOException{
+        System.out.println("MESSAGE ENTRANT");
         this.getReader().readMessageSize();
-        switch(this.getReader().readDiscriminant()){
+        byte disc = this.getReader().readDiscriminant();
+        System.out.println(disc);
+        switch(disc){
             case Protocol.D_CHEAT_FIGHT_LOOSE:
                 this.readCheatFightLoose();
                 break;
@@ -151,6 +154,7 @@ public class NetworkLocalTestServer extends Network{
                 .writeShortInt((short)15)
                 .writeShortInt((short)17)
                 .writeShortInt((short)6)
+                .writeShortInt((short)12)
                 .writeLongInt(1)
                 .writeLongIntArray(new int[]{1, 1})
                 .send();

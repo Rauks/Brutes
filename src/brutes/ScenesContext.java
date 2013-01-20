@@ -23,7 +23,6 @@ public class ScenesContext {
     
     private Stage stage;
     private Session session;
-    private NetworkClient network;
     
     public static ScenesContext getInstance(){
         return ScenesContext.instance;
@@ -37,12 +36,6 @@ public class ScenesContext {
     }
     public Session getSession(){
         return this.session;
-    }
-    public NetworkClient getNetwork() {
-        return network;
-    }
-    public void setNetwork(NetworkClient network) {
-        this.network = network;
     }
     
     private void show(Parent root){

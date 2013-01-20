@@ -5,10 +5,19 @@ package brutes;
  * and open the template in the editor.
  */
 
+import brutes.net.Protocol;
+import brutes.net.client.ErrorResponseException;
+import brutes.net.client.InvalidResponseException;
+import brutes.net.client.NetworkClient;
+import brutes.user.Session;
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
