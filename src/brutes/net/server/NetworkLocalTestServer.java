@@ -19,10 +19,8 @@ public class NetworkLocalTestServer extends Network{
     }
     
     public void read() throws IOException{
-        System.out.println("MESSAGE ENTRANT");
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
-        System.out.println(disc);
         switch(disc){
             case Protocol.D_CHEAT_FIGHT_LOOSE:
                 this.readCheatFightLoose();
