@@ -125,7 +125,7 @@ public class NetworkLocalTestServer extends Network {
                             .send();
                 } else {
                     String token = DatasManager.updateToken(rs.getInt("id"));
-                    
+
                     Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
                             .writeString(token)
@@ -135,9 +135,13 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogout() throws IOException {
+    private void readLogout() throws IOException, Exception {
         String token = this.getReader().readString();
-        System.out.println("LOGOUT: " + token);
+        
+        PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
+        psql.setString(1, token);
+        psql.executeQuery();
+        
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
     }
