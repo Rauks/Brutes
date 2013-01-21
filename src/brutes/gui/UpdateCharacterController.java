@@ -39,16 +39,21 @@ public class UpdateCharacterController implements Initializable {
     
     @FXML
     private void handleSubmitAction(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), this.characterName.getText());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+        new Thread(){
+            @Override
+            public void run() {
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    try {
+                        connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), characterName.getText());
+                    } catch (InvalidResponseException | ErrorResponseException ex) {
+                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ScenesContext.getInstance().getSession().netLoadMyCharacter();
             }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ScenesContext.getInstance().getSession().netLoadMyCharacter();
+        }.start();
         this.closeStage(e);
     }
     
