@@ -134,9 +134,11 @@ public class FightController implements Initializable {
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("CreateCharacter.fxml"));
             Scene scene = new Scene(root);
-            Stage createWindow = new Stage();
-            createWindow.setScene(scene);
-            createWindow.show();
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Nouveau personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,9 +148,11 @@ public class FightController implements Initializable {
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("UpdateCharacter.fxml"));
             Scene scene = new Scene(root);
-            Stage createWindow = new Stage();
-            createWindow.setScene(scene);
-            createWindow.show();
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Modifier son personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -158,9 +162,11 @@ public class FightController implements Initializable {
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("DeleteCharacter.fxml"));
             Scene scene = new Scene(root);
-            Stage createWindow = new Stage();
-            createWindow.setScene(scene);
-            createWindow.show();
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Supprimer son personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
