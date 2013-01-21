@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.UpdateCharacterController">
+    <children>
+    <VBox AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+      <children>
+        <Label text="Nom du personnage :">
+          <labelFor>
+            <TextField id="name" fx:id="characterName" prefWidth="200.0" />
+          </labelFor>
+        </Label>
+        <fx:reference source="characterName" />
+        <HBox alignment="TOP_CENTER" spacing="20.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
+            <Button mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Modifier" />
+          </children>
+          <VBox.margin>
+            <Insets top="20.0" />
+          </VBox.margin>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

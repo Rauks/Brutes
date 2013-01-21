@@ -4,8 +4,8 @@
  */
 package brutes.net.client;
 
-import brutes.FightController;
-import brutes.LoginController;
+import brutes.gui.FightController;
+import brutes.gui.LoginController;
 import brutes.ScenesContext;
 import brutes.game.Bonus;
 import brutes.game.Character;
@@ -94,6 +94,7 @@ public class NetworkClient extends Network{
     }
     public void sendDeleteCharacter(String token) throws IOException, InvalidResponseException, ErrorResponseException{
         this.getWriter().writeDiscriminant(Protocol.D_DELETE_CHARACTER)
+                .writeString(token)
                 .send();
         this.getReader().readMessageSize();
         switch(this.getReader().readDiscriminant()){

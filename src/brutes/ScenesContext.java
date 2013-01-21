@@ -46,7 +46,7 @@ public class ScenesContext {
     
     public void showLogin(){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("Login.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("gui/Login.fxml"));
             show(root);
         } catch (IOException ex) {
             Logger.getLogger(ScenesContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,7 +54,7 @@ public class ScenesContext {
     }
     public void showFight(){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("Fight.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("gui/Fight.fxml"));
             show(root);
         } catch (IOException ex) {
             Logger.getLogger(ScenesContext.class.getName()).log(Level.SEVERE, null, ex);

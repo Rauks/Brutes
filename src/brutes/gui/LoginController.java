@@ -1,10 +1,12 @@
-package brutes;
+package brutes.gui;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
+import brutes.ScenesContext;
+import brutes.ScenesContext;
 import brutes.net.Protocol;
 import brutes.net.client.ErrorResponseException;
 import brutes.net.client.InvalidResponseException;

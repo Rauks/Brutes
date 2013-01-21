@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package brutes;
+package brutes.gui;
 
+import brutes.ScenesContext;
 import brutes.game.ObservableCharacter;
 import brutes.net.Protocol;
 import brutes.net.client.ErrorResponseException;
@@ -17,9 +18,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -126,38 +131,44 @@ public class FightController implements Initializable {
     }
     @FXML
     private void handleMenuCharacterNew(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendCreateCharacter(ScenesContext.getInstance().getSession().getToken(), "Test");
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            Parent root = FXMLLoader.load(this.getClass().getResource("CreateCharacter.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Nouveau personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
     private void handleMenuCharacterUpdate(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), "Test");
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            Parent root = FXMLLoader.load(this.getClass().getResource("UpdateCharacter.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Modifier son personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
     private void handleMenuCharacterDelete(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendDeleteCharacter(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            Parent root = FXMLLoader.load(this.getClass().getResource("DeleteCharacter.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("Supprimer son personnage");
+            window.setResizable(false);
+            window.show();
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
@@ -201,48 +212,7 @@ public class FightController implements Initializable {
         this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
         
-        int myId = -1;
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                myId = connection.sendGetMyCharacterId(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(myId != -1){
-            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                try {
-                    me.loadCharacter(connection.getDataCharacter(myId));
-                } catch (InvalidResponseException | ErrorResponseException ex) {
-                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        int chId = -1;
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                chId = connection.sendGetChallengerCharacterId(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(chId != -1){
-            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                try {
-                    ch.loadCharacter(connection.getDataCharacter(chId));
-                } catch (InvalidResponseException | ErrorResponseException ex) {
-                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        ScenesContext.getInstance().getSession().netLoadMyCharacter();
+        ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
     }    
 }
