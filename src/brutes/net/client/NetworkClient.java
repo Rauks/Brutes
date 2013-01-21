@@ -94,6 +94,7 @@ public class NetworkClient extends Network{
     }
     public void sendDeleteCharacter(String token) throws IOException, InvalidResponseException, ErrorResponseException{
         this.getWriter().writeDiscriminant(Protocol.D_DELETE_CHARACTER)
+                .writeString(token)
                 .send();
         this.getReader().readMessageSize();
         switch(this.getReader().readDiscriminant()){
