@@ -102,6 +102,16 @@ public class DatasManager {
         return null;
     }
     
+    public static Character findCharacterByUser(User user) throws Exception {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ?");
+        psql.setInt(1, user.getId());
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return new brutes.game.Character(rs);
+        }
+        return null;
+    }
+    
     public static Fight findFightByUser(User user) throws Exception {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
         psql.setInt(1, user.getId());

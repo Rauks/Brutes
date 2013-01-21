@@ -30,10 +30,11 @@ public class NetworkLocalTestServer extends Network {
         super(connection);
     }
     
-    protected void checkToken(String token) throws Exception {
-        if( !token.equals(this.token) ) {
-            throw new Exception("Bad token");
+    protected String checkToken(String rToken) throws Exception {
+        if( !rToken.equals(this.token) ) {
+            throw new Exception("Bad token: " + rToken + " - " + this.token);
         }
+        return rToken;
     }
 
     public void read() throws IOException, Exception {
@@ -151,7 +152,7 @@ public class NetworkLocalTestServer extends Network {
         
         PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
         psql.setString(1, rToken);
-        psql.executeQuery();
+        psql.executeUpdate();
         
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
@@ -164,9 +165,18 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readUpdateCharacter() throws IOException {
-        this.getReader().readString();
-        this.getReader().readString();
+    private void readUpdateCharacter() throws Exception {
+        String rToken = this.getReader().readString();
+        String name = this.getReader().readString();
+        
+        User user = DatasManager.findUserByToken(rToken);
+        brutes.game.Character character = DatasManager.findCharacterByUser(user);
+        
+        PreparedStatement psql = DatasManager.prepare("UPDATE brutes SET name = ? WHERE id = ?");
+        psql.setString(1, name);
+        psql.setInt(2, character.getId());
+        psql.executeUpdate();
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
@@ -188,7 +198,10 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataCharacter() {
+    private void readDataCharacter() throws Exception {
+        //String rToken = this.checkToken(this.getReader().readString());
+        //int id = this.getReader().readLongInt();
+        
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(1)
                 .writeString("Rauks")
@@ -205,17 +218,15 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
         
         User user = DatasManager.findUserByToken(rToken);
-        Fight fight = DatasManager.findFightByUser(user);
-        
-        if( fight == null ) {
+        brutes.game.Character character = DatasManager.findCharacterByUser(user);
+        //Fight fight = DatasManager.findFightByUser(user);
+        //if( fight == null ) {
             //fight = new Fight();
             //fight.setCharacter1(null);
-        }
-        System.out.print("Combats : ");
-        System.out.println(fight);
+        //}
         
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
-                .writeLongInt(1)
+                .writeLongInt(character.getId())
                 .send();
     }
 
@@ -223,9 +234,10 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
         
         User user = DatasManager.findUserByToken(rToken);
+        brutes.game.Character character = DatasManager.findCharacterByUser(user);
         
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
-                .writeLongInt(user.getId())
+                .writeLongInt(character.getId())
                 .send();
     }
 }
