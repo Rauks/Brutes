@@ -137,6 +137,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readLogout() throws IOException {
         String token = this.getReader().readString();
+        System.out.println("LOGOUT: " + token);
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
     }

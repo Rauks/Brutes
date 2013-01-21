@@ -26,6 +26,9 @@ public class Brutes extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
+        // DEBUG
+        //(new File("bdd.db")).delete();
+        
         Connection instance = DatasManager.getInstance("sqlite", "bdd.db");
         System.out.println(instance);
         
