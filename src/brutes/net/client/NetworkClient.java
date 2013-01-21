@@ -4,8 +4,8 @@
  */
 package brutes.net.client;
 
-import brutes.FightController;
-import brutes.LoginController;
+import brutes.gui.FightController;
+import brutes.gui.LoginController;
 import brutes.ScenesContext;
 import brutes.game.Bonus;
 import brutes.game.Character;
