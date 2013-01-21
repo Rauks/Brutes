@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
