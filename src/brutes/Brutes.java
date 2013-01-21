@@ -28,6 +28,8 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
+        stage.setTitle("Les brutes (TP Réseaux 2012/2013 - Karl Woditsch)");
         stage.setOnCloseRequest(new EventHandler(){
             @Override
             public void handle(Event t) {
