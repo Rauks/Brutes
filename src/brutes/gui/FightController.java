@@ -112,6 +112,8 @@ public class FightController implements Initializable {
                     menuFightLoose.setDisable(false);
                     menuFightRandom.setDisable(false);
                     menuFightRegular.setDisable(false);
+                    ScenesContext.getInstance().getSession().netLoadMyCharacter();
+                    ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
                 }
             }
         });
