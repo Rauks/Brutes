@@ -176,6 +176,55 @@ public class FightController implements Initializable {
         ScenesContext.getInstance().showLogin();
     }
     
+    private void loadMyCharacter(){
+        ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
+        int myId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                myId = connection.sendGetMyCharacterId(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(myId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    me.loadCharacter(connection.getDataCharacter(myId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    private void loadChallengerCharacter(){
+        ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
+        int chId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                chId = connection.sendGetChallengerCharacterId(ScenesContext.getInstance().getSession().getToken());
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(chId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    ch.loadCharacter(connection.getDataCharacter(chId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -202,48 +251,7 @@ public class FightController implements Initializable {
         this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
         
-        int myId = -1;
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                myId = connection.sendGetMyCharacterId(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(myId != -1){
-            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                try {
-                    me.loadCharacter(connection.getDataCharacter(myId));
-                } catch (InvalidResponseException | ErrorResponseException ex) {
-                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        int chId = -1;
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                chId = connection.sendGetChallengerCharacterId(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(chId != -1){
-            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                try {
-                    ch.loadCharacter(connection.getDataCharacter(chId));
-                } catch (InvalidResponseException | ErrorResponseException ex) {
-                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        this.loadMyCharacter();
+        this.loadChallengerCharacter();
     }    
 }
