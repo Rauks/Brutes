@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.LoginController">
+<AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.LoginController">
   <children>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
       <children>
