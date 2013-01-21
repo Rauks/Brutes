@@ -13,6 +13,9 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +26,13 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setOnCloseRequest(new EventHandler(){
+            @Override
+            public void handle(Event t) {
+                Platform.exit();
+            }
+        });
+        
         new Thread(){
             @Override
             public void run(){
