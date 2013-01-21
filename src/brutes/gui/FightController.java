@@ -18,6 +18,9 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -85,54 +89,50 @@ public class FightController implements Initializable {
     private ImageView chBonus2Image;
     @FXML
     private ImageView chBonus3Image;
+    @FXML
+    private MenuItem menuFightWin;
+    @FXML
+    private MenuItem menuFightLoose;
+    @FXML
+    private MenuItem menuFightRandom;
+    @FXML
+    private MenuItem menuFightRegular;
+    
+    private void doFight(FightTask.FightType type){
+        menuFightWin.setDisable(true);
+        menuFightLoose.setDisable(true);
+        menuFightRandom.setDisable(true);
+        menuFightRegular.setDisable(true);
+        FightTask fightTask = new FightTask(type);
+        fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
+                if(newState == Worker.State.SUCCEEDED || newState == Worker.State.FAILED){
+                    menuFightWin.setDisable(false);
+                    menuFightLoose.setDisable(false);
+                    menuFightRandom.setDisable(false);
+                    menuFightRegular.setDisable(false);
+                }
+            }
+        });
+        new Thread(fightTask).start();
+    }
     
     @FXML
     private void handleMenuFightWin(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.doFight(FightTask.FightType.CHEAT_WIN);
     }
     @FXML
     private void handleMenuFightLoose(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.doFight(FightTask.FightType.CHEAT_LOOSE);
     }
     @FXML
     private void handleMenuFightRandom(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.doFight(FightTask.FightType.CHEAT_RANDOM);
     }
     @FXML
     private void handleMenuFightRegular(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendDoFight(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.doFight(FightTask.FightType.REGULAR);
     }
     @FXML
     private void handleMenuCharacterNew(ActionEvent e){

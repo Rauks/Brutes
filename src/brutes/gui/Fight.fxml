@@ -157,10 +157,10 @@
           <menus>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" fx:id="menuFightLoose" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" fx:id="menuFightRandom" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
