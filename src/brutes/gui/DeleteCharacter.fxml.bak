@@ -2,24 +2,30 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.DeleteCharacterController">
-    <children>
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.DeleteCharacterController">
+  <children>
     <VBox AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
       <children>
-        <Label text="Nom du personnage :">
-          <labelFor>
-            <TextField id="name" fx:id="characterName" prefWidth="200.0" />
-          </labelFor>
-        </Label>
-        <fx:reference source="characterName" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attention !">
+          <fill>
+            <Color blue="0.000" green="0.000" red="0.800" fx:id="x1" />
+          </fill>
+          <font>
+            <Font name="System Bold" size="12.0" />
+          </font>
+        </Text>
+        <Text fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Toute suppression est définitive." />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
             <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
-            <Button mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Créer" />
+            <Button mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Supprimer" />
           </children>
           <VBox.margin>
             <Insets top="20.0" />

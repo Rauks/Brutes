@@ -11,8 +11,12 @@
   <children>
     <VBox AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
       <children>
-        <Label text="Nom du personnage :" />
-        <TextField id="name" fx:id="characterName" prefWidth="200.0" />
+        <Label text="Nom du personnage :">
+          <labelFor>
+            <TextField id="name" fx:id="characterName" prefWidth="200.0" />
+          </labelFor>
+        </Label>
+        <fx:reference source="characterName" />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
             <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />

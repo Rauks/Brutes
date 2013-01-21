@@ -24,7 +24,7 @@
         <Text fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Toute suppression est définitive." />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
-            <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
+            <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
             <Button mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Supprimer" />
           </children>
           <VBox.margin>
