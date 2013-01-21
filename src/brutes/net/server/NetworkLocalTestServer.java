@@ -112,7 +112,7 @@ public class NetworkLocalTestServer extends Network {
             this.getWriter().writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
                     .send();
         } else {
-            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
+            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM brutes WHERE pseudo = ?");
             psql.setString(1, login);
             ResultSet rs = psql.executeQuery();
 
@@ -126,7 +126,7 @@ public class NetworkLocalTestServer extends Network {
                 } else {
                     String token = DatasManager.updateToken(rs.getInt("id"));
 
-                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for brute [{1}]", new Object[]{token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
                             .writeString(token)
                             .send();
@@ -138,7 +138,7 @@ public class NetworkLocalTestServer extends Network {
     private void readLogout() throws IOException, Exception {
         String token = this.getReader().readString();
         
-        PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
+        PreparedStatement psql = DatasManager.prepare("UPDATE brutes SET token = NULL WHERE token = ?");
         psql.setString(1, token);
         psql.executeQuery();
         

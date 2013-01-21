@@ -8,6 +8,7 @@ import brutes.db.DatasManager;
 import brutes.net.Protocol;
 import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -27,7 +28,7 @@ public class Brutes extends Application {
     public void start(Stage stage) throws Exception {
         
         // DEBUG
-        //(new File("bdd.db")).delete();
+        (new File("~$bdd.db")).delete();
         
         Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
         System.out.println(instance);
