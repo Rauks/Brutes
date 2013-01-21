@@ -38,7 +38,7 @@ public class DeleteCharacterController implements Initializable {
     private void handleSubmitAction(ActionEvent e){
         try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
             try {
-                connection.sendCreateCharacter(ScenesContext.getInstance().getSession().getToken(), this.characterName.getText());
+                connection.sendDeleteCharacter(ScenesContext.getInstance().getSession().getToken());
             } catch (InvalidResponseException | ErrorResponseException ex) {
                 Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
             }
