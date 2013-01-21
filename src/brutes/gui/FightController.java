@@ -143,14 +143,14 @@ public class FightController implements Initializable {
     }
     @FXML
     private void handleMenuCharacterUpdate(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), "Test");
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            Parent root = FXMLLoader.load(this.getClass().getResource("UpdateCharacter.fxml"));
+            Scene scene = new Scene(root);
+            Stage createWindow = new Stage();
+            createWindow.setScene(scene);
+            createWindow.show();
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
