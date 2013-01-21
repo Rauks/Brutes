@@ -143,7 +143,7 @@ public class FightController implements Initializable {
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
-            window.setTitle("Nouveau personnage");
+            window.setTitle("Nouvelle brute");
             window.setResizable(false);
             this.openedStages.add(window);
             window.show();
@@ -158,7 +158,7 @@ public class FightController implements Initializable {
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
-            window.setTitle("Modifier son personnage");
+            window.setTitle("Modifier la brute");
             window.setResizable(false);
             this.openedStages.add(window);
             window.show();
@@ -173,7 +173,7 @@ public class FightController implements Initializable {
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
-            window.setTitle("Supprimer son personnage");
+            window.setTitle("Supprimer la brute");
             window.setResizable(false);
             this.openedStages.add(window);
             window.show();
