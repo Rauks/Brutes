@@ -55,13 +55,6 @@ public class LoginController implements Initializable {
     private Text logError;
     
     @FXML
-    private void handleKeyPressed(KeyEvent e){
-        KeyCode key = e.getCode();
-        if(key == KeyCode.ENTER){
-            this.login();
-        }
-    }
-    @FXML
     private void handleConnexionAction(ActionEvent e){
         logError.setVisible(false);
         this.login();

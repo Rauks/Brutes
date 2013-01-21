@@ -59,7 +59,7 @@
                     <Insets />
                   </StackPane.margin>
                 </Text>
-                <Button fx:id="connexion" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
+                <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
               </children>
             </StackPane>
           </children>

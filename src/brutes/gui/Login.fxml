@@ -23,7 +23,7 @@
           <children>
             <Label text="Identifiant">
               <labelFor>
-                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" />
+                <TextField fx:id="login" />
               </labelFor>
             </Label>
             <fx:reference source="login" />
@@ -33,7 +33,7 @@
           <children>
             <Label text="Mot de passe">
               <labelFor>
-                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" />
+                <PasswordField fx:id="password" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
@@ -43,7 +43,7 @@
           <children>
             <Label text="Serveur">
               <labelFor>
-                <TextField id="login" fx:id="server" onKeyPressed="#handleKeyPressed" text="localhost" />
+                <TextField id="login" fx:id="server" text="localhost" />
               </labelFor>
             </Label>
             <fx:reference source="server" />
