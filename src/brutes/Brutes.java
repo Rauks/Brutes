@@ -29,7 +29,7 @@ public class Brutes extends Application {
         // DEBUG
         //(new File("bdd.db")).delete();
         
-        Connection instance = DatasManager.getInstance("sqlite", "bdd.db");
+        Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
         System.out.println(instance);
         
         new Thread(){
