@@ -21,8 +21,16 @@ import java.util.logging.Logger;
  */
 public class NetworkLocalTestServer extends Network {
 
+    protected String token;
+    
     public NetworkLocalTestServer(Socket connection) throws IOException {
         super(connection);
+    }
+    
+    protected void checkToken(String token) throws Exception {
+        if( !token.equals(this.token) ) {
+            throw new Exception("Bad token");
+        }
     }
 
     public void read() throws IOException, Exception {
@@ -112,7 +120,7 @@ public class NetworkLocalTestServer extends Network {
             this.getWriter().writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
                     .send();
         } else {
-            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM brutes WHERE pseudo = ?");
+            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
             psql.setString(1, login);
             ResultSet rs = psql.executeQuery();
 
@@ -124,11 +132,11 @@ public class NetworkLocalTestServer extends Network {
                     this.getWriter().writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
                             .send();
                 } else {
-                    String token = DatasManager.updateToken(rs.getInt("id"));
+                    this.token = DatasManager.updateToken(rs.getInt("id"));
 
-                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for brute [{1}]", new Object[]{token, rs.getInt("id")});
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{this.token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                            .writeString(token)
+                            .writeString(this.token)
                             .send();
                 }
             }
@@ -136,10 +144,10 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readLogout() throws IOException, Exception {
-        String token = this.getReader().readString();
+        String rToken = this.getReader().readString();
         
-        PreparedStatement psql = DatasManager.prepare("UPDATE brutes SET token = NULL WHERE token = ?");
-        psql.setString(1, token);
+        PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
+        psql.setString(1, rToken);
         psql.executeQuery();
         
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
