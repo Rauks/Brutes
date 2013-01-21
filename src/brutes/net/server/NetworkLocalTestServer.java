@@ -4,24 +4,32 @@
  */
 package brutes.net.server;
 
+import brutes.Brutes;
+import brutes.db.DatasManager;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Karl
  */
-public class NetworkLocalTestServer extends Network{
-    public NetworkLocalTestServer(Socket connection) throws IOException{
+public class NetworkLocalTestServer extends Network {
+
+    public NetworkLocalTestServer(Socket connection) throws IOException {
         super(connection);
     }
-    
-    public void read() throws IOException{
+
+    public void read() throws IOException, Exception {
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
-        switch(disc){
+        switch (disc) {
             case Protocol.D_CHEAT_FIGHT_LOOSE:
                 this.readCheatFightLoose();
                 break;
@@ -65,53 +73,71 @@ public class NetworkLocalTestServer extends Network{
                 this.getWriter().writeDiscriminant(Protocol.ERROR_SRLY_WTF).send();
         }
     }
-    
-    private void readCheatFightWin() throws IOException{
+
+    private void readCheatFightWin() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
                 .send();
     }
-    private void readCheatFightLoose() throws IOException{
+
+    private void readCheatFightLoose() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(false)
                 .send();
     }
-    private void readCheatFightRandom() throws IOException{
+
+    private void readCheatFightRandom() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(Math.random() < 0.5)
                 .send();
     }
-    private void readDoFight() throws IOException{
+
+    private void readDoFight() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
                 .send();
     }
-     
-    private void readLogin() throws IOException{
+
+    private void readLogin() throws IOException, Exception {
         String login = this.getReader().readString();
         String password = this.getReader().readString();
-        
-        if(login.isEmpty()){
+
+        if (login.isEmpty()) {
             this.getWriter().writeDiscriminant(Protocol.ERROR_LOGIN_NOT_FOUND)
                     .send();
-        }
-        else if(password.isEmpty()){
+        } else if (password.isEmpty()) {
             this.getWriter().writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
                     .send();
-        }
-        else{
-            String token = login + '@' + password;
-            this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                    .writeString(token)
-                    .send();
+        } else {
+            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
+            psql.setString(1, login);
+            ResultSet rs = psql.executeQuery();
+
+            if (!rs.next()) {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_LOGIN_NOT_FOUND)
+                        .send();
+            } else {
+                if (!password.equals(rs.getString("password"))) {
+                    this.getWriter().writeDiscriminant(Protocol.ERROR_WRONG_PASSWORD)
+                            .send();
+                } else {
+                    String token = DatasManager.updateToken(rs.getInt("id"));
+                    
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
+                    this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
+                            .writeString(token)
+                            .send();
+                }
+            }
         }
     }
-    private void readLogout() throws IOException{
-        this.getReader().readString();
+
+    private void readLogout() throws IOException {
+        String token = this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
     }
@@ -122,12 +148,14 @@ public class NetworkLocalTestServer extends Network{
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
+
     private void readUpdateCharacter() throws IOException {
         this.getReader().readString();
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
+
     private void readDeleteCharacter() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
@@ -138,9 +166,9 @@ public class NetworkLocalTestServer extends Network{
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
                 .writeLongInt(1)
                 .writeString("Hache")
-                .writeShortInt((short)2)
-                .writeShortInt((short)5)
-                .writeShortInt((short)7)
+                .writeShortInt((short) 2)
+                .writeShortInt((short) 5)
+                .writeShortInt((short) 7)
                 .writeLongInt(2)
                 .send();
     }
@@ -149,10 +177,10 @@ public class NetworkLocalTestServer extends Network{
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(1)
                 .writeString("Rauks")
-                .writeShortInt((short)15)
-                .writeShortInt((short)17)
-                .writeShortInt((short)6)
-                .writeShortInt((short)12)
+                .writeShortInt((short) 15)
+                .writeShortInt((short) 17)
+                .writeShortInt((short) 6)
+                .writeShortInt((short) 12)
                 .writeLongInt(1)
                 .writeLongIntArray(new int[]{1, 1})
                 .send();
@@ -164,6 +192,7 @@ public class NetworkLocalTestServer extends Network{
                 .writeLongInt(1)
                 .send();
     }
+
     private void readGetMyCharacterId() throws IOException {
         this.getReader().readString();
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)

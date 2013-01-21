@@ -4,12 +4,14 @@
  */
 package brutes;
 
+import brutes.db.DatasManager;
 import brutes.net.Protocol;
 import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -23,6 +25,10 @@ public class Brutes extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        
+        Connection instance = DatasManager.getInstance("sqlite", "bdd.db");
+        System.out.println(instance);
+        
         new Thread(){
             @Override
             public void run(){
@@ -32,7 +38,11 @@ public class Brutes extends Application {
                     while(true){
                         Socket sockcli = sockserv.accept();
                         NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
-                        n.read();
+                        try {
+                            n.read();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
