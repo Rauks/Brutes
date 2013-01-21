@@ -55,8 +55,8 @@ public class DeleteCharacterController implements Initializable {
     }
     
     private void closeStage(Event e){
-        Node  source = (Node) e.getSource(); 
-        Stage stage  = (Stage) source.getScene().getWindow();
+        Node source = (Node) e.getSource(); 
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
     /**

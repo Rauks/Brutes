@@ -13,6 +13,8 @@ import brutes.net.client.NetworkClient;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -32,6 +35,8 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class FightController implements Initializable {
+    private ArrayList<Stage> openedStages;
+    
     @FXML
     private Text myName;
     @FXML
@@ -138,6 +143,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Nouveau personnage");
             window.setResizable(false);
+            this.openedStages.add(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,6 +158,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Modifier son personnage");
             window.setResizable(false);
+            this.openedStages.add(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -166,6 +173,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Supprimer son personnage");
             window.setResizable(false);
+            this.openedStages.add(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -173,16 +181,24 @@ public class FightController implements Initializable {
     }
     @FXML
     private void handleMenuDisconnect(ActionEvent e){
-        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-            try {
-                connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
-            } catch (InvalidResponseException | ErrorResponseException ex) {
-                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+        new Thread(){
+            @Override
+            public void run() {
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    try {
+                        connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
+                    } catch (InvalidResponseException | ErrorResponseException ex) {
+                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }.start();
+        for(Iterator<Stage> it = this.openedStages.iterator(); it.hasNext();){
+            it.next().close();
         }
-        ScenesContext.getInstance().setSession(null);
+        this.openedStages.clear();
         ScenesContext.getInstance().showLogin();
     }
     
@@ -191,6 +207,8 @@ public class FightController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.openedStages = new ArrayList<>();
+        
         ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
         ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
         
