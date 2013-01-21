@@ -78,8 +78,7 @@ public class LoginController implements Initializable {
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
         this.logError.textProperty().bind(loginTask.statusMessageProperty());
-        
-        new Thread(loginTask).start();
+
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
@@ -103,6 +102,7 @@ public class LoginController implements Initializable {
                 loading.setVisible(false);
             }
         });
+        new Thread(loginTask).start();
     }
    
     /**
