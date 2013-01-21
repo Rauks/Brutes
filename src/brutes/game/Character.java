@@ -4,6 +4,9 @@
  */
 package brutes.game;
 
+import brutes.db.DatasManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +25,10 @@ public class Character {
     private int imageID;
     private Bonus[] bonuses;
 
+    public Character(ResultSet r) throws Exception {
+        this(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("life"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
+    }
+    
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
@@ -32,6 +39,7 @@ public class Character {
         this.imageID = imageID;
         this.bonuses = new Bonus[Character.MAX_BONUSES];
     }
+    
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
         this(id, name, level, life, strength, speed, imageID);
         this.bonuses = bonuses;

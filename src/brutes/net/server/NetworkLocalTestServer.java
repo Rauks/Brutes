@@ -6,12 +6,15 @@ package brutes.net.server;
 
 import brutes.Brutes;
 import brutes.db.DatasManager;
+import brutes.game.Fight;
+import brutes.game.User;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -198,17 +201,31 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerCharacterId() throws IOException {
-        this.getReader().readString();
+    private void readGetChallengerCharacterId() throws Exception {
+        String rToken = this.getReader().readString();
+        
+        User user = DatasManager.findUserByToken(rToken);
+        Fight fight = DatasManager.findFightByUser(user);
+        
+        if( fight == null ) {
+            //fight = new Fight();
+            //fight.setCharacter1(null);
+        }
+        System.out.print("Combats : ");
+        System.out.println(fight);
+        
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
                 .writeLongInt(1)
                 .send();
     }
 
-    private void readGetMyCharacterId() throws IOException {
-        this.getReader().readString();
+    private void readGetMyCharacterId() throws Exception {
+        String rToken = this.getReader().readString();
+        
+        User user = DatasManager.findUserByToken(rToken);
+        
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
-                .writeLongInt(2)
+                .writeLongInt(user.getId())
                 .send();
     }
 }
