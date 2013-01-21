@@ -6,18 +6,24 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.LoginController">
   <children>
+    <ImageView fitHeight="350.0" fitWidth="600.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+        <Image url="@Background.jpg" preserveRatio="false" smooth="false" />
+      </image>
+    </ImageView>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
       <children>
         <VBox>
           <children>
             <Label text="Identifiant">
               <labelFor>
-                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" />
+                <TextField fx:id="login" />
               </labelFor>
             </Label>
             <fx:reference source="login" />
@@ -27,7 +33,7 @@
           <children>
             <Label text="Mot de passe">
               <labelFor>
-                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" />
+                <PasswordField fx:id="password" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
@@ -37,7 +43,7 @@
           <children>
             <Label text="Serveur">
               <labelFor>
-                <TextField id="login" fx:id="server" onKeyPressed="#handleKeyPressed" text="localhost" />
+                <TextField id="login" fx:id="server" text="localhost" />
               </labelFor>
             </Label>
             <fx:reference source="server" />
@@ -53,7 +59,7 @@
                     <Insets />
                   </StackPane.margin>
                 </Text>
-                <Button fx:id="connexion" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
+                <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
               </children>
             </StackPane>
           </children>
