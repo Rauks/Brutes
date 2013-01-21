@@ -15,12 +15,15 @@ import java.util.logging.Logger;
  * @author Karl
  */
 public class Network implements Closeable{
+    private static final int CONNECTION_TIMEOUT = 10000;
+    
     private Socket connection;
     private NetworkReader reader;
     private NetworkWriter writer;
     
     public Network(Socket connection) throws IOException{
         this.connection = connection;
+        this.connection.setSoTimeout(Network.CONNECTION_TIMEOUT);
         this.reader = new NetworkReader(this.connection.getInputStream());
         this.writer = new NetworkWriter(this.connection.getOutputStream());
     }

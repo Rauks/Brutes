@@ -8,6 +8,8 @@ import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +20,14 @@ public class NetworkLocalTestServer extends Network{
         super(connection);
     }
     
-    public void read() throws IOException{
+    public synchronized void read() throws IOException{
+        
+        try { //server delay for tests
+            wait(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         switch(disc){
