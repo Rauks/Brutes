@@ -39,7 +39,7 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class FightController implements Initializable {
-    private Stage dialogStage;
+    private Stage currentDialogStage;
     
     @FXML
     private Text myName;
@@ -145,8 +145,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Nouvelle brute");
             window.setResizable(false);
-            this.dialogStage.close();
-            this.dialogStage = window;
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,8 +160,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Modifier la brute");
             window.setResizable(false);
-            this.dialogStage.close();
-            this.dialogStage = window;
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,8 +175,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Supprimer la brute");
             window.setResizable(false);
-            this.dialogStage.close();
-            this.dialogStage = window;
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,8 +197,18 @@ public class FightController implements Initializable {
                 }
             }
         }.start();
-        this.dialogStage.close();
+        this.closeCurrentDialogStage();
         ScenesContext.getInstance().showLogin();
+    }
+    
+    private void setCurrentDialogStage(Stage stage){
+        this.closeCurrentDialogStage();
+        this.currentDialogStage = stage;
+    }
+    private void closeCurrentDialogStage(){
+        if(this.currentDialogStage != null){
+            this.currentDialogStage.close();
+        }
     }
     
     /**
