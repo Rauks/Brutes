@@ -4,6 +4,8 @@
  */
 package brutes.game;
 
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -22,8 +24,11 @@ public class ObservableCharacter {
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper imageID;
     private ObservableBonus[] bonuses;
+    private ReadOnlyBooleanWrapper isLoaded;
     
     public ObservableCharacter(){
+        this.isLoaded = new ReadOnlyBooleanWrapper();
+        this.isLoaded.set(false);
         this.id = new ReadOnlyIntegerWrapper();
         this.name = new ReadOnlyStringWrapper();
         this.level = new ReadOnlyIntegerWrapper();
@@ -38,6 +43,7 @@ public class ObservableCharacter {
     }
     
     public void loadCharacter(Character c){
+        this.isLoaded.set(true);
         this.id.set(c.getId());
         this.name.set(c.getName());
         this.level.set(c.getLevel());
@@ -54,6 +60,9 @@ public class ObservableCharacter {
                 this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
             }
         }
+    }
+    public ReadOnlyBooleanProperty isLoaded(){
+        return this.isLoaded;
     }
 
     public ObservableBonus getBonus(int id){
