@@ -12,6 +12,11 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.FightController">
   <children>
+    <ImageView fitHeight="350.0" fitWidth="600.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+        <Image url="@Background.jpg" preserveRatio="false" smooth="false" />
+      </image>
+    </ImageView>
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
         <VBox minWidth="-Infinity" prefWidth="300.0">
@@ -157,17 +162,17 @@
           <menus>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" fx:id="menuFightLoose" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" fx:id="menuFightRandom" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterNew" text="Nouvelle Brute" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer Brute" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer Brute" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer la Brute" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer la Brute" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>

@@ -37,7 +37,14 @@ public class NetworkLocalTestServer extends Network {
         return rToken;
     }
 
-    public void read() throws IOException, Exception {
+    public synchronized void read() throws Exception{
+        
+        try { //server delay for tests
+            wait(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         switch (disc) {
