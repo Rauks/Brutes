@@ -52,26 +52,26 @@ public class ObservableBonus {
         this.speed.set(0);
         this.imageID.set(0);
     }
-    public ReadOnlyBooleanProperty isLoaded(){
-        return this.isLoaded;
+    public ReadOnlyBooleanProperty isLoadedProperty(){
+        return this.isLoaded.getReadOnlyProperty();
     }
 
-    public ReadOnlyIntegerProperty getId() {
-        return this.id;
+    public ReadOnlyIntegerProperty getIdProperty() {
+        return this.id.getReadOnlyProperty();
     }
-    public ReadOnlyStringProperty getName() {
-        return this.name;
+    public ReadOnlyStringProperty getNameProperty() {
+        return this.name.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getLevel() {
-        return this.level;
+    public ReadOnlyIntegerProperty getLevelProperty() {
+        return this.level.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getStrength() {
-        return this.strength;
+    public ReadOnlyIntegerProperty getStrengthProperty() {
+        return this.strength.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getSpeed() {
-        return this.speed;
+    public ReadOnlyIntegerProperty getSpeedProperty() {
+        return this.speed.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getImageID() {
-        return this.imageID;
+    public ReadOnlyIntegerProperty getImageIDProperty() {
+        return this.imageID.getReadOnlyProperty();
     }
 }

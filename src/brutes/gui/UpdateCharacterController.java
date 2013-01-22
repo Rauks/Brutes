@@ -67,6 +67,6 @@ public class UpdateCharacterController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.characterName.setText(ScenesContext.getInstance().getSession().getMyCharacter().getName().getValue());
+        this.characterName.setText(ScenesContext.getInstance().getSession().getMyCharacter().getNameProperty().getValue());
     }    
 }
