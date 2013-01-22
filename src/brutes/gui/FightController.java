@@ -10,6 +10,7 @@ import brutes.net.Protocol;
 import brutes.net.client.ErrorResponseException;
 import brutes.net.client.InvalidResponseException;
 import brutes.net.client.NetworkClient;
+import brutes.user.Session;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -97,6 +98,12 @@ public class FightController implements Initializable {
     private MenuItem menuFightRandom;
     @FXML
     private MenuItem menuFightRegular;
+    @FXML
+    private MenuItem menuOptCreate;
+    @FXML
+    private MenuItem menuOptRename;
+    @FXML
+    private MenuItem menuOptDelete;
     
     private void doFight(FightTask.FightType type){
         menuFightWin.setDisable(true);
@@ -215,7 +222,7 @@ public class FightController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
+    public void initialize(URL url, ResourceBundle rb) {
         ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
         ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
         
@@ -236,6 +243,10 @@ public class FightController implements Initializable {
         this.chBonus1.textProperty().bind(ch.getBonus(0).getName());
         this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
+        
+        this.menuOptCreate.disableProperty().bind(me.isLoaded());
+        this.menuOptRename.disableProperty().bind(me.isLoaded().not());
+        this.menuOptDelete.disableProperty().bind(me.isLoaded().not());
         
         ScenesContext.getInstance().getSession().netLoadMyCharacter();
         ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
