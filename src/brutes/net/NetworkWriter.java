@@ -124,7 +124,7 @@ public class NetworkWriter {
         Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Message sending...");
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
-            int messageSize = baos.size() + Protocol.SIZE_LONGINT;
+            int messageSize = baos.size();
             message.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(messageSize).array());
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();
