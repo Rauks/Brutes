@@ -39,7 +39,7 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class FightController implements Initializable {
-    private ArrayList<Stage> openedStages;
+    private Stage dialogStage;
     
     @FXML
     private Text myName;
@@ -145,7 +145,8 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Nouvelle brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.dialogStage.close();
+            this.dialogStage = window;
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +161,8 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Modifier la brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.dialogStage.close();
+            this.dialogStage = window;
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,7 +177,8 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Supprimer la brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.dialogStage.close();
+            this.dialogStage = window;
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -197,10 +200,7 @@ public class FightController implements Initializable {
                 }
             }
         }.start();
-        for(Iterator<Stage> it = this.openedStages.iterator(); it.hasNext();){
-            it.next().close();
-        }
-        this.openedStages.clear();
+        this.dialogStage.close();
         ScenesContext.getInstance().showLogin();
     }
     
@@ -208,9 +208,7 @@ public class FightController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        this.openedStages = new ArrayList<>();
-        
+    public void initialize(URL url, ResourceBundle rb) {        
         ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
         ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
         
