@@ -143,9 +143,10 @@ public class NetworkLocalTestServer extends Network{
                 .send();
     }
 
-    private void readDataBonus() {
+    private void readDataBonus() throws IOException {
+        int id = this.getReader().readLongInt();
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
-                .writeLongInt(1)
+                .writeLongInt(id)
                 .writeString("Hache")
                 .writeShortInt((short)2)
                 .writeShortInt((short)5)
@@ -154,9 +155,10 @@ public class NetworkLocalTestServer extends Network{
                 .send();
     }
 
-    private void readDataCharacter() {
+    private void readDataCharacter() throws IOException {
+        int id = this.getReader().readLongInt();
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
-                .writeLongInt(1)
+                .writeLongInt(id)
                 .writeString("Rauks")
                 .writeShortInt((short)15)
                 .writeShortInt((short)17)
