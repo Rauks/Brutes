@@ -48,7 +48,10 @@ public class DeleteCharacterController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                ScenesContext.getInstance().getSession().getMyCharacter().unload();
+                ScenesContext.getInstance().getSession().getChallengerCharacter().unload();
                 ScenesContext.getInstance().getSession().netLoadMyCharacter();
+                ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
             }
         }.start();
         this.closeStage(e);
