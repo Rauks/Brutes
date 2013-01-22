@@ -29,13 +29,13 @@ public class ObservableCharacter {
     public ObservableCharacter(){
         this.isLoaded = new ReadOnlyBooleanWrapper();
         this.isLoaded.set(false);
-        this.id = new ReadOnlyIntegerWrapper();
-        this.name = new ReadOnlyStringWrapper();
-        this.level = new ReadOnlyIntegerWrapper();
-        this.life = new ReadOnlyIntegerWrapper();
-        this.strength = new ReadOnlyIntegerWrapper();
-        this.speed = new ReadOnlyIntegerWrapper();
-        this.imageID = new ReadOnlyIntegerWrapper();
+        this.id = new ReadOnlyIntegerWrapper(0);
+        this.name = new ReadOnlyStringWrapper(null);
+        this.level = new ReadOnlyIntegerWrapper(0);
+        this.life = new ReadOnlyIntegerWrapper(0);
+        this.strength = new ReadOnlyIntegerWrapper(0);
+        this.speed = new ReadOnlyIntegerWrapper(0);
+        this.imageID = new ReadOnlyIntegerWrapper(0);
         this.bonuses = new ObservableBonus[Character.MAX_BONUSES];
         for(int i = 0; i < Character.MAX_BONUSES; i++){
             this.bonuses[i] = new ObservableBonus();
@@ -59,6 +59,19 @@ public class ObservableCharacter {
             else{
                 this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
             }
+        }
+    }
+    public void unload() {
+        this.isLoaded.set(false);
+        this.id.set(0);
+        this.name.set(null);
+        this.level.set(0);
+        this.life.set(0);
+        this.strength.set(0);
+        this.speed.set(0);
+        this.imageID.set(0);
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
         }
     }
     public ReadOnlyBooleanProperty isLoaded(){

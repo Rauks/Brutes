@@ -4,6 +4,8 @@
  */
 package brutes.game;
 
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -20,14 +22,17 @@ public class ObservableBonus {
     private ReadOnlyIntegerWrapper strength;
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper imageID;
+    private ReadOnlyBooleanWrapper isLoaded;
     
     public ObservableBonus(){
-        this.id = new ReadOnlyIntegerWrapper();
-        this.name = new ReadOnlyStringWrapper();
-        this.level = new ReadOnlyIntegerWrapper();
-        this.strength = new ReadOnlyIntegerWrapper();
-        this.speed = new ReadOnlyIntegerWrapper();
-        this.imageID = new ReadOnlyIntegerWrapper();
+        this.isLoaded = new ReadOnlyBooleanWrapper();
+        this.isLoaded.set(false);
+        this.id = new ReadOnlyIntegerWrapper(0);
+        this.name = new ReadOnlyStringWrapper(null);
+        this.level = new ReadOnlyIntegerWrapper(0);
+        this.strength = new ReadOnlyIntegerWrapper(0);
+        this.speed = new ReadOnlyIntegerWrapper(0);
+        this.imageID = new ReadOnlyIntegerWrapper(0);
     }
     
     public void loadBonus(Bonus b){
@@ -37,6 +42,18 @@ public class ObservableBonus {
         this.strength.set(b.getStrength());
         this.speed.set(b.getSpeed());
         this.imageID.set(b.getImage());
+    }
+    public void unload(){
+        this.isLoaded.set(false);
+        this.id.set(0);
+        this.name.set(null);
+        this.level.set(0);
+        this.strength.set(0);
+        this.speed.set(0);
+        this.imageID.set(0);
+    }
+    public ReadOnlyBooleanProperty isLoaded(){
+        return this.isLoaded;
     }
 
     public ReadOnlyIntegerProperty getId() {
