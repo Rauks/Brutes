@@ -40,11 +40,14 @@ public class DatasManager {
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER)");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Yéti', 2, 62, 5, 5)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Rauks', 1, 50, 3, 8)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Rauks', 1, 50, 3, 8)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1', 1, 10, 2, 4)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Bot_2', 10, 250, 23, 18)");
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, life INTEGER, level INTEGER, strength INTEGER, speed INTEGER)");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, life, strength, speed) VALUES (1, 'Hache', 1, 5, 10, 15)");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, life, strength, speed) VALUES (2, 'Robe de lin', 1, 15, 1, 10)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, life, strength, speed) VALUES (3, 'Anneau de la forge', 10, 150, 50, 0)");
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER)");
         } catch (SQLException e) {
