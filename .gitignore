@@ -1,4 +1,5 @@
 *.class
+*.db
 
 # Netbeans #
 nbproject/private/

@@ -4,20 +4,38 @@
  */
 package brutes.game;
 
+import brutes.db.Entity;
+import brutes.db.SQL;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Karl
  */
-public class Bonus {
+public class Bonus extends Entity {
     public static final Bonus EMPTY_BONUS = new Bonus();
 
+    @SQL(name="id", type="int")
     private int id;
+    
+    @SQL(name="name", type="varchar")
     private String name;
+    
+    @SQL(name="level", type="int")
     private short level;
+    
+    @SQL(name="strength", type="int")
     private short strength;
+    
+    @SQL(name="speed", type="int")
     private short speed;
+    
     private int imageID;
 
+    public Bonus(ResultSet r) throws Exception {
+        this(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
+    }
+    
     private Bonus(){
         this.id = 0;
         this.name = null;
@@ -36,6 +54,7 @@ public class Bonus {
         this.imageID = imageID;
     }
 
+    @Override
     public int getId() {
         return id;
     }

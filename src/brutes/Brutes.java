@@ -4,10 +4,17 @@
  */
 package brutes;
 
+import brutes.db.DatasManager;
+import brutes.game.User;
+import brutes.net.Protocol;
+import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -23,6 +30,13 @@ import javafx.stage.Stage;
 public class Brutes extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        
+        // DEBUG
+        (new File("~$bdd.db")).delete();
+        
+        Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
+        System.out.println(instance);
+                
         stage.setResizable(false);
         stage.setTitle("Les brutes (TP Réseaux 2012/2013 - Karl Woditsch)");
         stage.setOnCloseRequest(new EventHandler(){
@@ -38,19 +52,16 @@ public class Brutes extends Application {
                 try {
                     ServerSocket sockserv = new ServerSocket (42666);
                     System.out.println("Server up");
-                    while(true){
-                        final Socket sockcli = sockserv.accept();
-                        sockcli.setSoTimeout(1000);
-                        new Thread(){
-                            @Override
-                            public void run(){
-                                try (NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);){
-                                    n.read();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
-                        }.start();
+                    while(!this.isInterrupted()){
+                        try{
+                            Socket sockcli = sockserv.accept();
+                            NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
+                        try {
+                            n.read();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        } catch(SocketTimeoutException ex){ }
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
