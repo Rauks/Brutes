@@ -198,7 +198,6 @@ public class NetworkLocalTestServer extends Network {
         
         brutes.game.Character character = new brutes.game.Character(0, name, level, life, strength, speed, imageID);
         character.setUserId(user.getId());
-        System.out.println("NEW: " + DatasManager.insert(character));
         
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
@@ -246,16 +245,19 @@ public class NetworkLocalTestServer extends Network {
         if (character == null) {
             throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
         }
+        
+        character.setBonuses(BonusEntity.findAllByCharacter(character));
+        System.out.println("BONUS=" + character.getIntBonuses());
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(id)
-                .writeString(character.getName() + " #" + id)
+                .writeString(character.getName())
                 .writeShortInt((short) character.getLevel())
                 .writeShortInt((short) character.getLife())
                 .writeShortInt((short) character.getStrength())
                 .writeShortInt((short) character.getSpeed())
                 .writeLongInt(id) // @TODO : image
-                .writeLongIntArray(new int[]{1, 2}) // @TODO : bonus
+                .writeLongIntArray(character.getIntBonuses()) // @TODO : bonus
                 .send();
     }
 
@@ -289,8 +291,6 @@ public class NetworkLocalTestServer extends Network {
         if(  character == null ) {
             throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
         }
-        
-        System.out.println("CHARACTER:" + character.getName());
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
                 .writeLongInt(character.getId())
