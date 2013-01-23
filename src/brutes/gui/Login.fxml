@@ -28,7 +28,7 @@
             <Label labelFor="$login" text="Identifiant" />
           </left>
           <right>
-            <Text id="lo" fx:id="loginError" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" textAlignment="RIGHT" visible="false">
+            <Text id="lo" fx:id="loginError" strokeType="OUTSIDE" strokeWidth="0.0" text="Login invalide" textAlignment="RIGHT" visible="false">
               <fill>
                 <Color blue="0.000" green="0.000" red="0.800" fx:id="x1" />
               </fill>
@@ -43,7 +43,7 @@
             <Label labelFor="$password" text="Mot de passe" />
           </left>
           <right>
-            <Text fx:id="passwordError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" visible="false" />
+            <Text fx:id="passwordError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Password invalide" visible="false" />
           </right>
         </BorderPane>
         <BorderPane>
@@ -54,7 +54,7 @@
             <Label labelFor="$server" text="Serveur" />
           </left>
           <right>
-            <Text fx:id="serverError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" visible="false" />
+            <Text fx:id="serverError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Serveur invalide" visible="false" />
           </right>
         </BorderPane>
         <HBox alignment="TOP_CENTER">

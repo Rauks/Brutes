@@ -81,8 +81,8 @@ public class LoginController implements Initializable {
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
         this.loginError.visibleProperty().bind(loginTask.getLoginErrorProperty());
-        this.passwordError.visibleProperty().bind(loginTask.getLoginErrorProperty());
-        this.serverError.visibleProperty().bind(loginTask.getLoginErrorProperty());
+        this.passwordError.visibleProperty().bind(loginTask.getPasswordErrorProperty());
+        this.serverError.visibleProperty().bind(loginTask.getPasswordErrorProperty());
 
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
