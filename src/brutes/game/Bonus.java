@@ -4,8 +4,6 @@
  */
 package brutes.game;
 
-import brutes.game.media.BonusImage;
-
 /**
  *
  * @author Karl

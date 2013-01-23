@@ -4,8 +4,6 @@
  */
 package brutes.game;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Karl

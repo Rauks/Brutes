@@ -4,13 +4,10 @@
  */
 package brutes;
 
-import brutes.net.Protocol;
-import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -45,8 +42,8 @@ public class Brutes extends Application {
                     ServerSocket sockserv = new ServerSocket (42666);
                     System.out.println("Server up");
                     while(true){
-                    final Socket sockcli = sockserv.accept();
-                    sockcli.setSoTimeout(1000);
+                        final Socket sockcli = sockserv.accept();
+                        sockcli.setSoTimeout(1000);
                         new Thread(){
                             @Override
                             public void run(){
