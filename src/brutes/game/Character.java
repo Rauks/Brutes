@@ -23,6 +23,9 @@ public class Character implements Identifiable {
     private int imageID;
     
     private Bonus[] bonuses;
+    
+    /* more */
+    private int userid;
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
@@ -111,4 +114,13 @@ public class Character implements Identifiable {
     public void setBonuses(Bonus[] bonuses) {
         this.bonuses = bonuses;
     }
+
+    public int getUserId() {
+        return userid;
+    }
+
+    public void setUserId(int userid) {
+        this.userid = userid;
+    }
+    
 }
