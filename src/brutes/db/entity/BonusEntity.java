@@ -1,5 +1,6 @@
 package brutes.db.entity;
 
+import brutes.db.DatasManager;
 import brutes.db.Entity;
 import brutes.game.Bonus;
 import java.io.IOException;
@@ -26,5 +27,15 @@ public class BonusEntity implements Entity {
         psql.setInt(4, bonus.getSpeed());
         psql.setInt(5, bonus.getId());
         return psql.executeUpdate();
+    }
+    
+    public static Bonus findById(int id) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE id = ?");
+        psql.setInt(1, id);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return BonusEntity.create(rs);
+        }
+        return null;
     }
 }

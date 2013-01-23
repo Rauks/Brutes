@@ -6,6 +6,7 @@ package brutes.net.server;
 
 import brutes.Brutes;
 import brutes.db.DatasManager;
+import brutes.db.entity.BonusEntity;
 import brutes.db.entity.CharacterEntity;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
@@ -212,7 +213,7 @@ public class NetworkLocalTestServer extends Network {
     private void readDataBonus() throws IOException, SQLException, NetworkResponseException {
         int id = this.getReader().readLongInt();
 
-        Bonus bonus = DatasManager.findBonusById(id);
+        Bonus bonus = BonusEntity.findById(id);
 
         if (bonus == null) {
             throw new NetworkResponseException(Protocol.ERROR_BONUS_NOT_FOUND);

@@ -99,16 +99,6 @@ public class DatasManager {
         return null;
     }
 
-    public static Bonus findBonusById(int id) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM bonus WHERE id = ?");
-        psql.setInt(1, id);
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return BonusEntity.create(rs);
-        }
-        return null;
-    }
-
     public static String updateToken(int id) throws IOException, SQLException {
         String token = UUID.randomUUID().toString();
 
