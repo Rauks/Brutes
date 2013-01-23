@@ -63,8 +63,12 @@ public class Character implements Identifiable {
     public short getLife() {
         return this.life;
     }
-
+    
     public short getStrength() {
+        return this.strength;
+    }
+
+    public short getStrengthWithBonus() {
         short sum = this.strength;
         for (int i = 0; i < this.bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
@@ -75,6 +79,10 @@ public class Character implements Identifiable {
     }
 
     public short getSpeed() {
+        return this.speed;
+    }
+
+    public short getSpeedWithBonus() {
         short sum = this.speed;
         for (int i = 0; i < bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
