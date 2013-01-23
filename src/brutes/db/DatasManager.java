@@ -4,6 +4,7 @@
  */
 package brutes.db;
 
+import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.game.Character;
@@ -119,6 +120,16 @@ public class DatasManager {
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
             return new Fight(rs);
+        }
+        return null;
+    }
+    
+    public static Bonus findBonusById(int id) throws Exception {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM bonus WHERE id = ?");
+        psql.setInt(1, id);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return new Bonus(rs);
         }
         return null;
     }
