@@ -16,6 +16,7 @@ import brutes.game.User;
 import brutes.net.Network;
 import brutes.net.NetworkReader;
 import brutes.net.Protocol;
+import brutes.ui;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
@@ -186,7 +187,19 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCreateCharacter(String token, String name) throws IOException {
+    private void readCreateCharacter(String token, String name) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
+        
+        short level = 1;
+        short strength = (short) ui.random(3, 10);
+        short speed    = (short) ui.random(3, 10);
+        short life     = (short) (ui.random(10, 20) + strength/3);
+        int imageID = ui.random(1, 3);
+        
+        brutes.game.Character character = new brutes.game.Character(0, name, level, life, strength, speed, imageID);
+        character.setUserId(user.getId());
+        System.out.println("NEW: " + DatasManager.insert(character));
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
@@ -201,7 +214,11 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDeleteCharacter(String token) throws IOException {
+    private void readDeleteCharacter(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
+        brutes.game.Character character = CharacterEntity.findByUser(user);
+        DatasManager.delete(character);
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
@@ -265,9 +282,15 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyCharacterId(String token) throws IOException, SQLException {
+    private void readGetMyCharacterId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
+        
+        if(  character == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+        }
+        
+        System.out.println("CHARACTER:" + character.getName());
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
                 .writeLongInt(character.getId())
