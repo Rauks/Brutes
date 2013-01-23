@@ -33,14 +33,14 @@ abstract public class Entity {
 
         return fields;
     }
-    
+
     abstract public int getId();
 
     public void save() throws Exception {
         Class current = this.getClass().asSubclass(Entity.class);
-        
+
         Logger.getLogger(Entity.class.getName()).log(Level.INFO, "{0}::save()", current.getName());
-        
+
         ArrayList<Field> fields = this.getAnnotedFields(current);
         int nbFields = fields.size();
 
@@ -73,8 +73,13 @@ abstract public class Entity {
 
             switch (info.type()) {
                 case "int":
-                    prepare.setInt(f++, field.getInt(this));
-                    System.out.println("int: " + (field.getInt(this)));
+                    if (field.get(this) instanceof Entity) {
+                        prepare.setInt(f++, ((Entity) field.get(this)).getId());
+                        System.out.println("int#id: " + ((Entity) field.get(this)).getId());
+                    } else {
+                        prepare.setInt(f++, field.getInt(this));
+                        System.out.println("int: " + (field.getInt(this)));
+                    }
                     break;
                 case "varchar":
                 case "text":
@@ -86,7 +91,7 @@ abstract public class Entity {
             }
         }
 
-        
+
         prepare.setInt(f++, this.getId());
         //System.out.println("int: " + (idField.getInt(this)));
         prepare.executeUpdate(); // TODO Bug return int ?

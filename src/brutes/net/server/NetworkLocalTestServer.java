@@ -40,14 +40,7 @@ public class NetworkLocalTestServer extends Network {
         return rToken;
     }
 
-    public synchronized void read() throws Exception {
-
-        try { //server delay for tests
-            wait(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    public void read() throws Exception {
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         try {
@@ -104,11 +97,9 @@ public class NetworkLocalTestServer extends Network {
 
         User user = DatasManager.findUserByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
-
-        PreparedStatement psql = DatasManager.prepare("UPDATE fights SET winner_id = ? WHERE id = ?");
-        psql.setInt(1, fight.getCharacter1().getId());
-        psql.setInt(1, fight.getId());
-        psql.executeUpdate();
+        
+        fight.setWinner(fight.getCharacter1());
+        fight.save();
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
@@ -121,10 +112,8 @@ public class NetworkLocalTestServer extends Network {
         User user = DatasManager.findUserByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
 
-        PreparedStatement psql = DatasManager.prepare("UPDATE fights SET winner_id = ? WHERE id = ?");
-        psql.setInt(1, fight.getCharacter2().getId());
-        psql.setInt(1, fight.getId());
-        psql.executeUpdate();
+        fight.setWinner(fight.getCharacter2());
+        fight.save();
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(false)
@@ -205,12 +194,9 @@ public class NetworkLocalTestServer extends Network {
 
         User user = DatasManager.findUserByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
-
-        PreparedStatement psql = DatasManager.prepare("UPDATE brutes SET name = ? WHERE id = ?");
-        psql.setString(1, name);
-        psql.setInt(2, character.getId());
-        psql.executeUpdate();
-
+        character.setName(name);
+        character.save();
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
