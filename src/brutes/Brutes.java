@@ -28,50 +28,25 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class Brutes extends Application {
+    private static ServerThread SERVER = new ServerThread();
+    
+    public static void exit(){
+        Brutes.SERVER.interrupt();
+        Platform.exit();
+    }
+        
     @Override
     public void start(Stage stage) throws Exception {
-        
-        // DEBUG
-        (new File("~$bdd.db")).delete();
-        
-        Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
-                
-        stage.setResizable(false);
         stage.setTitle("Les brutes (TP Réseaux 2012/2013 - Karl Woditsch)");
+        stage.setResizable(false);
         stage.setOnCloseRequest(new EventHandler(){
             @Override
             public void handle(Event t) {
-                Platform.exit();
+                Brutes.exit();
             }
         });
-        
-        new Thread(){
-            @Override
-            public void run(){
-                try {
-                    ServerSocket sockserv = new ServerSocket (42666);
-                    System.out.println("Server up");
-                    while(true){
-                        try{
-                            final Socket sockcli = sockserv.accept();
-                            sockcli.setSoTimeout(1000);
-                            new Thread(){
-                                @Override
-                                public void run(){
-                            try(NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)){
-                                n.read();
-                            } catch (Exception ex) {
-                                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                                }
-                            }.start();
-                        } catch(SocketTimeoutException ex){ }
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }.start();
+
+        Brutes.SERVER.start();
         
         ScenesContext.getInstance().setStage(stage);
         ScenesContext.getInstance().showLogin();

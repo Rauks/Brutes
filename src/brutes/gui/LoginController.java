@@ -65,7 +65,7 @@ public class LoginController implements Initializable {
     
     @FXML
     private void handleCloseAction(ActionEvent e){
-        Platform.exit();
+        Brutes.exit();
     }
     
     private synchronized void login(){
