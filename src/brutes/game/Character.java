@@ -38,15 +38,14 @@ public class Character {
         this.speed = speed;
         this.imageID = imageID;
         this.bonuses = new Bonus[Character.MAX_BONUSES];
+        for (int i = 0; i < this.bonuses.length; i++) {
+            this.bonuses[i] = Bonus.EMPTY_BONUS;
+        }
     }
     
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
         this(id, name, level, life, strength, speed, imageID);
-        this.bonuses = bonuses;
-    }
-    
-    public void addBonus(Bonus b){
-        this.bonuses[this.bonuses.length] = b;
+        System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Character.MAX_BONUSES) ? bonuses.length : Character.MAX_BONUSES);
     }
 
     public int getId() {
@@ -63,17 +62,19 @@ public class Character {
     }
     public short getStrength() {
         short sum = this.strength;
-        for (int i = 0; i < bonuses.length; i++) {
-            sum += bonuses[i].getStrength();
-            
+        for (int i = 0; i < this.bonuses.length; i++) {
+            if(!this.bonuses[i].equals(Bonus.EMPTY_BONUS)){
+                sum += this.bonuses[i].getStrength();
+            }
         }
         return sum;
     }
     public short getSpeed() {
         short sum = this.speed;
         for (int i = 0; i < bonuses.length; i++) {
-            sum += bonuses[i].getSpeed();
-            
+            if(!this.bonuses[i].equals(Bonus.EMPTY_BONUS)){
+                sum += bonuses[i].getSpeed();
+            }
         }
         return sum;
     }

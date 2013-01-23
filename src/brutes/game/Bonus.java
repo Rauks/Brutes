@@ -26,6 +26,12 @@ public class Bonus implements Entity {
     }
     
     private Bonus(){
+        this.id = 0;
+        this.name = null;
+        this.level = 0;
+        this.strength = 0;
+        this.speed = 0;
+        this.imageID = 0;
     }
     
     public Bonus(int id, String name, short level, short strength, short speed, int imageID) {

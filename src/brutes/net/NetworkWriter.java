@@ -65,8 +65,9 @@ public class NetworkWriter {
     public NetworkWriter writeString(String value){
         Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "String  : {0}", value);
         try {
-            this.writeShortInt((short)value.length());
-            this.baos.write(value.getBytes(Charset.forName("UTF-8")));
+            byte[] str = value.getBytes(Charset.forName("UTF-8"));
+            this.writeShortInt((short)str.length);
+            this.baos.write(str);
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
