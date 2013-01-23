@@ -112,6 +112,18 @@ public class FightController implements Initializable {
                     ScenesContext.getInstance().getSession().netLoadMyCharacter();
                     ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
                     isFighting.set(false);
+                    Parent root;
+                    try {
+                        root = FXMLLoader.load(this.getClass().getResource("FightResult.fxml"));
+                        Scene scene = new Scene(root);
+                        Stage window = new Stage();
+                        window.setScene(scene);
+                        window.setTitle("Combat terminé");
+                        window.setResizable(false);
+                        window.showAndWait();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
