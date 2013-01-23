@@ -177,13 +177,7 @@ public class NetworkClient extends Network{
                 Bonus[] bonuses = new Bonus[(bonusesID.length < Character.MAX_BONUSES)?bonusesID.length:Character.MAX_BONUSES];
                 for(int i = 0; i < bonuses.length; i++){
                     try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                        try {
-                            bonuses[i] = connection.getDataBonus(bonusesID[i]);
-                        } catch (InvalidResponseException | ErrorResponseException ex) {
-                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        bonuses[i] = connection.getDataBonus(bonusesID[i]);
                     }
                 }
                 return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonuses);

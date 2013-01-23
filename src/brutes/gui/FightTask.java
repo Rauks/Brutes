@@ -48,6 +48,7 @@ public class FightTask extends Task{
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case CHEAT_LOOSE:
@@ -59,6 +60,7 @@ public class FightTask extends Task{
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case CHEAT_RANDOM:
@@ -70,6 +72,7 @@ public class FightTask extends Task{
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case REGULAR:
@@ -81,6 +84,7 @@ public class FightTask extends Task{
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             default:
