@@ -52,15 +52,20 @@ public class Brutes extends Application {
                 try {
                     ServerSocket sockserv = new ServerSocket (42666);
                     System.out.println("Server up");
-                    while(!this.isInterrupted()){
+                    while(true){
                         try{
-                            Socket sockcli = sockserv.accept();
-                            NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);
-                        try {
-                            n.read();
-                        } catch (Exception ex) {
-                            Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                            final Socket sockcli = sockserv.accept();
+                            sockcli.setSoTimeout(1000);
+                            new Thread(){
+                                @Override
+                                public void run(){
+                            try(NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)){
+                                n.read();
+                            } catch (Exception ex) {
+                                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                                }
+                            }.start();
                         } catch(SocketTimeoutException ex){ }
                     }
                 } catch (IOException ex) {
