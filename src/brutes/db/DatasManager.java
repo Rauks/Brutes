@@ -88,26 +88,6 @@ public class DatasManager {
         return DatasManager.getInstance().createStatement();
     }
 
-    public static User findUserByToken(String token) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM users WHERE token = ?");
-        psql.setString(1, token);
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return UserEntity.create(rs);
-        }
-        return null;
-    }
-
-    public static User findUserById(int id) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM users WHERE id = ?");
-        psql.setInt(1, id);
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return UserEntity.create(rs);
-        }
-        return null;
-    }
-
     public static Character findCharacterById(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE id = ?");
         psql.setInt(1, id);
@@ -152,7 +132,7 @@ public class DatasManager {
     public static String updateToken(int id) throws IOException, SQLException {
         String token = UUID.randomUUID().toString();
 
-        User user = DatasManager.findUserById(id);
+        User user = UserEntity.findById(id);
         user.setToken(token);
         DatasManager.save(user);
         

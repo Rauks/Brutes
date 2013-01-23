@@ -6,6 +6,7 @@ package brutes.net.server;
 
 import brutes.Brutes;
 import brutes.db.DatasManager;
+import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
@@ -95,7 +96,7 @@ public class NetworkLocalTestServer extends Network {
     private void readCheatFightWin() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
-        User user = DatasManager.findUserByToken(rToken);
+        User user = UserEntity.findByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
         
         fight.setWinner(fight.getCharacter1());
@@ -109,7 +110,7 @@ public class NetworkLocalTestServer extends Network {
     private void readCheatFightLoose() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
-        User user = DatasManager.findUserByToken(rToken);
+        User user = UserEntity.findByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
 
         fight.setWinner(fight.getCharacter2());
@@ -157,7 +158,7 @@ public class NetworkLocalTestServer extends Network {
                     //this.token = DatasManager.updateToken(rs.getInt("id"));
                     this.token = UUID.randomUUID().toString();
 
-                    User user = DatasManager.findUserById(rs.getInt("id"));
+                    User user = UserEntity.findById(rs.getInt("id"));
                     user.setToken(this.token);
                     DatasManager.save(user);
 
@@ -192,7 +193,7 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
         String name = this.getReader().readString();
 
-        User user = DatasManager.findUserByToken(rToken);
+        User user = UserEntity.findByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
         character.setName(name);
         DatasManager.save(character);
@@ -250,7 +251,7 @@ public class NetworkLocalTestServer extends Network {
     private void readGetChallengerCharacterId() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
-        User user = DatasManager.findUserByToken(rToken);
+        User user = UserEntity.findByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
         Fight fight = DatasManager.findFightByUser(user);
         if (fight == null) {
@@ -275,7 +276,7 @@ public class NetworkLocalTestServer extends Network {
     private void readGetMyCharacterId() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
-        User user = DatasManager.findUserByToken(rToken);
+        User user = UserEntity.findByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
