@@ -16,6 +16,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.concurrent.Task;
@@ -28,17 +30,24 @@ public class LoginTask extends Task{
     private String login;
     private String password;
     private String host;
-    private ReadOnlyStringWrapper statusMessage;
+    private ReadOnlyBooleanWrapper loginError;
+    private ReadOnlyBooleanWrapper passwordError;
+    private ReadOnlyBooleanWrapper hostError;
 
     public LoginTask(String host, String login, String password) {
-        this.statusMessage = new ReadOnlyStringWrapper();
         this.login = login;
         this.password = password;
         this.host = host;
     }
 
-    public ReadOnlyStringProperty statusMessageProperty() {
-        return this.statusMessage;
+    public ReadOnlyBooleanProperty getLoginErrorProperty(){
+        return this.loginError.getReadOnlyProperty();
+    }
+    public ReadOnlyBooleanProperty getPasswordErrorProperty(){
+        return this.passwordError.getReadOnlyProperty();
+    }
+    public ReadOnlyBooleanProperty getHostErrorProperty(){
+        return this.hostError.getReadOnlyProperty();
     }
     
     @Override
@@ -49,16 +58,16 @@ public class LoginTask extends Task{
                 token = connection.sendLogin(this.login, this.password);
                 ScenesContext.getInstance().setSession(new Session(this.host, token));
             } catch (UnknownHostException ex) {
-                this.statusMessage.set("Serveur invalide");
+                this.hostError.set(true);
                 throw new Exception("Login task failed at server connection");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch(ErrorResponseException ex){
-            this.statusMessage.set(ex.getMessage());
+                this.loginError.set(true);
             throw new Exception("Login task failed at login/password validation");
         } catch(InvalidResponseException ex){
-            this.statusMessage.set(ex.getMessage());
+            this.passwordError.set(true);
             throw new Exception("Login task failed at server response");
         }
         return null;

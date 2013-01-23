@@ -44,11 +44,28 @@ public class LoginController implements Initializable {
     @FXML
     private ProgressIndicator loading;
     @FXML
-    private Text logError;
+    private Text loginError;
+    @FXML
+    private Text passwordError;
+    @FXML
+    private Text serverError;
+    
+    private void setVisibleErrors(boolean visible){
+        this.loginError.setVisible(visible);
+        this.passwordError.setVisible(visible);
+        this.serverError.setVisible(visible);
+    }
+    private void setDisableForm(boolean disable){
+        this.loading.setVisible(disable);
+        this.login.setDisable(disable);
+        this.password.setDisable(disable);
+        this.server.setDisable(disable);
+        this.connexion.setDisable(disable);
+    }
     
     @FXML
     private void handleConnexionAction(ActionEvent e){
-        logError.setVisible(false);
+        this.setVisibleErrors(false);
         this.login();
     }
     
@@ -60,14 +77,12 @@ public class LoginController implements Initializable {
     private synchronized void login(){
         Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Login thread");
         
-        this.loading.setVisible(true);
-        this.login.setDisable(true);
-        this.password.setDisable(true);
-        this.server.setDisable(true);
-        this.connexion.setDisable(true);
+        this.setDisableForm(true);
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
-        this.logError.textProperty().bind(loginTask.statusMessageProperty());
+        this.loginError.visibleProperty().bind(loginTask.getLoginErrorProperty());
+        this.passwordError.visibleProperty().bind(loginTask.getLoginErrorProperty());
+        this.serverError.visibleProperty().bind(loginTask.getLoginErrorProperty());
 
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
@@ -75,22 +90,13 @@ public class LoginController implements Initializable {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
                     ScenesContext.getInstance().showFight();
-                    this.reactiveLogin();
+                    setDisableForm(false);
                 }
                 else if(newState == Worker.State.FAILED){
                     loginTask.cancel();
-                    logError.setVisible(true);
-                    this.reactiveLogin();
+                    setDisableForm(false);
                 }
             }   
-
-            private void reactiveLogin() {
-                login.setDisable(false);
-                password.setDisable(false);
-                server.setDisable(false);
-                connexion.setDisable(false);
-                loading.setVisible(false);
-            }
         });
         new Thread(loginTask).start();
     }
