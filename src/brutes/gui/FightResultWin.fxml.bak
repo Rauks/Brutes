@@ -2,10 +2,29 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.FightResultController">
-    
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.FightResultWinController">
+  <children>
+    <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@BackgroundDialog.jpg" preserveRatio="false" smooth="false" />
+      </image>
+    </ImageView>
+    <VBox alignment="CENTER" prefHeight="90.0" prefWidth="240.0" spacing="20.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0">
+      <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Combat terminé !" />
+        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleContinueAction" prefWidth="80.0" text="Continuer">
+          <VBox.margin>
+            <Insets />
+          </VBox.margin>
+        </Button>
+      </children>
+    </VBox>
+  </children>
 </AnchorPane>
