@@ -98,4 +98,27 @@ public class DatasManager {
             Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static <T> T insert(T obj) throws IOException {
+        try {
+            Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            return (T) classObj.getMethod("insert", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
+            
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static <T> void delete(T obj) throws IOException {
+        try {
+            Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            classObj.getMethod("delete", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
+            
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
