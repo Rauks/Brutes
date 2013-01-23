@@ -4,13 +4,13 @@
  */
 package brutes.game;
 
-import brutes.db.IsIdentifiable;
+import brutes.db.Identifiable;
 
 /**
  *
  * @author Karl
  */
-public class Bonus implements IsIdentifiable {
+public class Bonus implements Identifiable {
     public static final Bonus EMPTY_BONUS = new Bonus();
     
     private int id;

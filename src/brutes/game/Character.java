@@ -4,13 +4,13 @@
  */
 package brutes.game;
 
-import brutes.db.IsIdentifiable;
+import brutes.db.Identifiable;
 
 /**
  *
  * @author Karl
  */
-public class Character implements IsIdentifiable {
+public class Character implements Identifiable {
 
     public static final int MAX_BONUSES = 3;
     

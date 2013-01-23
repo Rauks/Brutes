@@ -4,14 +4,14 @@
  */
 package brutes.game;
 
-import brutes.db.IsIdentifiable;
+import brutes.db.Identifiable;
 import java.util.HashMap;
 
 /**
  *
  * @author Thiktak
  */
-public class User implements IsIdentifiable {
+public class User implements Identifiable {
     
     private int id;
     private String pseudo;

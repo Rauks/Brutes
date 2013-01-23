@@ -4,6 +4,6 @@ package brutes.db;
  *
  * @author Thiktak
  */
-public interface IsIdentifiable {
+public interface Identifiable {
     public int getId();
 }

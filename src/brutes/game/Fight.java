@@ -5,7 +5,7 @@
 package brutes.game;
 
 import brutes.db.DatasManager;
-import brutes.db.IsIdentifiable;
+import brutes.db.Identifiable;
 import brutes.db.SQL;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author Thiktak
  */
-public class Fight implements IsIdentifiable {
+public class Fight implements Identifiable {
 
     private int id;
     private Character character1;
