@@ -34,10 +34,6 @@ public class Character {
         this(id, name, level, life, strength, speed, imageID);
         this.bonuses = bonuses;
     }
-    
-    public void addBonus(Bonus b){
-        this.bonuses[this.bonuses.length] = b;
-    }
 
     public int getId() {
         return this.id;
@@ -55,7 +51,6 @@ public class Character {
         short sum = this.strength;
         for (int i = 0; i < bonuses.length; i++) {
             sum += bonuses[i].getStrength();
-            
         }
         return sum;
     }
@@ -63,7 +58,6 @@ public class Character {
         short sum = this.speed;
         for (int i = 0; i < bonuses.length; i++) {
             sum += bonuses[i].getSpeed();
-            
         }
         return sum;
     }
