@@ -51,7 +51,7 @@ public class NetworkReader {
             short length = this.readShortInt();
             byte[] b = new byte[length];
             this.is.read(b);
-            out =  new String(b, "UTF-8");
+            out = new String(b, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,7 +101,7 @@ public class NetworkReader {
     public String[] readStringArray() throws IOException{
         short nbElements = this.readShortInt();
         byte type = this.readByte();
-        if(type != Protocol.TYPE_BOOLEAN){
+        if(type != Protocol.TYPE_STRING){
             throw new IOException(NetworkException.ARRAY_TYPE);
         }
         String[] array = new String[nbElements];
