@@ -53,12 +53,7 @@ public class ObservableCharacter {
         this.imageID.set(c.getImageID());
         Bonus[] bonus = c.getBonuses();
         for(int i = 0; i < Character.MAX_BONUSES; i++){
-            if(bonus[i] != null){
-                this.bonuses[i].loadBonus(bonus[i]);
-            }
-            else{
-                this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
-            }
+            this.bonuses[i].loadBonus(bonus[i]);
         }
     }
     public void unload() {
