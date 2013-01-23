@@ -115,7 +115,7 @@ public class FightController implements Initializable {
                     isFighting.set(false);
                     try {
                         Parent root;
-                        root = FXMLLoader.load(this.getClass().getResource("FightResult.fxml"));
+                        root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
                         Scene scene = new Scene(root);
                         Stage window = new Stage();
                         window.setScene(scene);

@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class FightResultController implements Initializable {
+public class FightResultWinController implements Initializable {
     @FXML
     private void handleContinueAction(ActionEvent e){
         Node source = (Node) e.getSource(); 

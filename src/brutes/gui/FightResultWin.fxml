@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.FightResultController">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.FightResultWinController">
   <children>
     <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
       <image>
