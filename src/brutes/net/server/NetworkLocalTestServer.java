@@ -20,14 +20,7 @@ public class NetworkLocalTestServer extends Network{
         super(connection);
     }
     
-    public synchronized void read() throws IOException{
-        
-        try { //server delay for tests
-            wait(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    public void read() throws IOException{
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         switch(disc){
