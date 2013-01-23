@@ -4,7 +4,6 @@
  */
 package brutes;
 
-import brutes.net.client.NetworkClient;
 import brutes.user.Session;
 import java.io.IOException;
 import java.util.logging.Level;

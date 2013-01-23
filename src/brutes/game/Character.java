@@ -62,10 +62,20 @@ public class Character {
         return this.life;
     }
     public short getStrength() {
-        return this.strength;
+        short sum = this.strength;
+        for (int i = 0; i < bonuses.length; i++) {
+            sum += bonuses[i].getStrength();
+            
+        }
+        return sum;
     }
     public short getSpeed() {
-        return this.speed;
+        short sum = this.speed;
+        for (int i = 0; i < bonuses.length; i++) {
+            sum += bonuses[i].getSpeed();
+            
+        }
+        return sum;
     }
     public int getImageID() {
         return this.imageID;

@@ -52,6 +52,7 @@ public class CreateCharacterController implements Initializable {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ScenesContext.getInstance().getSession().netLoadMyCharacter();
+                ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
             }
         }.start();
         this.closeStage(e);
