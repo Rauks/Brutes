@@ -20,9 +20,10 @@ import java.sql.SQLException;
  */
 public class CharacterEntity implements Entity {
 
-    public static brutes.game.Character create(ResultSet r) throws SQLException {
+    public static brutes.game.Character create(ResultSet r) throws IOException, SQLException {
         brutes.game.Character character = new brutes.game.Character(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("life"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
         character.setUserId(r.getInt("user_id"));
+        //character.setBonuses(BonusEntity.findAllByCharacter(character));
         return character;
     }
 
