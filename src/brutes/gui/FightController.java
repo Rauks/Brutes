@@ -108,22 +108,26 @@ public class FightController implements Initializable {
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
-                if(newState == Worker.State.SUCCEEDED || newState == Worker.State.FAILED){
+                if(newState == Worker.State.SUCCEEDED){
                     ScenesContext.getInstance().getSession().netLoadMyCharacter();
                     ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
                     isFighting.set(false);
-                    Parent root;
                     try {
+                        Parent root;
                         root = FXMLLoader.load(this.getClass().getResource("FightResult.fxml"));
                         Scene scene = new Scene(root);
                         Stage window = new Stage();
                         window.setScene(scene);
                         window.setTitle("Combat terminé");
                         window.setResizable(false);
-                        window.showAndWait();
+                        setCurrentDialogStage(window);
+                        window.show();
                     } catch (IOException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                else if(newState == Worker.State.FAILED){
+                    isFighting.set(false);
                 }
             }
         });
