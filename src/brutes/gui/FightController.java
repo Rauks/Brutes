@@ -105,7 +105,7 @@ public class FightController implements Initializable {
     private MenuItem menuOptDelete;
     
     private void doFight(FightTask.FightType type){
-        FightTask fightTask = new FightTask(type);
+        final FightTask fightTask = new FightTask(type);
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
@@ -115,7 +115,12 @@ public class FightController implements Initializable {
                     isFighting.set(false);
                     try {
                         Parent root;
-                        root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
+                        if(fightTask.getResultProperty().get()){
+                            root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
+                        }
+                        else{
+                            root = FXMLLoader.load(this.getClass().getResource("FightResultLoose.fxml"));
+                        }
                         Scene scene = new Scene(root);
                         Stage window = new Stage();
                         window.setScene(scene);
