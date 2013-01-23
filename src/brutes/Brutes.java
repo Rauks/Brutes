@@ -21,32 +21,6 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class Brutes extends Application {
-    public static Thread LOCAL_SERVER = new Thread(){
-        @Override
-        public void run(){
-            try {
-                ServerSocket sockserv = new ServerSocket (42666);
-                System.out.println("Server up");
-                while(true){
-                    final Socket sockcli = sockserv.accept();
-                    sockcli.setSoTimeout(1000);
-                    new Thread(){
-                        @Override
-                        public void run(){
-                            try (NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);){
-                                n.read();
-                            } catch (IOException ex) {
-                                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }.start();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    };
-    
     @Override
     public void start(Stage stage) throws Exception {
         stage.setResizable(false);
@@ -54,12 +28,35 @@ public class Brutes extends Application {
         stage.setOnCloseRequest(new EventHandler(){
             @Override
             public void handle(Event t) {
-                Brutes.LOCAL_SERVER.interrupt();
                 Platform.exit();
             }
         });
         
-        Brutes.LOCAL_SERVER.start();
+        new Thread(){
+            @Override
+            public void run(){
+                try {
+                    ServerSocket sockserv = new ServerSocket (42666);
+                    System.out.println("Server up");
+                    while(true){
+                        final Socket sockcli = sockserv.accept();
+                        sockcli.setSoTimeout(1000);
+                        new Thread(){
+                            @Override
+                            public void run(){
+                                try (NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli);){
+                                    n.read();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }.start();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
         
         ScenesContext.getInstance().setStage(stage);
         ScenesContext.getInstance().showLogin();

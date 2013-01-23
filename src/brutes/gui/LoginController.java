@@ -54,8 +54,6 @@ public class LoginController implements Initializable {
     
     @FXML
     private void handleCloseAction(ActionEvent e){
-        System.out.println("Handle Close");
-        Brutes.LOCAL_SERVER.interrupt();
         Platform.exit();
     }
     
