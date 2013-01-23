@@ -5,6 +5,7 @@
 package brutes;
 
 import brutes.db.DatasManager;
+import brutes.game.User;
 import brutes.net.Protocol;
 import brutes.net.client.NetworkClient;
 import brutes.net.server.NetworkLocalTestServer;
@@ -37,7 +38,7 @@ public class Brutes extends Application {
         
         Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
         System.out.println(instance);
-        
+                
         stage.setResizable(false);
         stage.setTitle("Les brutes (TP Réseaux 2012/2013 - Karl Woditsch)");
         stage.setOnCloseRequest(new EventHandler(){

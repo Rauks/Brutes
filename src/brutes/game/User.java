@@ -5,20 +5,30 @@
 package brutes.game;
 
 import brutes.db.Entity;
+import brutes.db.SQL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
  *
  * @author Thiktak
  */
-public class User implements Entity {
-
+public class User extends Entity {
+    
+    public String tableName = "Users";
+    
+    @SQL(name="id", type="int")
     private int id;
+    
+    @SQL(name="pseudo", type="varchar")
     private String pseudo;
+    
+    @SQL(name="password", type="varchar")
     private String password;
+    
+    @SQL(name="token", type="varchar")
     private String token;
+    
     private HashMap<String, Character> characters = new HashMap<>();
 
     public User(ResultSet r) throws Exception {
@@ -32,6 +42,7 @@ public class User implements Entity {
         this.token = token;
     }
 
+    @Override
     public int getId() {
         return this.id;
     }

@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,12 +104,12 @@ public class NetworkLocalTestServer extends Network {
 
         User user = DatasManager.findUserByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
-        
+
         PreparedStatement psql = DatasManager.prepare("UPDATE fights SET winner_id = ? WHERE id = ?");
         psql.setInt(1, fight.getCharacter1().getId());
         psql.setInt(1, fight.getId());
         psql.executeUpdate();
-        
+
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
                 .send();
@@ -119,22 +120,23 @@ public class NetworkLocalTestServer extends Network {
 
         User user = DatasManager.findUserByToken(rToken);
         Fight fight = DatasManager.findFightByUser(user);
-        
+
         PreparedStatement psql = DatasManager.prepare("UPDATE fights SET winner_id = ? WHERE id = ?");
         psql.setInt(1, fight.getCharacter2().getId());
         psql.setInt(1, fight.getId());
         psql.executeUpdate();
-        
+
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(false)
                 .send();
     }
 
     private void readCheatFightRandom() throws Exception {
-        if( Math.random() < 0.5 )
+        if (Math.random() < 0.5) {
             this.readCheatFightLoose();
-        else
+        } else {
             this.readCheatFightWin();
+        }
     }
 
     private void readDoFight() throws IOException {
@@ -163,7 +165,12 @@ public class NetworkLocalTestServer extends Network {
                 if (!password.equals(rs.getString("password"))) {
                     throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
                 } else {
-                    this.token = DatasManager.updateToken(rs.getInt("id"));
+                    //this.token = DatasManager.updateToken(rs.getInt("id"));
+                    this.token = UUID.randomUUID().toString();
+
+                    User user = DatasManager.findUserById(rs.getInt("id"));
+                    user.setToken(this.token);
+                    user.save();
 
                     Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{this.token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
@@ -237,7 +244,7 @@ public class NetworkLocalTestServer extends Network {
         int id = this.getReader().readLongInt();
 
         brutes.game.Character character = DatasManager.findCharacterById(id);
-        
+
         if (character == null) {
             throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
         }
@@ -260,17 +267,17 @@ public class NetworkLocalTestServer extends Network {
         User user = DatasManager.findUserByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
         Fight fight = DatasManager.findFightByUser(user);
-        if( fight == null ) {
+        if (fight == null) {
             PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
             psql.setInt(1, user.getId());
             ResultSet query = psql.executeQuery();
             query.next();
-            
+
             psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
             psql.setInt(1, character.getId());
             psql.setInt(2, query.getInt("id")); // @TODO: random
             psql.executeUpdate();
-            
+
             fight = DatasManager.findFightByUser(user);
         }
 

@@ -4,25 +4,40 @@
  */
 package brutes.game;
 
-import brutes.db.DatasManager;
+import brutes.db.Entity;
+import brutes.db.SQL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
  * @author Karl
  */
-public class Character {
+public class Character extends Entity {
     public static final int MAX_BONUSES = 3;
     
+    public String tableName = "Brutes";
+    
+    @SQL(name="id", type="int")
     private int id;
+    
+    @SQL(name="name", type="varchar")
     private String name;
+    
+    @SQL(name="level", type="int")
     private short level;
+    
+    @SQL(name="life", type="int")
     private short life;
+    
+    @SQL(name="strength", type="int")
     private short strength;
+    
+    @SQL(name="speed", type="int")
     private short speed;
+    
+    //@SQL(name="id", type="int")
     private int imageID;
+    
     private Bonus[] bonuses;
 
     public Character(ResultSet r) throws Exception {
@@ -48,6 +63,7 @@ public class Character {
         System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Character.MAX_BONUSES) ? bonuses.length : Character.MAX_BONUSES);
     }
 
+    @Override
     public int getId() {
         return this.id;
     }

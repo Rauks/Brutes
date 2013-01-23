@@ -140,11 +140,15 @@ public class DatasManager {
     public static String updateToken(int id) throws Exception {
         Random rn = new Random();
         String token = UUID.randomUUID().toString();
+        
+        User user = DatasManager.findUserById(id);
+        user.setToken(token);
+        user.save();
 
-        PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = ? WHERE id = ?");
+        /*PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = ? WHERE id = ?");
         psql.setString(1, token);
         psql.setInt(2, id);
-        psql.executeUpdate();
+        psql.executeUpdate();*/
         return token;
     }
 }
