@@ -19,6 +19,19 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class FightResultWinController implements Initializable {
+    private final String[] sentences = {
+        "La victoire aime l'effort.", 
+        "Ce n'est pas la trempe des armes, mais celle du cœur qui donne la victoire.", 
+        "Tout soldat est grand dans un jour de victoire.", 
+        "À bien patienter consiste la victoire.", 
+        "La victoire est à qui tient un quart d'heure de plus.", 
+        "Qui veut vaincre est déjà bien près de la victoire.", 
+        "Qui sait se vaincre dans la victoire est deux fois vainqueur.", 
+        "Tout soldat s'ennoblit le jour d'une victoire.", 
+        "La victoire ne veut point de rivalité.",
+        "Chaque pas est une victoire."
+    };
+    
     @FXML
     private Text text;
     
@@ -34,6 +47,6 @@ public class FightResultWinController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.text.setText(this.sentences[(int)(Math.random() * this.sentences.length)]);
     }    
 }
