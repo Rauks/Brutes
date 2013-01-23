@@ -35,7 +35,9 @@ public class Brutes extends Application {
         (new File("~$bdd.db")).delete();
         
         Connection instance = DatasManager.getInstance("sqlite", "~$bdd.db");
-        System.out.println(instance);
+        
+        User user = DatasManager.findUserById(1);
+        DatasManager.save(user);
                 
         stage.setResizable(false);
         stage.setTitle("Les brutes (TP Réseaux 2012/2013 - Karl Woditsch)");

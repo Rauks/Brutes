@@ -5,7 +5,7 @@
 package brutes.game;
 
 import brutes.db.DatasManager;
-import brutes.db.Entity;
+import brutes.db.IsIdentifiable;
 import brutes.db.SQL;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -15,25 +15,14 @@ import java.sql.SQLException;
  *
  * @author Thiktak
  */
-public class Fight extends Entity {
+public class Fight implements IsIdentifiable {
 
-    @SQL(name="id", type="int")
     private int id;
-    
-    @SQL(name="brute_id1", type="int")
     private Character character1;
-    
-    @SQL(name="brute_id2", type="int")
     private Character character2;
-    
-    @SQL(name="winner_id", type="int")
     private Character winner;
 
     public Fight() {
-    }
-
-    public Fight(ResultSet r) throws SQLException, IOException {
-        this(r.getInt("id"), DatasManager.findCharacterById(r.getInt("brute_id1")), DatasManager.findCharacterById(r.getInt("brute_id2")));
     }
 
     public Fight(int id, Character character1, Character character2) {

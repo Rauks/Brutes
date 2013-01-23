@@ -4,38 +4,25 @@
  */
 package brutes.game;
 
-import brutes.db.Entity;
-import brutes.db.SQL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import brutes.db.IsIdentifiable;
 
 /**
  *
  * @author Karl
  */
-public class Character extends Entity {
+public class Character implements IsIdentifiable {
 
     public static final int MAX_BONUSES = 3;
-    public String tableName = "Brutes";
-    @SQL(name = "id", type = "int")
+    
     private int id;
-    @SQL(name = "name", type = "varchar")
     private String name;
-    @SQL(name = "level", type = "int")
     private short level;
-    @SQL(name = "life", type = "int")
     private short life;
-    @SQL(name = "strength", type = "int")
     private short strength;
-    @SQL(name = "speed", type = "int")
     private short speed;
-    //@SQL(name="id", type="int")
     private int imageID;
+    
     private Bonus[] bonuses;
-
-    public Character(ResultSet r) throws SQLException {
-        this(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("life"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
-    }
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;

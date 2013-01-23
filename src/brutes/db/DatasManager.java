@@ -4,14 +4,21 @@
  */
 package brutes.db;
 
+import brutes.db.entity.BonusEntity;
+import brutes.db.entity.CharacterEntity;
+import brutes.db.entity.FightEntity;
+import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.game.Character;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.sqlite.JDBC;
 
 /**
@@ -86,7 +93,7 @@ public class DatasManager {
         psql.setString(1, token);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new User(rs);
+            return UserEntity.create(rs);
         }
         return null;
     }
@@ -96,7 +103,7 @@ public class DatasManager {
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new User(rs);
+            return UserEntity.create(rs);
         }
         return null;
     }
@@ -106,7 +113,7 @@ public class DatasManager {
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new brutes.game.Character(rs);
+            return CharacterEntity.create(rs);
         }
         return null;
     }
@@ -116,7 +123,7 @@ public class DatasManager {
         psql.setInt(1, user.getId());
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new brutes.game.Character(rs);
+            return CharacterEntity.create(rs);
         }
         return null;
     }
@@ -127,7 +134,7 @@ public class DatasManager {
         psql.setInt(2, user.getId());
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new Fight(rs);
+            return FightEntity.create(rs);
         }
         return null;
     }
@@ -137,23 +144,29 @@ public class DatasManager {
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            return new Bonus(rs);
+            return BonusEntity.create(rs);
         }
         return null;
     }
 
     public static String updateToken(int id) throws IOException, SQLException {
-        Random rn = new Random();
         String token = UUID.randomUUID().toString();
 
         User user = DatasManager.findUserById(id);
         user.setToken(token);
-        user.save();
-
-        /*PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = ? WHERE id = ?");
-         psql.setString(1, token);
-         psql.setInt(2, id);
-         psql.executeUpdate();*/
+        DatasManager.save(user);
+        
         return token;
+    }
+    
+    public static <T> void save(T obj) throws IOException {
+        try {
+            Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            classObj.getMethod("save", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
+            
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

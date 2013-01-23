@@ -4,37 +4,20 @@
  */
 package brutes.game;
 
-import brutes.db.Entity;
-import brutes.db.SQL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import brutes.db.IsIdentifiable;
 import java.util.HashMap;
 
 /**
  *
  * @author Thiktak
  */
-public class User extends Entity {
+public class User implements IsIdentifiable {
     
-    public String tableName = "Users";
-    
-    @SQL(name="id", type="int")
     private int id;
-    
-    @SQL(name="pseudo", type="varchar")
     private String pseudo;
-    
-    @SQL(name="password", type="varchar")
     private String password;
-    
-    @SQL(name="token", type="varchar")
     private String token;
-    
     private HashMap<String, Character> characters = new HashMap<>();
-
-    public User(ResultSet r) throws SQLException {
-        this(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
-    }
 
     public User(int id, String pseudo, String password, String token) {
         this.id = id;

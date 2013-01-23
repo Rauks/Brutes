@@ -99,7 +99,7 @@ public class NetworkLocalTestServer extends Network {
         Fight fight = DatasManager.findFightByUser(user);
         
         fight.setWinner(fight.getCharacter1());
-        fight.save();
+        DatasManager.save(fight);
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
@@ -113,7 +113,7 @@ public class NetworkLocalTestServer extends Network {
         Fight fight = DatasManager.findFightByUser(user);
 
         fight.setWinner(fight.getCharacter2());
-        fight.save();
+        DatasManager.save(fight);
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(false)
@@ -159,7 +159,7 @@ public class NetworkLocalTestServer extends Network {
 
                     User user = DatasManager.findUserById(rs.getInt("id"));
                     user.setToken(this.token);
-                    user.save();
+                    DatasManager.save(user);
 
                     Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{this.token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
@@ -195,7 +195,7 @@ public class NetworkLocalTestServer extends Network {
         User user = DatasManager.findUserByToken(rToken);
         brutes.game.Character character = DatasManager.findCharacterByUser(user);
         character.setName(name);
-        character.save();
+        DatasManager.save(character);
         
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
