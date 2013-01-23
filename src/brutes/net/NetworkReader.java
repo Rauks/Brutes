@@ -51,7 +51,7 @@ public class NetworkReader {
             short length = this.readShortInt();
             byte[] b = new byte[length];
             this.is.read(b);
-            out =  new String(b, "UTF-8");
+            out = new String(b, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
         }
