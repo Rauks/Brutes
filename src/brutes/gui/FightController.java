@@ -115,17 +115,18 @@ public class FightController implements Initializable {
                     isFighting.set(false);
                     try {
                         Parent root;
+                        Stage window = new Stage();
+                        window.setResizable(false);
                         if(fightTask.getResultProperty().get()){
                             root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
+                            window.setTitle("Victoire !");
                         }
                         else{
                             root = FXMLLoader.load(this.getClass().getResource("FightResultLoose.fxml"));
+                            window.setTitle("Défaite !");
                         }
                         Scene scene = new Scene(root);
-                        Stage window = new Stage();
                         window.setScene(scene);
-                        window.setTitle("Combat terminé");
-                        window.setResizable(false);
                         setCurrentDialogStage(window);
                         window.show();
                     } catch (IOException ex) {
