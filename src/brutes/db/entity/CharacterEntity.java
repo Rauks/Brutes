@@ -4,6 +4,7 @@
  */
 package brutes.db.entity;
 
+import brutes.db.DatasManager;
 import brutes.db.Entity;
 import brutes.game.User;
 import java.io.IOException;
@@ -31,5 +32,25 @@ public class CharacterEntity implements Entity {
         psql.setInt(5, character.getSpeed());
         psql.setInt(6, character.getId());
         return psql.executeUpdate();
+    }
+
+    public static brutes.game.Character findById(int id) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE id = ?");
+        psql.setInt(1, id);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return CharacterEntity.create(rs);
+        }
+        return null;
+    }
+    
+    public static brutes.game.Character findByUser(User user) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ?");
+        psql.setInt(1, user.getId());
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return CharacterEntity.create(rs);
+        }
+        return null;
     }
 }

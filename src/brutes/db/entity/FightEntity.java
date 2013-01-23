@@ -21,7 +21,7 @@ import java.sql.SQLException;
 public class FightEntity implements Entity {
 
     static public Fight create(ResultSet r) throws SQLException, IOException {
-        return new Fight(r.getInt("id"), DatasManager.findCharacterById(r.getInt("brute_id1")), DatasManager.findCharacterById(r.getInt("brute_id2")));
+        return new Fight(r.getInt("id"), CharacterEntity.findById(r.getInt("brute_id1")), CharacterEntity.findById(r.getInt("brute_id2")));
     }
 
     public static int save(Connection con, Fight fight) throws IOException, SQLException {

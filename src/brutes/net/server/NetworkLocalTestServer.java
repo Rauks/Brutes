@@ -6,6 +6,7 @@ package brutes.net.server;
 
 import brutes.Brutes;
 import brutes.db.DatasManager;
+import brutes.db.entity.CharacterEntity;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Fight;
@@ -194,7 +195,7 @@ public class NetworkLocalTestServer extends Network {
         String name = this.getReader().readString();
 
         User user = UserEntity.findByToken(rToken);
-        brutes.game.Character character = DatasManager.findCharacterByUser(user);
+        brutes.game.Character character = CharacterEntity.findByUser(user);
         character.setName(name);
         DatasManager.save(character);
         
@@ -230,7 +231,7 @@ public class NetworkLocalTestServer extends Network {
     private void readDataCharacter() throws IOException, SQLException, NetworkResponseException {
         int id = this.getReader().readLongInt();
 
-        brutes.game.Character character = DatasManager.findCharacterById(id);
+        brutes.game.Character character = CharacterEntity.findById(id);
 
         if (character == null) {
             throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
@@ -252,7 +253,7 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
 
         User user = UserEntity.findByToken(rToken);
-        brutes.game.Character character = DatasManager.findCharacterByUser(user);
+        brutes.game.Character character = CharacterEntity.findByUser(user);
         Fight fight = DatasManager.findFightByUser(user);
         if (fight == null) {
             PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
@@ -277,7 +278,7 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
 
         User user = UserEntity.findByToken(rToken);
-        brutes.game.Character character = DatasManager.findCharacterByUser(user);
+        brutes.game.Character character = CharacterEntity.findByUser(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
                 .writeLongInt(character.getId())

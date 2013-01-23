@@ -88,26 +88,6 @@ public class DatasManager {
         return DatasManager.getInstance().createStatement();
     }
 
-    public static Character findCharacterById(int id) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE id = ?");
-        psql.setInt(1, id);
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return CharacterEntity.create(rs);
-        }
-        return null;
-    }
-
-    public static Character findCharacterByUser(User user) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ?");
-        psql.setInt(1, user.getId());
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return CharacterEntity.create(rs);
-        }
-        return null;
-    }
-
     public static Fight findFightByUser(User user) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
         psql.setInt(1, user.getId());
