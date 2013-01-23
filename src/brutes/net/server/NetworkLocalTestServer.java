@@ -14,6 +14,7 @@ import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.net.Network;
+import brutes.net.NetworkReader;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
@@ -45,48 +46,62 @@ public class NetworkLocalTestServer extends Network {
     }
 
     public void read() throws IOException, SQLException {
-        this.getReader().readMessageSize();
+        NetworkReader r = this.getReader();
+        r.readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         try {
             switch (disc) {
                 case Protocol.D_CHEAT_FIGHT_LOOSE:
-                    this.readCheatFightLoose();
+                    // token, newName
+                    this.readCheatFightLoose(r.readString());
                     break;
                 case Protocol.D_CHEAT_FIGHT_RANDOM:
-                    this.readCheatFightRandom();
+                    // token, newName
+                    this.readCheatFightRandom(r.readString());
                     break;
                 case Protocol.D_CHEAT_FIGHT_WIN:
-                    this.readCheatFightWin();
+                    // token, newName
+                    this.readCheatFightWin(r.readString());
                     break;
                 case Protocol.D_CREATE_CHARACTER:
-                    this.readCreateCharacter();
+                    // token, name
+                    this.readCreateCharacter(r.readString(), r.readString());
                     break;
                 case Protocol.D_UPDATE_CHARACTER:
-                    this.readUpdateCharacter();
+                    // token, newName
+                    this.readUpdateCharacter(r.readString(), r.readString());
                     break;
                 case Protocol.D_DELETE_CHARACTER:
-                    this.readDeleteCharacter();
+                    // token
+                    this.readDeleteCharacter(r.readString());
                     break;
                 case Protocol.D_DO_FIGHT:
-                    this.readDoFight();
+                    // token
+                    this.readDoFight(r.readString());
                     break;
                 case Protocol.D_GET_BONUS:
-                    this.readDataBonus();
+                    // token
+                    this.readDataBonus(r.readLongInt());
                     break;
                 case Protocol.D_GET_CHALLENGER_CHARACTER_ID:
-                    this.readGetChallengerCharacterId();
+                    // token
+                    this.readGetChallengerCharacterId(r.readString());
                     break;
                 case Protocol.D_GET_CHARACTER:
-                    this.readDataCharacter();
+                    // token
+                    this.readDataCharacter(r.readLongInt());
                     break;
                 case Protocol.D_GET_MY_CHARACTER_ID:
-                    this.readGetMyCharacterId();
+                    // token
+                    this.readGetMyCharacterId(r.readString());
                     break;
                 case Protocol.D_LOGIN:
-                    this.readLogin();
+                    // pseudo, password
+                    this.readLogin(r.readString(), r.readString());
                     break;
                 case Protocol.D_LOGOUT:
-                    this.readLogout();
+                    // token
+                    this.readLogout(r.readString());
                     break;
                 default:
                     throw new NetworkResponseException(Protocol.ERROR_SRLY_WTF);
@@ -96,10 +111,8 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readCheatFightWin() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-
-        User user = UserEntity.findByToken(rToken);
+    private void readCheatFightWin(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
         
         fight.setWinner(fight.getCharacter1());
@@ -110,10 +123,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-
-        User user = UserEntity.findByToken(rToken);
+    private void readCheatFightLoose(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
 
         fight.setWinner(fight.getCharacter2());
@@ -124,24 +135,21 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom() throws IOException, SQLException {
+    private void readCheatFightRandom(String token) throws IOException, SQLException {
         if (Math.random() < 0.5) {
-            this.readCheatFightLoose();
+            this.readCheatFightLoose(token);
         } else {
-            this.readCheatFightWin();
+            this.readCheatFightWin(token);
         }
     }
 
-    private void readDoFight() throws IOException {
-        this.getReader().readString();
+    private void readDoFight(String token) throws IOException {
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(true)
                 .send();
     }
 
-    private void readLogin() throws IOException, SQLException, NetworkResponseException {
-        String login = this.getReader().readString();
-        String password = this.getReader().readString();
+    private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException {
 
         if (login.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
@@ -169,29 +177,22 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogout() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-
+    private void readLogout(String token) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
-        psql.setString(1, rToken);
+        psql.setString(1, token);
         psql.executeUpdate();
 
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
     }
 
-    private void readCreateCharacter() throws IOException {
-        this.getReader().readString();
-        this.getReader().readString();
+    private void readCreateCharacter(String token, String name) throws IOException {
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
 
-    private void readUpdateCharacter() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-        String name = this.getReader().readString();
-
-        User user = UserEntity.findByToken(rToken);
+    private void readUpdateCharacter(String token, String name) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
         character.setName(name);
         DatasManager.save(character);
@@ -200,15 +201,12 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDeleteCharacter() throws IOException {
-        this.getReader().readString();
+    private void readDeleteCharacter(String token) throws IOException {
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
 
-    private void readDataBonus() throws IOException, SQLException, NetworkResponseException {
-        int id = this.getReader().readLongInt();
-
+    private void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException {
         Bonus bonus = BonusEntity.findById(id);
 
         if (bonus == null) {
@@ -225,9 +223,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataCharacter() throws IOException, SQLException, NetworkResponseException {
-        int id = this.getReader().readLongInt();
-
+    private void readDataCharacter(int id) throws IOException, SQLException, NetworkResponseException {
         brutes.game.Character character = CharacterEntity.findById(id);
 
         if (character == null) {
@@ -246,10 +242,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerCharacterId() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-
-        User user = UserEntity.findByToken(rToken);
+    private void readGetChallengerCharacterId(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
         Fight fight = FightEntity.findByUser(user);
         if (fight == null) {
@@ -271,10 +265,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyCharacterId() throws IOException, SQLException {
-        String rToken = this.getReader().readString();
-
-        User user = UserEntity.findByToken(rToken);
+    private void readGetMyCharacterId(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
