@@ -6,6 +6,7 @@ package brutes.net.server;
 
 import brutes.Brutes;
 import brutes.db.DatasManager;
+import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.net.Network;
@@ -194,29 +195,36 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataBonus() throws IOException {
+    private void readDataBonus() throws Exception {
         int id = this.getReader().readLongInt();
+        
+        Bonus bonus = DatasManager.findBonusById(id);
+        
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
                 .writeLongInt(id)
-                .writeString("Hache")
-                .writeShortInt((short) 2)
-                .writeShortInt((short) 5)
-                .writeShortInt((short) 7)
-                .writeLongInt(2)
+                .writeString(bonus.getName())
+                .writeShortInt((short) bonus.getLevel())
+                .writeShortInt((short) bonus.getStrength())
+                .writeShortInt((short) bonus.getSpeed())
+                .writeLongInt(id)
                 .send();
     }
 
-    private void readDataCharacter() throws IOException {
-        int id = this.getReader().readLongInt();
-
+    private void readDataCharacter() throws Exception {
+        int id = this.getReader().readLongInt()+1;
+        
+        brutes.game.Character character = DatasManager.findCharacterById(id);
+        System.out.print(character);
+        System.out.print(character.getName());
+        
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(id)
-                .writeString("Rauks")
-                .writeShortInt((short) 15)
-                .writeShortInt((short) 17)
-                .writeShortInt((short) 6)
-                .writeShortInt((short) 12)
-                .writeLongInt(1)
+                .writeString(character.getName() + " #" + id)
+                .writeShortInt((short) character.getLevel())
+                .writeShortInt((short) character.getLife())
+                .writeShortInt((short) character.getStrength())
+                .writeShortInt((short) character.getSpeed())
+                .writeLongInt(id) // @TODO : image
                 .writeLongIntArray(new int[]{1, 1})
                 .send();
     }
