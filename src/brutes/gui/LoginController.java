@@ -50,11 +50,6 @@ public class LoginController implements Initializable {
     @FXML
     private Text serverError;
     
-    private void setVisibleErrors(boolean visible){
-        this.loginError.setVisible(visible);
-        this.passwordError.setVisible(visible);
-        this.serverError.setVisible(visible);
-    }
     private void setDisableForm(boolean disable){
         this.loading.setVisible(disable);
         this.login.setDisable(disable);
@@ -65,7 +60,6 @@ public class LoginController implements Initializable {
     
     @FXML
     private void handleConnexionAction(ActionEvent e){
-        this.setVisibleErrors(false);
         this.login();
     }
     
@@ -82,7 +76,7 @@ public class LoginController implements Initializable {
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
         this.loginError.visibleProperty().bind(loginTask.getLoginErrorProperty());
         this.passwordError.visibleProperty().bind(loginTask.getPasswordErrorProperty());
-        this.serverError.visibleProperty().bind(loginTask.getPasswordErrorProperty());
+        this.serverError.visibleProperty().bind(loginTask.getHostErrorProperty());
 
         loginTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
