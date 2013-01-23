@@ -101,7 +101,7 @@ public class NetworkReader {
     public String[] readStringArray() throws IOException{
         short nbElements = this.readShortInt();
         byte type = this.readByte();
-        if(type != Protocol.TYPE_BOOLEAN){
+        if(type != Protocol.TYPE_STRING){
             throw new IOException(NetworkException.ARRAY_TYPE);
         }
         String[] array = new String[nbElements];
