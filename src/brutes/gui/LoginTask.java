@@ -35,6 +35,9 @@ public class LoginTask extends Task{
     private ReadOnlyBooleanWrapper hostError;
 
     public LoginTask(String host, String login, String password) {
+        this.loginError = new ReadOnlyBooleanWrapper();
+        this.passwordError = new ReadOnlyBooleanWrapper();
+        this.hostError = new ReadOnlyBooleanWrapper();
         this.login = login;
         this.password = password;
         this.host = host;
