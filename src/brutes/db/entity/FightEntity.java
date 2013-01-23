@@ -8,6 +8,7 @@ import brutes.db.DatasManager;
 import brutes.db.Entity;
 import brutes.game.Bonus;
 import brutes.game.Fight;
+import brutes.game.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,5 +32,20 @@ public class FightEntity implements Entity {
         psql.setInt(3, fight.getWinner() != null ? fight.getWinner().getId() : null);
         psql.setInt(4, fight.getId());
         return psql.executeUpdate();
+    }
+
+    public static Fight findByUser(User user) throws IOException, SQLException {
+        return findById(user.getId());
+    }
+    
+    public static Fight findById(int id) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
+        psql.setInt(1, id);
+        psql.setInt(2, id);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return FightEntity.create(rs);
+        }
+        return null;
     }
 }

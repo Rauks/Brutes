@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  *
@@ -49,5 +50,15 @@ public class UserEntity {
             return UserEntity.create(rs);
         }
         return null;
+    }
+    
+    public static String updateToken(int id) throws IOException, SQLException {
+        String token = UUID.randomUUID().toString();
+
+        User user = UserEntity.findById(id);
+        user.setToken(token);
+        DatasManager.save(user);
+        
+        return token;
     }
 }

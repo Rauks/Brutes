@@ -8,6 +8,7 @@ import brutes.Brutes;
 import brutes.db.DatasManager;
 import brutes.db.entity.BonusEntity;
 import brutes.db.entity.CharacterEntity;
+import brutes.db.entity.FightEntity;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Fight;
@@ -99,7 +100,7 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
 
         User user = UserEntity.findByToken(rToken);
-        Fight fight = DatasManager.findFightByUser(user);
+        Fight fight = FightEntity.findByUser(user);
         
         fight.setWinner(fight.getCharacter1());
         DatasManager.save(fight);
@@ -113,7 +114,7 @@ public class NetworkLocalTestServer extends Network {
         String rToken = this.getReader().readString();
 
         User user = UserEntity.findByToken(rToken);
-        Fight fight = DatasManager.findFightByUser(user);
+        Fight fight = FightEntity.findByUser(user);
 
         fight.setWinner(fight.getCharacter2());
         DatasManager.save(fight);
@@ -157,12 +158,7 @@ public class NetworkLocalTestServer extends Network {
                 if (!password.equals(rs.getString("password"))) {
                     throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
                 } else {
-                    //this.token = DatasManager.updateToken(rs.getInt("id"));
-                    this.token = UUID.randomUUID().toString();
-
-                    User user = UserEntity.findById(rs.getInt("id"));
-                    user.setToken(this.token);
-                    DatasManager.save(user);
+                    this.token = UserEntity.updateToken(rs.getInt("id"));
 
                     Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{this.token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
@@ -255,7 +251,7 @@ public class NetworkLocalTestServer extends Network {
 
         User user = UserEntity.findByToken(rToken);
         brutes.game.Character character = CharacterEntity.findByUser(user);
-        Fight fight = DatasManager.findFightByUser(user);
+        Fight fight = FightEntity.findByUser(user);
         if (fight == null) {
             PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
             psql.setInt(1, user.getId());
@@ -267,7 +263,7 @@ public class NetworkLocalTestServer extends Network {
             psql.setInt(2, query.getInt("id")); // @TODO: random
             psql.executeUpdate();
 
-            fight = DatasManager.findFightByUser(user);
+            fight = FightEntity.findByUser(user);
         }
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)

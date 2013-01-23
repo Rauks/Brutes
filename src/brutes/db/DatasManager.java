@@ -87,27 +87,6 @@ public class DatasManager {
     public static Statement getStatement() throws IOException, SQLException {
         return DatasManager.getInstance().createStatement();
     }
-
-    public static Fight findFightByUser(User user) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
-        psql.setInt(1, user.getId());
-        psql.setInt(2, user.getId());
-        ResultSet rs = psql.executeQuery();
-        if (rs.next()) {
-            return FightEntity.create(rs);
-        }
-        return null;
-    }
-
-    public static String updateToken(int id) throws IOException, SQLException {
-        String token = UUID.randomUUID().toString();
-
-        User user = UserEntity.findById(id);
-        user.setToken(token);
-        DatasManager.save(user);
-        
-        return token;
-    }
     
     public static <T> void save(T obj) throws IOException {
         try {
