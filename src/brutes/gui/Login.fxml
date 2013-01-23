@@ -8,6 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.LoginController">
@@ -19,46 +20,48 @@
     </ImageView>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
       <children>
-        <VBox>
-          <children>
-            <Label text="Identifiant">
-              <labelFor>
-                <TextField fx:id="login" />
-              </labelFor>
-            </Label>
-            <fx:reference source="login" />
-          </children>
-        </VBox>
-        <VBox>
-          <children>
-            <Label text="Mot de passe">
-              <labelFor>
-                <PasswordField fx:id="password" />
-              </labelFor>
-            </Label>
-            <fx:reference source="password" />
-          </children>
-        </VBox>
-        <VBox>
-          <children>
-            <Label text="Serveur">
-              <labelFor>
-                <TextField id="login" fx:id="server" text="localhost" />
-              </labelFor>
-            </Label>
-            <fx:reference source="server" />
-          </children>
-        </VBox>
+        <BorderPane>
+          <bottom>
+            <TextField fx:id="login" />
+          </bottom>
+          <left>
+            <Label labelFor="$login" text="Identifiant" />
+          </left>
+          <right>
+            <Text id="lo" fx:id="loginError" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" textAlignment="RIGHT" visible="false">
+              <fill>
+                <Color blue="0.000" green="0.000" red="0.800" fx:id="x1" />
+              </fill>
+            </Text>
+          </right>
+        </BorderPane>
+        <BorderPane>
+          <bottom>
+            <PasswordField fx:id="password" />
+          </bottom>
+          <left>
+            <Label labelFor="$password" text="Mot de passe" />
+          </left>
+          <right>
+            <Text fx:id="passwordError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" visible="false" />
+          </right>
+        </BorderPane>
+        <BorderPane>
+          <bottom>
+            <TextField id="login" fx:id="server" text="localhost" />
+          </bottom>
+          <left>
+            <Label labelFor="$server" text="Serveur" />
+          </left>
+          <right>
+            <Text fx:id="serverError" fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Erreur" visible="false" />
+          </right>
+        </BorderPane>
         <HBox alignment="TOP_CENTER">
           <children>
             <StackPane>
               <children>
                 <ProgressIndicator fx:id="loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" translateX="110.0" visible="false" />
-                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="200.0" visible="false" wrappingWidth="150.0">
-                  <StackPane.margin>
-                    <Insets />
-                  </StackPane.margin>
-                </Text>
                 <HBox spacing="20.0">
                   <children>
                     <Button mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Quitter" />
