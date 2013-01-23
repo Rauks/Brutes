@@ -40,8 +40,9 @@ public class Brutes extends Application {
             public void run(){
                 try {
                     ServerSocket sockserv = new ServerSocket (42666);
+                    sockserv.setSoTimeout(10000);
                     System.out.println("Server up");
-                    while(true){
+                    while(!this.isInterrupted()){
                         final Socket sockcli = sockserv.accept();
                         sockcli.setSoTimeout(1000);
                         new Thread(){
