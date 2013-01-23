@@ -35,10 +35,7 @@ public class Character implements Identifiable {
         this.strength = strength;
         this.speed = speed;
         this.imageID = imageID;
-        this.bonuses = new Bonus[Character.MAX_BONUSES];
-        for (int i = 0; i < this.bonuses.length; i++) {
-            this.bonuses[i] = Bonus.EMPTY_BONUS;
-        }
+        this.setBonuses(null);
     }
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
@@ -90,6 +87,17 @@ public class Character implements Identifiable {
     public Bonus[] getBonuses() {
         return this.bonuses;
     }
+    
+    public int[] getIntBonuses() {
+        int[] ibonus = new int[Character.MAX_BONUSES];
+        int i = 0;
+        for (Bonus bonus : this.bonuses) {
+            if( bonus != Bonus.EMPTY_BONUS && bonus != null ) {
+                ibonus[i++] = bonus.getId();
+            }
+        }
+        return ibonus;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -112,7 +120,10 @@ public class Character implements Identifiable {
     }
 
     public void setBonuses(Bonus[] bonuses) {
-        this.bonuses = bonuses;
+        this.bonuses = new Bonus[Character.MAX_BONUSES];
+        for (int i = 0; i < this.bonuses.length; i++) {
+            this.bonuses[i] = ((bonuses != null && bonuses[i] != null) ? bonuses[i] : Bonus.EMPTY_BONUS);
+        }
     }
 
     public int getUserId() {
