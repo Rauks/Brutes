@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -19,11 +20,15 @@ import javafx.stage.Stage;
  */
 public class FightResultWinController implements Initializable {
     @FXML
+    private Text text;
+    
+    @FXML
     private void handleContinueAction(ActionEvent e){
         Node source = (Node) e.getSource(); 
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
+    
     /**
      * Initializes the controller class.
      */
