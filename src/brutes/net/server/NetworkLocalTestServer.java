@@ -40,7 +40,7 @@ public class NetworkLocalTestServer extends Network {
         return rToken;
     }
 
-    public void read() throws IOException {
+    public void read() throws IOException, SQLException {
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         try {
@@ -92,7 +92,7 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readCheatFightWin() throws IOException {
+    private void readCheatFightWin() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -106,7 +106,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose() throws IOException {
+    private void readCheatFightLoose() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -120,7 +120,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom() throws IOException {
+    private void readCheatFightRandom() throws IOException, SQLException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose();
         } else {
@@ -135,7 +135,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readLogin() throws IOException {
+    private void readLogin() throws IOException, SQLException, NetworkResponseException {
         String login = this.getReader().readString();
         String password = this.getReader().readString();
 
@@ -170,7 +170,7 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogout() throws IOException {
+    private void readLogout() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
         PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
@@ -188,7 +188,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readUpdateCharacter() throws IOException {
+    private void readUpdateCharacter() throws IOException, SQLException {
         String rToken = this.getReader().readString();
         String name = this.getReader().readString();
 
@@ -207,7 +207,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataBonus() throws IOException {
+    private void readDataBonus() throws IOException, SQLException, NetworkResponseException {
         int id = this.getReader().readLongInt();
 
         Bonus bonus = DatasManager.findBonusById(id);
@@ -226,7 +226,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataCharacter() throws IOException {
+    private void readDataCharacter() throws IOException, SQLException, NetworkResponseException {
         int id = this.getReader().readLongInt();
 
         brutes.game.Character character = DatasManager.findCharacterById(id);
@@ -247,7 +247,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerCharacterId() throws IOException {
+    private void readGetChallengerCharacterId() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -272,7 +272,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyCharacterId() throws IOException {
+    private void readGetMyCharacterId() throws IOException, SQLException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);

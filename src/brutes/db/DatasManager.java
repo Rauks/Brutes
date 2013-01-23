@@ -8,6 +8,7 @@ import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.game.Character;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Random;
 import java.util.UUID;
@@ -21,15 +22,19 @@ public class DatasManager {
 
     static private Connection con;
 
-    public static Connection getInstance(String type, String dbpath) throws Exception {
+    public static Connection getInstance(String type, String dbpath) throws IOException {
         Class classType;
         switch (type) {
             case "sqlite":
-                classType = Class.forName("org.sqlite.JDBC");
-                dbpath = "jdbc:sqlite:" + dbpath;
+                try {
+                    classType = Class.forName("org.sqlite.JDBC");
+                    dbpath = "jdbc:sqlite:" + dbpath;
+                } catch (ClassNotFoundException e) {
+                    throw new IOException(e);
+                }
                 break;
             default:
-                throw new Exception(type + " SQL support not exists");
+                throw new IOException(type + " SQL support not exists");
         }
         try {
             DatasManager.con = DriverManager.getConnection(dbpath);
@@ -57,26 +62,26 @@ public class DatasManager {
         return DatasManager.con;
     }
 
-    public static Connection getInstance() throws Exception {
+    public static Connection getInstance() throws IOException {
         if (DatasManager.con == null) {
-            throw new Exception("No instance of dataManager");
+            throw new IOException("No instance of dataManager");
         }
         return DatasManager.con;
     }
 
-    public static ResultSet exec(String query) throws Exception {
+    public static ResultSet exec(String query) throws IOException, SQLException {
         return DatasManager.getInstance().createStatement().executeQuery(query);
     }
 
-    public static PreparedStatement prepare(String query) throws Exception {
+    public static PreparedStatement prepare(String query) throws IOException, SQLException {
         return DatasManager.getInstance().prepareStatement(query);
     }
 
-    public static Statement getStatement() throws Exception {
+    public static Statement getStatement() throws IOException, SQLException {
         return DatasManager.getInstance().createStatement();
     }
 
-    public static User findUserByToken(String token) throws Exception {
+    public static User findUserByToken(String token) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM users WHERE token = ?");
         psql.setString(1, token);
         ResultSet rs = psql.executeQuery();
@@ -85,8 +90,8 @@ public class DatasManager {
         }
         return null;
     }
-    
-    public static User findUserById(int id) throws Exception {
+
+    public static User findUserById(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM users WHERE id = ?");
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
@@ -95,8 +100,8 @@ public class DatasManager {
         }
         return null;
     }
-    
-    public static Character findCharacterById(int id) throws Exception {
+
+    public static Character findCharacterById(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE id = ?");
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
@@ -105,8 +110,8 @@ public class DatasManager {
         }
         return null;
     }
-    
-    public static Character findCharacterByUser(User user) throws Exception {
+
+    public static Character findCharacterByUser(User user) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ?");
         psql.setInt(1, user.getId());
         ResultSet rs = psql.executeQuery();
@@ -115,8 +120,8 @@ public class DatasManager {
         }
         return null;
     }
-    
-    public static Fight findFightByUser(User user) throws Exception {
+
+    public static Fight findFightByUser(User user) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
         psql.setInt(1, user.getId());
         psql.setInt(2, user.getId());
@@ -126,8 +131,8 @@ public class DatasManager {
         }
         return null;
     }
-    
-    public static Bonus findBonusById(int id) throws Exception {
+
+    public static Bonus findBonusById(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM bonus WHERE id = ?");
         psql.setInt(1, id);
         ResultSet rs = psql.executeQuery();
@@ -137,18 +142,18 @@ public class DatasManager {
         return null;
     }
 
-    public static String updateToken(int id) throws Exception {
+    public static String updateToken(int id) throws IOException, SQLException {
         Random rn = new Random();
         String token = UUID.randomUUID().toString();
-        
+
         User user = DatasManager.findUserById(id);
         user.setToken(token);
         user.save();
 
         /*PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = ? WHERE id = ?");
-        psql.setString(1, token);
-        psql.setInt(2, id);
-        psql.executeUpdate();*/
+         psql.setString(1, token);
+         psql.setInt(2, id);
+         psql.executeUpdate();*/
         return token;
     }
 }

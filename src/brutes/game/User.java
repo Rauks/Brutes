@@ -7,6 +7,7 @@ package brutes.game;
 import brutes.db.Entity;
 import brutes.db.SQL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -31,7 +32,7 @@ public class User extends Entity {
     
     private HashMap<String, Character> characters = new HashMap<>();
 
-    public User(ResultSet r) throws Exception {
+    public User(ResultSet r) throws SQLException {
         this(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
     }
 

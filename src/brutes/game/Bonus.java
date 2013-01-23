@@ -7,6 +7,7 @@ package brutes.game;
 import brutes.db.Entity;
 import brutes.db.SQL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -32,7 +33,7 @@ public class Bonus extends Entity {
     
     private int imageID;
 
-    public Bonus(ResultSet r) throws Exception {
+    public Bonus(ResultSet r) throws SQLException {
         this(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
     }
     

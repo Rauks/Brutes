@@ -7,7 +7,9 @@ package brutes.game;
 import brutes.db.DatasManager;
 import brutes.db.Entity;
 import brutes.db.SQL;
+import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -30,7 +32,7 @@ public class Fight extends Entity {
     public Fight() {
     }
 
-    public Fight(ResultSet r) throws Exception {
+    public Fight(ResultSet r) throws SQLException, IOException {
         this(r.getInt("id"), DatasManager.findCharacterById(r.getInt("brute_id1")), DatasManager.findCharacterById(r.getInt("brute_id2")));
     }
 
