@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,8 +65,9 @@ public class NetworkWriter {
     public NetworkWriter writeString(String value){
         Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "String  : {0}", value);
         try {
-            this.writeShortInt((short)value.length());
-            this.baos.write(value.getBytes(Charset.forName("UTF-8")));
+            byte[] str = value.getBytes(Charset.forName("UTF-8"));
+            this.writeShortInt((short)str.length);
+            this.baos.write(str);
         } catch (IOException ex) {
             Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
@@ -124,7 +124,7 @@ public class NetworkWriter {
         Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, "Message sending...");
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
-            int messageSize = baos.size() + Protocol.SIZE_LONGINT;
+            int messageSize = baos.size();
             message.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(messageSize).array());
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();

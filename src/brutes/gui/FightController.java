@@ -13,11 +13,11 @@ import brutes.net.client.NetworkClient;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -25,7 +25,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -39,7 +38,8 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class FightController implements Initializable {
-    private ArrayList<Stage> openedStages;
+    private Stage currentDialogStage;
+    private ReadOnlyBooleanWrapper isFighting;
     
     @FXML
     private Text myName;
@@ -97,26 +97,42 @@ public class FightController implements Initializable {
     private MenuItem menuFightRandom;
     @FXML
     private MenuItem menuFightRegular;
+    @FXML
+    private MenuItem menuOptCreate;
+    @FXML
+    private MenuItem menuOptRename;
+    @FXML
+    private MenuItem menuOptDelete;
     
     private void doFight(FightTask.FightType type){
-        menuFightWin.setDisable(true);
-        menuFightLoose.setDisable(true);
-        menuFightRandom.setDisable(true);
-        menuFightRegular.setDisable(true);
         FightTask fightTask = new FightTask(type);
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
-                if(newState == Worker.State.SUCCEEDED || newState == Worker.State.FAILED){
-                    menuFightWin.setDisable(false);
-                    menuFightLoose.setDisable(false);
-                    menuFightRandom.setDisable(false);
-                    menuFightRegular.setDisable(false);
+                if(newState == Worker.State.SUCCEEDED){
                     ScenesContext.getInstance().getSession().netLoadMyCharacter();
                     ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
+                    isFighting.set(false);
+                    try {
+                        Parent root;
+                        root = FXMLLoader.load(this.getClass().getResource("FightResult.fxml"));
+                        Scene scene = new Scene(root);
+                        Stage window = new Stage();
+                        window.setScene(scene);
+                        window.setTitle("Combat terminé");
+                        window.setResizable(false);
+                        setCurrentDialogStage(window);
+                        window.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else if(newState == Worker.State.FAILED){
+                    isFighting.set(false);
                 }
             }
         });
+        this.isFighting.set(true);
         new Thread(fightTask).start();
     }
     
@@ -145,7 +161,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Nouvelle brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +176,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Modifier la brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,7 +191,7 @@ public class FightController implements Initializable {
             window.setScene(scene);
             window.setTitle("Supprimer la brute");
             window.setResizable(false);
-            this.openedStages.add(window);
+            this.setCurrentDialogStage(window);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
@@ -197,11 +213,18 @@ public class FightController implements Initializable {
                 }
             }
         }.start();
-        for(Iterator<Stage> it = this.openedStages.iterator(); it.hasNext();){
-            it.next().close();
-        }
-        this.openedStages.clear();
+        this.closeCurrentDialogStage();
         ScenesContext.getInstance().showLogin();
+    }
+    
+    private void setCurrentDialogStage(Stage stage){
+        this.closeCurrentDialogStage();
+        this.currentDialogStage = stage;
+    }
+    private void closeCurrentDialogStage(){
+        if(this.currentDialogStage != null){
+            this.currentDialogStage.close();
+        }
     }
     
     /**
@@ -209,28 +232,37 @@ public class FightController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.openedStages = new ArrayList<>();
+        this.isFighting = new ReadOnlyBooleanWrapper();
+        this.isFighting.set(false);
         
         ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
         ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
         
-        this.myName.textProperty().bind(me.getName());
-        this.myLevel.textProperty().bind(me.getLevel().asString());
-        this.myLifes.textProperty().bind(me.getLife().asString());
-        this.myStrength.textProperty().bind(me.getStrength().asString());
-        this.mySpeed.textProperty().bind(me.getSpeed().asString());
-        this.myBonus1.textProperty().bind(me.getBonus(0).getName());
-        this.myBonus2.textProperty().bind(me.getBonus(1).getName());
-        this.myBonus3.textProperty().bind(me.getBonus(2).getName());
+        this.myName.textProperty().bind(me.getNameProperty());
+        this.myLevel.textProperty().bind(me.getLevelProperty().asString());
+        this.myLifes.textProperty().bind(me.getLifeProperty().asString());
+        this.myStrength.textProperty().bind(me.getStrengthProperty().asString());
+        this.mySpeed.textProperty().bind(me.getSpeedProperty().asString());
+        this.myBonus1.textProperty().bind(me.getBonus(0).getNameProperty());
+        this.myBonus2.textProperty().bind(me.getBonus(1).getNameProperty());
+        this.myBonus3.textProperty().bind(me.getBonus(2).getNameProperty());
         
-        this.chName.textProperty().bind(ch.getName());
-        this.chLevel.textProperty().bind(ch.getLevel().asString());
-        this.chLifes.textProperty().bind(ch.getLife().asString());
-        this.chStrength.textProperty().bind(ch.getStrength().asString());
-        this.chSpeed.textProperty().bind(ch.getSpeed().asString());
-        this.chBonus1.textProperty().bind(ch.getBonus(0).getName());
-        this.chBonus2.textProperty().bind(ch.getBonus(1).getName());
-        this.chBonus3.textProperty().bind(ch.getBonus(2).getName());
+        this.chName.textProperty().bind(ch.getNameProperty());
+        this.chLevel.textProperty().bind(ch.getLevelProperty().asString());
+        this.chLifes.textProperty().bind(ch.getLifeProperty().asString());
+        this.chStrength.textProperty().bind(ch.getStrengthProperty().asString());
+        this.chSpeed.textProperty().bind(ch.getSpeedProperty().asString());
+        this.chBonus1.textProperty().bind(ch.getBonus(0).getNameProperty());
+        this.chBonus2.textProperty().bind(ch.getBonus(1).getNameProperty());
+        this.chBonus3.textProperty().bind(ch.getBonus(2).getNameProperty());
+        
+        this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        this.menuFightRandom.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        this.menuFightRegular.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        this.menuOptCreate.disableProperty().bind(me.isLoadedProperty());
+        this.menuOptRename.disableProperty().bind(me.isLoadedProperty().not());
+        this.menuOptDelete.disableProperty().bind(me.isLoadedProperty().not());
         
         ScenesContext.getInstance().getSession().netLoadMyCharacter();
         ScenesContext.getInstance().getSession().netLoadChallengerCharacter();

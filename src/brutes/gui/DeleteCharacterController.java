@@ -20,7 +20,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -48,7 +47,10 @@ public class DeleteCharacterController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                ScenesContext.getInstance().getSession().getMyCharacter().unload();
+                ScenesContext.getInstance().getSession().getChallengerCharacter().unload();
                 ScenesContext.getInstance().getSession().netLoadMyCharacter();
+                ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
             }
         }.start();
         this.closeStage(e);

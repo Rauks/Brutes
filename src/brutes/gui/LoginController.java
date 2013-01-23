@@ -5,21 +5,13 @@ package brutes.gui;
  * and open the template in the editor.
  */
 
+import brutes.Brutes;
 import brutes.ScenesContext;
-import brutes.ScenesContext;
-import brutes.net.Protocol;
-import brutes.net.client.ErrorResponseException;
-import brutes.net.client.InvalidResponseException;
-import brutes.net.client.NetworkClient;
-import brutes.user.Session;
-import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -27,13 +19,13 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -58,6 +50,11 @@ public class LoginController implements Initializable {
     private void handleConnexionAction(ActionEvent e){
         logError.setVisible(false);
         this.login();
+    }
+    
+    @FXML
+    private void handleCloseAction(ActionEvent e){
+        Platform.exit();
     }
     
     private synchronized void login(){

@@ -23,7 +23,7 @@
           <children>
             <Label text="Identifiant">
               <labelFor>
-                <TextField fx:id="login" onKeyPressed="#handleKeyPressed" />
+                <TextField fx:id="login" />
               </labelFor>
             </Label>
             <fx:reference source="login" />
@@ -33,7 +33,7 @@
           <children>
             <Label text="Mot de passe">
               <labelFor>
-                <PasswordField fx:id="password" onKeyPressed="#handleKeyPressed" />
+                <PasswordField fx:id="password" />
               </labelFor>
             </Label>
             <fx:reference source="password" />
@@ -43,7 +43,7 @@
           <children>
             <Label text="Serveur">
               <labelFor>
-                <TextField id="login" fx:id="server" onKeyPressed="#handleKeyPressed" text="localhost" />
+                <TextField id="login" fx:id="server" text="localhost" />
               </labelFor>
             </Label>
             <fx:reference source="server" />
@@ -53,13 +53,18 @@
           <children>
             <StackPane>
               <children>
-                <ProgressIndicator fx:id="loading" prefHeight="22.0" prefWidth="22.0" translateX="60.0" visible="false" />
-                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="150.0" visible="false" wrappingWidth="150.0">
+                <ProgressIndicator fx:id="loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" translateX="110.0" visible="false" />
+                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="200.0" visible="false" wrappingWidth="150.0">
                   <StackPane.margin>
                     <Insets />
                   </StackPane.margin>
                 </Text>
-                <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
+                <HBox spacing="20.0">
+                  <children>
+                    <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Quitter" />
+                    <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" prefWidth="80.0" text="Connexion" />
+                  </children>
+                </HBox>
               </children>
             </StackPane>
           </children>

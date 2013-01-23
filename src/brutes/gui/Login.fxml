@@ -53,13 +53,18 @@
           <children>
             <StackPane>
               <children>
-                <ProgressIndicator fx:id="loading" prefHeight="22.0" prefWidth="22.0" translateX="60.0" visible="false" />
-                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="150.0" visible="false" wrappingWidth="150.0">
+                <ProgressIndicator fx:id="loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" translateX="110.0" visible="false" />
+                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="200.0" visible="false" wrappingWidth="150.0">
                   <StackPane.margin>
                     <Insets />
                   </StackPane.margin>
                 </Text>
-                <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" text="Connexion" />
+                <HBox spacing="20.0">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Quitter" />
+                    <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" prefWidth="80.0" text="Connexion" />
+                  </children>
+                </HBox>
               </children>
             </StackPane>
           </children>

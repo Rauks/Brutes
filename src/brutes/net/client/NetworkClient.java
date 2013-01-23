@@ -13,7 +13,6 @@ import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -175,21 +174,16 @@ public class NetworkClient extends Network{
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readLongInt();
                 int[] bonusesID = this.getReader().readLongIntArray();
-                Bonus[] bonuses = new Bonus[Character.MAX_BONUSES];
-                for(int i = 0; i < Character.MAX_BONUSES; i++){
-                    if(bonusesID.length > i){
-                        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                            try {
-                                bonuses[i] = connection.getDataBonus(bonusesID[i]);
-                            } catch (InvalidResponseException | ErrorResponseException ex) {
-                                Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        } catch (IOException ex) {
-                            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                Bonus[] bonuses = new Bonus[(bonusesID.length < Character.MAX_BONUSES)?bonusesID.length:Character.MAX_BONUSES];
+                for(int i = 0; i < bonuses.length; i++){
+                    try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                        try {
+                            bonuses[i] = connection.getDataBonus(bonusesID[i]);
+                        } catch (InvalidResponseException | ErrorResponseException ex) {
+                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }
-                    else{
-                        bonuses[i] = Bonus.EMPTY_BONUS;
+                    } catch (IOException ex) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonuses);
