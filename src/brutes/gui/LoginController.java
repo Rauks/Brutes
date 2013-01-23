@@ -17,11 +17,13 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -46,6 +48,13 @@ public class LoginController implements Initializable {
     private void handleConnexionAction(ActionEvent e){
         logError.setVisible(false);
         this.login();
+    }
+    
+    @FXML
+    private void handleCloseAction(ActionEvent e){
+        Node source = (Node) e.getSource(); 
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
     
     private synchronized void login(){
