@@ -35,9 +35,9 @@ public class NetworkClient extends Network{
             case Protocol.R_LOGIN_SUCCESS:
                 return this.getReader().readString();
             case Protocol.ERROR_LOGIN_NOT_FOUND:
-                throw new ErrorResponseException(ErrorResponseException.LOGIN_NOT_FOUND);
+                throw new ErrorResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
             case Protocol.ERROR_WRONG_PASSWORD:
-                throw new ErrorResponseException(ErrorResponseException.WRONG_PASSWORD);
+                throw new ErrorResponseException(Protocol.ERROR_WRONG_PASSWORD);
             default:
                 throw new InvalidResponseException();
         }
@@ -51,7 +51,7 @@ public class NetworkClient extends Network{
             case Protocol.R_LOGOUT_SUCCESS:
                 break;
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -67,9 +67,9 @@ public class NetworkClient extends Network{
             case Protocol.R_ACTION_SUCCESS:
                 break;
             case Protocol.ERROR_CREATE_CHARACTER:
-                throw new ErrorResponseException(ErrorResponseException.CREATE_CHARACTER);
+                throw new ErrorResponseException(Protocol.ERROR_CREATE_CHARACTER);
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -84,9 +84,9 @@ public class NetworkClient extends Network{
             case Protocol.R_ACTION_SUCCESS:
                 break;
             case Protocol.ERROR_UPDATE_CHARACTER:
-                throw new ErrorResponseException(ErrorResponseException.UPDATE_CHARACTER);
+                throw new ErrorResponseException(Protocol.ERROR_UPDATE_CHARACTER);
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -100,9 +100,9 @@ public class NetworkClient extends Network{
             case Protocol.R_ACTION_SUCCESS:
                 break;
             case Protocol.ERROR_DELETE_CHARACTER:
-                throw new ErrorResponseException(ErrorResponseException.UPDATE_CHARACTER);
+                throw new ErrorResponseException(Protocol.ERROR_UPDATE_CHARACTER);
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -117,9 +117,9 @@ public class NetworkClient extends Network{
             case Protocol.R_CHARACTER:
                 return this.getReader().readLongInt();
             case Protocol.ERROR_CHARACTER_NOT_FOUND:
-                throw new ErrorResponseException(ErrorResponseException.CHARACTER_NOT_FOUND);
+                throw new ErrorResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -140,9 +140,9 @@ public class NetworkClient extends Network{
             case Protocol.R_FIGHT_RESULT:
                 return this.getReader().readBoolean();
             case Protocol.ERROR_FIGHT:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             case Protocol.ERROR_TOKEN:
-                throw new ErrorResponseException(ErrorResponseException.TOKEN);
+                throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
@@ -188,7 +188,7 @@ public class NetworkClient extends Network{
                 }
                 return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonuses);
             case Protocol.ERROR_CHARACTER_NOT_FOUND:
-                throw new ErrorResponseException(ErrorResponseException.CHARACTER_NOT_FOUND);
+                throw new ErrorResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
             default:
                 throw new InvalidResponseException();
         }
@@ -208,7 +208,7 @@ public class NetworkClient extends Network{
                 int imageID = this.getReader().readShortInt();
                 return new Bonus(boId, name, level, strength, speed, imageID);
             case Protocol.ERROR_BONUS_NOT_FOUND:
-                throw new ErrorResponseException(ErrorResponseException.BONUS_NOT_FOUND);
+                throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
                 throw new InvalidResponseException();
         }

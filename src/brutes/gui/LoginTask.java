@@ -55,23 +55,25 @@ public class LoginTask extends Task{
     
     @Override
     protected Void call() throws Exception {
-        try{
+        try (NetworkClient connection = new NetworkClient(new Socket(this.host, Protocol.CONNECTION_PORT))) {
             String token;
-            try (NetworkClient connection = new NetworkClient(new Socket(this.host, Protocol.CONNECTION_PORT))) {
-                token = connection.sendLogin(this.login, this.password);
-                ScenesContext.getInstance().setSession(new Session(this.host, token));
-            } catch (UnknownHostException ex) {
-                this.hostError.set(true);
-                throw new Exception("Login task failed at server connection");
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            token = connection.sendLogin(this.login, this.password);
+            ScenesContext.getInstance().setSession(new Session(this.host, token));
+        } catch (UnknownHostException ex) {
+            this.hostError.set(true);
+            throw new Exception("Login task failed at server connection");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch(ErrorResponseException ex){
+            if(ex.getErrorCode() == Protocol.ERROR_LOGIN_NOT_FOUND){
                 this.loginError.set(true);
+            }
+            if(ex.getErrorCode() == Protocol.ERROR_WRONG_PASSWORD){
+                this.passwordError.set(true);
+            }
             throw new Exception("Login task failed at login/password validation");
         } catch(InvalidResponseException ex){
-            this.passwordError.set(true);
-            throw new Exception("Login task failed at server response");
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
