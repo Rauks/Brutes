@@ -61,7 +61,7 @@
                 </Text>
                 <HBox spacing="20.0">
                   <children>
-                    <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Quitter" />
+                    <Button mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Quitter" />
                     <Button fx:id="connexion" defaultButton="true" mnemonicParsing="false" onAction="#handleConnexionAction" prefWidth="80.0" text="Connexion" />
                   </children>
                 </HBox>

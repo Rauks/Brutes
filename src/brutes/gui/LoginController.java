@@ -5,11 +5,13 @@ package brutes.gui;
  * and open the template in the editor.
  */
 
+import brutes.Brutes;
 import brutes.ScenesContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -52,9 +54,9 @@ public class LoginController implements Initializable {
     
     @FXML
     private void handleCloseAction(ActionEvent e){
-        Node source = (Node) e.getSource(); 
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        System.out.println("Handle Close");
+        Brutes.LOCAL_SERVER.interrupt();
+        Platform.exit();
     }
     
     private synchronized void login(){

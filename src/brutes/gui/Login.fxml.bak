@@ -53,8 +53,8 @@
           <children>
             <StackPane>
               <children>
-                <ProgressIndicator fx:id="loading" prefHeight="22.0" prefWidth="22.0" translateX="60.0" visible="false" />
-                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="150.0" visible="false" wrappingWidth="150.0">
+                <ProgressIndicator fx:id="loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" translateX="110.0" visible="false" />
+                <Text fx:id="logError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" translateX="200.0" visible="false" wrappingWidth="150.0">
                   <StackPane.margin>
                     <Insets />
                   </StackPane.margin>
