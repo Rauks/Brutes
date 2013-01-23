@@ -31,12 +31,8 @@ public class NetworkLocalTestServer extends Network {
     public NetworkLocalTestServer(Socket connection) throws IOException {
         super(connection);
     }
-<<<<<<< HEAD
-    
-    public void read() throws IOException{
-=======
 
-    protected String checkToken(String rToken) throws Exception {
+    protected String checkToken(String rToken) throws NetworkResponseException {
         if (!rToken.equals(this.token)) {
             //throw new Exception("Bad token: " + rToken + " - " + this.token);
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);
@@ -44,8 +40,7 @@ public class NetworkLocalTestServer extends Network {
         return rToken;
     }
 
-    public void read() throws Exception {
->>>>>>> origin/dev-server
+    public void read() throws IOException {
         this.getReader().readMessageSize();
         byte disc = this.getReader().readDiscriminant();
         try {
@@ -97,7 +92,7 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readCheatFightWin() throws Exception {
+    private void readCheatFightWin() throws IOException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -111,7 +106,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose() throws Exception {
+    private void readCheatFightLoose() throws IOException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -125,7 +120,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom() throws Exception {
+    private void readCheatFightRandom() throws IOException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose();
         } else {
@@ -140,7 +135,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readLogin() throws IOException, Exception {
+    private void readLogin() throws IOException {
         String login = this.getReader().readString();
         String password = this.getReader().readString();
 
@@ -175,7 +170,7 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogout() throws IOException, Exception {
+    private void readLogout() throws IOException {
         String rToken = this.getReader().readString();
 
         PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
@@ -193,7 +188,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readUpdateCharacter() throws Exception {
+    private void readUpdateCharacter() throws IOException {
         String rToken = this.getReader().readString();
         String name = this.getReader().readString();
 
@@ -212,7 +207,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataBonus() throws Exception {
+    private void readDataBonus() throws IOException {
         int id = this.getReader().readLongInt();
 
         Bonus bonus = DatasManager.findBonusById(id);
@@ -231,7 +226,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataCharacter() throws Exception {
+    private void readDataCharacter() throws IOException {
         int id = this.getReader().readLongInt();
 
         brutes.game.Character character = DatasManager.findCharacterById(id);
@@ -252,7 +247,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerCharacterId() throws Exception {
+    private void readGetChallengerCharacterId() throws IOException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
@@ -277,7 +272,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyCharacterId() throws Exception {
+    private void readGetMyCharacterId() throws IOException {
         String rToken = this.getReader().readString();
 
         User user = DatasManager.findUserByToken(rToken);
