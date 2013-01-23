@@ -4,6 +4,8 @@
  */
 package brutes.game;
 
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -22,15 +24,18 @@ public class ObservableCharacter {
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper imageID;
     private ObservableBonus[] bonuses;
+    private ReadOnlyBooleanWrapper isLoaded;
     
     public ObservableCharacter(){
-        this.id = new ReadOnlyIntegerWrapper();
-        this.name = new ReadOnlyStringWrapper();
-        this.level = new ReadOnlyIntegerWrapper();
-        this.life = new ReadOnlyIntegerWrapper();
-        this.strength = new ReadOnlyIntegerWrapper();
-        this.speed = new ReadOnlyIntegerWrapper();
-        this.imageID = new ReadOnlyIntegerWrapper();
+        this.isLoaded = new ReadOnlyBooleanWrapper();
+        this.isLoaded.set(false);
+        this.id = new ReadOnlyIntegerWrapper(0);
+        this.name = new ReadOnlyStringWrapper(null);
+        this.level = new ReadOnlyIntegerWrapper(0);
+        this.life = new ReadOnlyIntegerWrapper(0);
+        this.strength = new ReadOnlyIntegerWrapper(0);
+        this.speed = new ReadOnlyIntegerWrapper(0);
+        this.imageID = new ReadOnlyIntegerWrapper(0);
         this.bonuses = new ObservableBonus[Character.MAX_BONUSES];
         for(int i = 0; i < Character.MAX_BONUSES; i++){
             this.bonuses[i] = new ObservableBonus();
@@ -38,6 +43,7 @@ public class ObservableCharacter {
     }
     
     public void loadCharacter(Character c){
+        this.isLoaded.set(true);
         this.id.set(c.getId());
         this.name.set(c.getName());
         this.level.set(c.getLevel());
@@ -55,29 +61,45 @@ public class ObservableCharacter {
             }
         }
     }
+    public void unload() {
+        this.isLoaded.set(false);
+        this.id.set(0);
+        this.name.set(null);
+        this.level.set(0);
+        this.life.set(0);
+        this.strength.set(0);
+        this.speed.set(0);
+        this.imageID.set(0);
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
+        }
+    }
+    public ReadOnlyBooleanProperty isLoadedProperty(){
+        return this.isLoaded.getReadOnlyProperty();
+    }
 
     public ObservableBonus getBonus(int id){
         return this.bonuses[id];
     }
-    public ReadOnlyIntegerProperty getId() {
-        return this.id;
+    public ReadOnlyIntegerProperty getIdProperty() {
+        return this.id.getReadOnlyProperty();
     }
-    public ReadOnlyStringProperty getName() {
-        return this.name;
+    public ReadOnlyStringProperty getNameProperty() {
+        return this.name.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getLevel() {
-        return this.level;
+    public ReadOnlyIntegerProperty getLevelProperty() {
+        return this.level.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getLife() {
-        return this.life;
+    public ReadOnlyIntegerProperty getLifeProperty() {
+        return this.life.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getStrength() {
-        return this.strength;
+    public ReadOnlyIntegerProperty getStrengthProperty() {
+        return this.strength.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getSpeed() {
-        return this.speed;
+    public ReadOnlyIntegerProperty getSpeedProperty() {
+        return this.speed.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getImageID() {
-        return this.imageID;
+    public ReadOnlyIntegerProperty getImageIDProperty() {
+        return this.imageID.getReadOnlyProperty();
     }
 }

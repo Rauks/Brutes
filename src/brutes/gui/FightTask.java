@@ -25,9 +25,10 @@ public class FightTask extends Task{
     public static enum FightType {CHEAT_WIN, CHEAT_LOOSE, CHEAT_RANDOM, REGULAR};
     
     private FightType type;
-    private ReadOnlyBooleanWrapper result = new ReadOnlyBooleanWrapper();
+    private ReadOnlyBooleanWrapper result;
     
     public FightTask(FightType type) {
+        this.result = new ReadOnlyBooleanWrapper();
         this.type = type;
     }
     
