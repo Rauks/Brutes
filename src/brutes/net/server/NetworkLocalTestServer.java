@@ -250,6 +250,7 @@ public class NetworkLocalTestServer extends Network {
         
         brutes.game.Character character = new brutes.game.Character(0, name, level, life, strength, speed, imageID);
         character.setUserId(user.getId());
+        DatasManager.insert(character);
         
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
