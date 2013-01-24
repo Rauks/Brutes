@@ -32,17 +32,16 @@ import java.util.logging.Logger;
  */
 public class NetworkLocalTestServer extends Network {
 
-    protected String token;
-
     public NetworkLocalTestServer(Socket connection) throws IOException {
         super(connection);
     }
 
-    protected String checkToken(String rToken) throws NetworkResponseException {
-        if (!rToken.equals(this.token)) {
+    protected User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException {
+        User user = UserEntity.findByToken(token);
+        if (user == null) {
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);
         }
-        return rToken;
+        return user;
     }
 
     public void read() throws IOException, SQLException {
@@ -112,7 +111,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         Fight fight = FightEntity.findByUser(user);
         
         if( fight == null ) {
@@ -167,7 +166,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         Fight fight = FightEntity.findByUser(user);
         
         if( fight == null ) {
@@ -191,7 +190,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         Fight fight = FightEntity.findByUser(user);
         
         if( fight == null ) {
@@ -251,11 +250,11 @@ public class NetworkLocalTestServer extends Network {
                 if (!password.equals(rs.getString("password"))) {
                     throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
                 } else {
-                    this.token = UserEntity.updateToken(rs.getInt("id"));
+                    String token = UserEntity.updateToken(rs.getInt("id"));
 
-                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{this.token, rs.getInt("id")});
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                            .writeString(this.token)
+                            .writeString(token)
                             .send();
                 }
             }
@@ -272,7 +271,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         
         // Brute already exists !
         if( BruteEntity.findByUser(user) != null ) {
@@ -293,8 +292,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readUpdateBrute(String token, String name) throws IOException, SQLException {
-        User user = UserEntity.findByToken(token);
+    private void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
+        User user = this.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findByUser(user);
         brute.setName(name);
         DatasManager.save(brute);
@@ -351,7 +350,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findByUser(user);
         
         if( brute == null ) {
@@ -373,13 +372,6 @@ public class NetworkLocalTestServer extends Network {
             fight.setBrute1(brute);
             fight.setBrute2(BruteEntity.findById(query.getInt("id")));
             DatasManager.insert(fight);
-
-            /*psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
-            psql.setInt(1, brute.getId());
-            psql.setInt(2, query.getInt("id")); // @TODO: random
-            psql.executeUpdate();*/
-
-            //fight = FightEntity.findByUser(user);
         }
         
         if( fight == null ) {
@@ -392,7 +384,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+        User user = this.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findByUser(user);
         
         if(  brute == null ) {
