@@ -119,7 +119,49 @@ public class NetworkLocalTestServer extends Network {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
         
-        fight.setWinner(fight.getCharacter1());
+        Character character = fight.getCharacter1();
+        switch(ui.random(1, 6))
+        {
+            case 1: // Level Up
+                character.setLevel((short)(character.getLevel()+1));
+                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 character level ({0})", character.getLevel());
+                DatasManager.save(character);
+                break;
+            case 2: // Bonus Up
+            case 3: // Bonus Up
+                Bonus bonus = BonusEntity.findRandomByCharacter(character);
+                if( bonus != null )
+                {
+                    System.out.println("Up bonus: " + bonus.getName());
+                    bonus.setLevel((short)(bonus.getLevel()+1));
+                    bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
+                    bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
+                    DatasManager.save(bonus);
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 bonus level ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                }
+                else
+                {
+                    bonus = BonusEntity.findRandomByCharacter(fight.getCharacter2());
+                    System.out.println("Find bonus 1: " + bonus);
+                    if( bonus != null )
+                    {
+                        System.out.println("Find bonus 2: " + bonus.getName());
+                        bonus.setLevel((short) ui.random(1, (int)(character.getLevel()/2)));
+                        bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
+                        bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
+                        bonus.setCharacterId(character.getId());
+                        DatasManager.insert(bonus);
+                        Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: new bonus ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                    }
+                    
+                }
+                break;
+            default: // New
+                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: Nothing ...");
+                break;
+        }
+        
+        fight.setWinner(character);
         DatasManager.save(fight);
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
