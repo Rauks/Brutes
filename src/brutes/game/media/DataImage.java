@@ -4,13 +4,14 @@
  */
 package brutes.game.media;
 
+import brutes.db.Identifiable;
 import javafx.scene.image.Image;
 
 /**
  *
  * @author Karl
  */
-public class DataImage {
+public class DataImage implements Identifiable{
     private int id;
     private Image image;
 
@@ -21,6 +22,7 @@ public class DataImage {
     public Image getImage(){
         return this.image;
     }
+    @Override
     public int getId(){
         return this.id;
     }
