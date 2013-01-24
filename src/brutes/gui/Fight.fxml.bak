@@ -26,7 +26,7 @@
                 <Font name="System Bold" size="12.0" fx:id="x1" />
               </font>
             </Text>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0">
               <children>
                 <VBox alignment="TOP_RIGHT" minWidth="-Infinity" prefWidth="60.0">
                   <children>
@@ -60,24 +60,24 @@
               </VBox.margin>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.margin="$x2">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.margin="$x2">
               <children>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text id="bonus1" fx:id="myBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" />
-                    <ImageView fx:id="myBonus1Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" />
-                    <ImageView fx:id="myBonus2Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="myBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" />
-                    <ImageView fx:id="myBonus3Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="myBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
               </children>
@@ -92,7 +92,7 @@
         <VBox minWidth="-Infinity" prefWidth="300.0">
           <children>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0">
               <children>
                 <VBox alignment="TOP_RIGHT" minWidth="-Infinity" prefWidth="60.0">
                   <children>
@@ -126,24 +126,24 @@
               </VBox.margin>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
               <children>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" />
-                    <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" />
-                    <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
                     <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" />
-                    <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
               </children>
@@ -170,9 +170,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterNew" text="Nouvelle Brute" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer la Brute" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer la Brute" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>

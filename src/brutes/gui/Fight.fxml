@@ -26,9 +26,9 @@
                 <Font name="System Bold" size="12.0" fx:id="x1" />
               </font>
             </Text>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0">
               <children>
-                <VBox alignment="TOP_RIGHT" minWidth="-Infinity" prefWidth="60.0">
+                <VBox alignment="TOP_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="60.0">
                   <children>
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" />
@@ -40,13 +40,13 @@
                     <Insets right="5.0" />
                   </padding>
                 </VBox>
-                <VBox prefWidth="100.0">
+                <VBox>
                   <children>
-                    <Text fx:id="myName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myName&gt;" />
-                    <Text fx:id="myLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLevel&gt;" />
-                    <Text fx:id="myLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLifes&gt;" />
-                    <Text id="myStrengh" fx:id="myStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myStrength&gt;" />
-                    <Text fx:id="mySpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;mySpeed&gt;" />
+                    <Text fx:id="myName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myName&gt;" VBox.vgrow="NEVER" />
+                    <Text fx:id="myLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLevel&gt;" VBox.vgrow="NEVER" />
+                    <Text fx:id="myLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLifes&gt;" VBox.vgrow="NEVER" />
+                    <Text id="myStrengh" fx:id="myStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myStrength&gt;" VBox.vgrow="NEVER" />
+                    <Text fx:id="mySpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;mySpeed&gt;" VBox.vgrow="NEVER" />
                   </children>
                 </VBox>
                 <ImageView fx:id="myImage" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -60,24 +60,24 @@
               </VBox.margin>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.margin="$x2">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.margin="$x2">
               <children>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="bonus1" fx:id="myBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" />
-                    <ImageView fx:id="myBonus1Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text id="bonus1" fx:id="myBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" VBox.vgrow="NEVER" />
+                    <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" />
-                    <ImageView fx:id="myBonus2Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" VBox.vgrow="NEVER" />
+                    <ImageView fx:id="myBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" />
-                    <ImageView fx:id="myBonus3Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" VBox.vgrow="NEVER" />
+                    <ImageView fx:id="myBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
               </children>
@@ -92,9 +92,9 @@
         <VBox minWidth="-Infinity" prefWidth="300.0">
           <children>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0">
               <children>
-                <VBox alignment="TOP_RIGHT" minWidth="-Infinity" prefWidth="60.0">
+                <VBox alignment="TOP_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="60.0">
                   <children>
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" />
@@ -108,11 +108,11 @@
                 </VBox>
                 <VBox prefWidth="100.0">
                   <children>
-                    <Text id="myName" fx:id="chName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chName&gt;" />
-                    <Text id="myLevel" fx:id="chLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLevel&gt;" />
-                    <Text id="myLifes" fx:id="chLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLifes&gt;" />
-                    <Text id="myStrengh" fx:id="chStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chStrength&gt;" />
-                    <Text id="mySpeed" fx:id="chSpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chSpeed&gt;" />
+                    <Text id="myName" fx:id="chName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chName&gt;" VBox.vgrow="NEVER" />
+                    <Text id="myLevel" fx:id="chLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLevel&gt;" VBox.vgrow="NEVER" />
+                    <Text id="myLifes" fx:id="chLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLifes&gt;" VBox.vgrow="NEVER" />
+                    <Text id="myStrengh" fx:id="chStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chStrength&gt;" VBox.vgrow="NEVER" />
+                    <Text id="mySpeed" fx:id="chSpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chSpeed&gt;" VBox.vgrow="NEVER" />
                   </children>
                 </VBox>
                 <ImageView id="myImage" fx:id="chImage" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -126,24 +126,24 @@
               </VBox.margin>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
               <children>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" />
-                    <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" VBox.vgrow="NEVER" />
+                    <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" />
-                    <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" VBox.vgrow="NEVER" />
+                    <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" />
-                    <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                    <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" VBox.vgrow="NEVER" />
+                    <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
               </children>
