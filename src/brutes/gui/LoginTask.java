@@ -18,8 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.concurrent.Task;
 
 /**
@@ -61,9 +59,10 @@ public class LoginTask extends Task{
             ScenesContext.getInstance().setSession(new Session(this.host, token));
         } catch (UnknownHostException ex) {
             this.hostError.set(true);
-            throw new Exception("Login task failed at server connection");
+            throw ex;
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         } catch(ErrorResponseException ex){
             if(ex.getErrorCode() == Protocol.ERROR_LOGIN_NOT_FOUND){
                 this.loginError.set(true);
@@ -71,9 +70,10 @@ public class LoginTask extends Task{
             if(ex.getErrorCode() == Protocol.ERROR_WRONG_PASSWORD){
                 this.passwordError.set(true);
             }
-            throw new Exception("Login task failed at login/password validation");
+            throw ex;
         } catch(InvalidResponseException ex){
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginController.class.getName()).log(Level.WARNING, null, ex);
+            throw ex;
         }
         return null;
     }

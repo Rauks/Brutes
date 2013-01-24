@@ -42,45 +42,53 @@ public class FightTask extends Task{
             case CHEAT_WIN:
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken());
+                        this.result.set(connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
+                        throw ex;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case CHEAT_LOOSE:
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken());
+                        this.result.set(connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
+                        throw ex;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case CHEAT_RANDOM:
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken());
+                        this.result.set(connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
+                        throw ex;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             case REGULAR:
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendDoFight(ScenesContext.getInstance().getSession().getToken());
+                        this.result.set(connection.sendDoFight(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
+                        throw ex;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
                 }
                 break;
             default:

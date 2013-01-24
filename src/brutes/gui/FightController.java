@@ -13,7 +13,6 @@ import brutes.net.client.NetworkClient;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,7 +104,7 @@ public class FightController implements Initializable {
     private MenuItem menuOptDelete;
     
     private void doFight(FightTask.FightType type){
-        FightTask fightTask = new FightTask(type);
+        final FightTask fightTask = new FightTask(type);
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
@@ -115,12 +114,18 @@ public class FightController implements Initializable {
                     isFighting.set(false);
                     try {
                         Parent root;
-                        root = FXMLLoader.load(this.getClass().getResource("FightResult.fxml"));
-                        Scene scene = new Scene(root);
                         Stage window = new Stage();
-                        window.setScene(scene);
-                        window.setTitle("Combat terminé");
                         window.setResizable(false);
+                        if(fightTask.getResultProperty().get()){
+                            root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
+                            window.setTitle("Victoire !");
+                        }
+                        else{
+                            root = FXMLLoader.load(this.getClass().getResource("FightResultLoose.fxml"));
+                            window.setTitle("Défaite !");
+                        }
+                        Scene scene = new Scene(root);
+                        window.setScene(scene);
                         setCurrentDialogStage(window);
                         window.show();
                     } catch (IOException ex) {
@@ -206,7 +211,7 @@ public class FightController implements Initializable {
                     try {
                         connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

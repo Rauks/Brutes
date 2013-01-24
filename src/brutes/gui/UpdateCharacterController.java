@@ -46,7 +46,7 @@ public class UpdateCharacterController implements Initializable {
                     try {
                         connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), characterName.getText());
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

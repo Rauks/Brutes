@@ -11,17 +11,18 @@ import brutes.db.entity.CharacterEntity;
 import brutes.db.entity.FightEntity;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
+import brutes.game.Character;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.net.Network;
 import brutes.net.NetworkReader;
 import brutes.net.Protocol;
+import brutes.ui;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +40,6 @@ public class NetworkLocalTestServer extends Network {
 
     protected String checkToken(String rToken) throws NetworkResponseException {
         if (!rToken.equals(this.token)) {
-            //throw new Exception("Bad token: " + rToken + " - " + this.token);
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);
         }
         return rToken;
@@ -111,9 +111,13 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readCheatFightWin(String token) throws IOException, SQLException {
+    private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
         
         fight.setWinner(fight.getCharacter1());
         DatasManager.save(fight);
@@ -123,9 +127,13 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose(String token) throws IOException, SQLException {
+    private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
 
         fight.setWinner(fight.getCharacter2());
         DatasManager.save(fight);
@@ -135,7 +143,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom(String token) throws IOException, SQLException {
+    private void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose(token);
         } else {
@@ -143,9 +151,58 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readDoFight(String token) throws IOException {
+    private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
+        User user = UserEntity.findByToken(token);
+        Fight fight = FightEntity.findByUser(user);
+        System.out.println("[DoFight]");
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
+        
+        System.out.println("SET ch" + fight.getCharacter1().getId() + "[life=" + fight.getCharacter1().getLife() + "] VS ch" + fight.getCharacter2().getId() + "[life=" + fight.getCharacter2().getLife() + "]");
+        
+        int i = 0;
+        int lost;
+        while( fight.getCharacter1().getLife() > 0 && fight.getCharacter2().getLife() > 0 ) {
+            System.out.println("FIGHT: " + (++i) + " ");
+            System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
+            
+            for( int j = 0 ; j < 2 ; j++ )
+            {
+                Character ch1 = j==0 ? fight.getCharacter1() : fight.getCharacter2();
+                Character ch2 = j==0 ? fight.getCharacter2() : fight.getCharacter1();
+                int random = ui.random(0, 10);
+                
+                System.out.print("\t\tBrute[" + ch1.getName() + "] ");
+                if( random == 0 ) {
+                    System.out.println("rate son attaque ...");
+                }
+                else if( random == 1 ) {
+                    System.out.println("est enragé et gagne +1 dans chaque compétance !");
+                    ch1.setSpeed((short) (ch1.getSpeed()+1));
+                    ch1.setStrength((short) (ch1.getStrength()+1));
+                }
+                else {
+                    double pWin = ((double)(10*ch1.getLevel() + ch1.getStrength()));
+                    pWin *= ((double) ch1.getSpeed()/((double)(1+ch1.getSpeed()+ch2.getSpeed())));
+                    pWin *= ((double) ch1.getStrength()/((double)(1+ch1.getStrength()+ch2.getStrength())));
+                    pWin *= 1+((double) ch1.getLife()/((double)(1+ch1.getLife()+ch2.getLife())));
+                    // DEBUG
+                    //System.out.println("@@" + pWin);
+                    //System.out.println("@@ 100*(10*" + ch1.getLevel() + "+" + ch1.getStrength() + ")*(" + ch1.getSpeed() + "/(1+" + ch1.getSpeed() + "+" + ch2.getSpeed() + ")");
+                    //System.out.println(ch1.getLife() + "/(1+" + ch1.getLife() + "+" + ch2.getLife() + ")");
+                    ch2.setLife((short) (fight.getCharacter2().getLife() - pWin));
+                    
+                    System.out.println("attaque. ATK " + ((short) pWin) + " pv");
+                }
+            }
+        }
+        System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
+        
+        System.out.println("\t\tVous " + (fight.getCharacter1().getLife() > 0 ? "gagnez" : "perdez"));
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
-                .writeBoolean(true)
+                .writeBoolean(fight.getCharacter1().getLife() > 0)
                 .send();
     }
 
@@ -186,7 +243,24 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCreateCharacter(String token, String name) throws IOException {
+    private void readCreateCharacter(String token, String name) throws IOException, SQLException, NetworkResponseException {
+        User user = UserEntity.findByToken(token);
+        
+        // Character already exists !
+        if( CharacterEntity.findByUser(user) != null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CREATE_CHARACTER);
+        }
+        
+        short level = 1;
+        short strength = (short) ui.random(3, 10);
+        short speed    = (short) ui.random(3, 10);
+        short life     = (short) (ui.random(10, 20) + strength/3);
+        int imageID = ui.random(1, 3);
+        
+        brutes.game.Character character = new brutes.game.Character(0, name, level, life, strength, speed, imageID);
+        character.setUserId(user.getId());
+        DatasManager.insert(character);
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
@@ -201,7 +275,11 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDeleteCharacter(String token) throws IOException {
+    private void readDeleteCharacter(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
+        brutes.game.Character character = CharacterEntity.findByUser(user);
+        DatasManager.delete(character);
+        
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
@@ -229,35 +307,55 @@ public class NetworkLocalTestServer extends Network {
         if (character == null) {
             throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
         }
+        
+        character.setBonuses(BonusEntity.findAllByCharacter(character));
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(id)
-                .writeString(character.getName() + " #" + id)
+                .writeString(character.getName())
                 .writeShortInt((short) character.getLevel())
                 .writeShortInt((short) character.getLife())
                 .writeShortInt((short) character.getStrength())
                 .writeShortInt((short) character.getSpeed())
                 .writeLongInt(id) // @TODO : image
-                .writeLongIntArray(new int[]{1, 2}) // @TODO : bonus
+                .writeLongIntArray(character.getBonusesIDs())
                 .send();
     }
 
-    private void readGetChallengerCharacterId(String token) throws IOException, SQLException {
+    private void readGetChallengerCharacterId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
+        
+        if( character == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+        }
+        
         Fight fight = FightEntity.findByUser(user);
+        
         if (fight == null) {
             PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
             psql.setInt(1, user.getId());
             ResultSet query = psql.executeQuery();
-            query.next();
+            
+            if( !query.next() ) {
+                throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+            }
+            
+            fight = new Fight();
+            fight.setCharacter1(character);
+            fight.setCharacter2(CharacterEntity.findById(query.getInt("id")));
+            DatasManager.insert(fight);
 
-            psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
+            /*psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
             psql.setInt(1, character.getId());
             psql.setInt(2, query.getInt("id")); // @TODO: random
-            psql.executeUpdate();
+            psql.executeUpdate();*/
 
-            fight = FightEntity.findByUser(user);
+            //fight = FightEntity.findByUser(user);
+        }
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
@@ -265,9 +363,13 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyCharacterId(String token) throws IOException, SQLException {
+    private void readGetMyCharacterId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
+        
+        if(  character == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+        }
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
                 .writeLongInt(character.getId())

@@ -5,6 +5,7 @@
 package brutes.game;
 
 import brutes.db.Identifiable;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +24,9 @@ public class Character implements Identifiable {
     private int imageID;
     
     private Bonus[] bonuses;
+    
+    /* more */
+    private int userid;
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
@@ -59,8 +63,12 @@ public class Character implements Identifiable {
     public short getLife() {
         return this.life;
     }
-
+    
     public short getStrength() {
+        return this.strength;
+    }
+
+    public short getStrengthWithBonus() {
         short sum = this.strength;
         for (int i = 0; i < this.bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
@@ -71,6 +79,10 @@ public class Character implements Identifiable {
     }
 
     public short getSpeed() {
+        return this.speed;
+    }
+
+    public short getSpeedWithBonus() {
         short sum = this.speed;
         for (int i = 0; i < bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
@@ -86,6 +98,20 @@ public class Character implements Identifiable {
 
     public Bonus[] getBonuses() {
         return this.bonuses;
+    }
+    
+    public int[] getBonusesIDs() {
+        ArrayList<Integer> bonusesIds = new ArrayList<>(Character.MAX_BONUSES);
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            if(this.bonuses[i] != Bonus.EMPTY_BONUS){
+                bonusesIds.add(new Integer(this.bonuses[i].getId()));
+            }
+        }
+        int[] intIDs = new int[bonusesIds.size()];
+        for(int i = 0; i < intIDs.length; i++){
+            intIDs[i] = bonusesIds.get(i).intValue();
+        }
+        return intIDs;
     }
 
     public void setName(String name) {
@@ -109,6 +135,24 @@ public class Character implements Identifiable {
     }
 
     public void setBonuses(Bonus[] bonuses) {
-        this.bonuses = bonuses;
+        for (int i = 0; i < Character.MAX_BONUSES; i++) {
+            this.bonuses[i] = Bonus.EMPTY_BONUS;
+        }
+        if(bonuses != null){
+            for (int i = 0; i < ((bonuses.length < Character.MAX_BONUSES)?bonuses.length:Character.MAX_BONUSES); i++) {
+                if(bonuses[i] != null){
+                    this.bonuses[i] = bonuses[i];
+                }
+            }
+        }
     }
+
+    public int getUserId() {
+        return userid;
+    }
+
+    public void setUserId(int userid) {
+        this.userid = userid;
+    }
+    
 }

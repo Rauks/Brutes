@@ -4,19 +4,6 @@
  */
 package brutes;
 
-import brutes.db.DatasManager;
-import brutes.game.User;
-import brutes.net.Protocol;
-import brutes.net.client.NetworkClient;
-import brutes.net.server.NetworkLocalTestServer;
-import java.io.File;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.sql.Connection;
-import java.net.SocketTimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;

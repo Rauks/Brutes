@@ -4,22 +4,11 @@
  */
 package brutes.db;
 
-import brutes.db.entity.BonusEntity;
-import brutes.db.entity.CharacterEntity;
-import brutes.db.entity.FightEntity;
-import brutes.db.entity.UserEntity;
-import brutes.game.Bonus;
-import brutes.game.Fight;
-import brutes.game.User;
-import brutes.game.Character;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.Random;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.sqlite.JDBC;
 
 /**
  *
@@ -47,14 +36,16 @@ public class DatasManager {
             DatasManager.con = DriverManager.getConnection(dbpath);
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, pseudo TEXT, password TEXT, token TEXT)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bots', 'WTF')");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Thiktak', 'root1')");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Kirauks', 'root2')");
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Yéti', 2, 62, 5, 5)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Rauks', 1, 50, 3, 8)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1', 1, 10, 2, 4)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Bot_2', 10, 250, 23, 18)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1 : Kikou', 3, 10, 2, 4)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_2 : Ultimate', 10, 250, 23, 18)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_3 : 贝努瓦', 1, 100, 0, 0)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Yéti', 2, 62, 5, 5)");
+            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (3, 'Rauks', 1, 50, 3, 8)");
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, life INTEGER, level INTEGER, strength INTEGER, speed INTEGER)");
             DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, life, strength, speed) VALUES (1, 'Hache', 1, 5, 10, 15)");
@@ -92,7 +83,36 @@ public class DatasManager {
         try {
             Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
             
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::save", obj.getClass().getSimpleName());
+            
             classObj.getMethod("save", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
+            
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static <T> T insert(T obj) throws IOException {
+        try {
+            Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::insert", obj.getClass().getSimpleName());
+            
+            return (T) classObj.getMethod("insert", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
+            
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static <T> void delete(T obj) throws IOException {
+        try {
+            Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::delete", obj.getClass().getSimpleName());
+            
+            classObj.getMethod("delete", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
             
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
             Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
