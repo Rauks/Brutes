@@ -42,15 +42,18 @@ public class FightEntity implements Entity {
     }
 
     public static Fight findByUser(User user) throws IOException, SQLException {
-        return findById(user.getId());
+        System.out.println("FightEntity::FindByUser(" + user.getId() + ")");
+        return findById(CharacterEntity.findByUser(user).getId());
     }
 
     public static Fight findById(int id) throws IOException, SQLException {
+        System.out.println("FightEntity::FindById(" + id + ")");
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
         psql.setInt(1, id);
         psql.setInt(2, id);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
+            System.out.println("FightEntity::FindById = " + rs.getInt("id") + ";");
             return FightEntity.create(rs);
         }
         return null;

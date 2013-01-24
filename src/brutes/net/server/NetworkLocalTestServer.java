@@ -174,7 +174,7 @@ public class NetworkLocalTestServer extends Network {
                 Character ch2 = j==0 ? fight.getCharacter2() : fight.getCharacter1();
                 int random = ui.random(0, 10);
                 
-                System.out.print("Brute[" + ch1.getName() + "] ");
+                System.out.print("\t\tBrute[" + ch1.getName() + "] ");
                 if( random == 0 ) {
                     System.out.println("rate son attaque ...");
                 }
