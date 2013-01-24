@@ -6,7 +6,7 @@ package brutes.net.client;
 
 import brutes.ScenesContext;
 import brutes.game.Bonus;
-import brutes.game.Character;
+import brutes.game.Brute;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
@@ -53,8 +53,8 @@ public class NetworkClient extends Network{
         }
     }
     
-    public void sendCreateCharacter(String token, String name) throws IOException, InvalidResponseException, ErrorResponseException{
-        this.getWriter().writeDiscriminant(Protocol.D_CREATE_CHARACTER)
+    public void sendCreateBrute(String token, String name) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_CREATE_BRUTE)
                 .writeString(token)
                 .writeString(name)
                 .send();
@@ -62,16 +62,16 @@ public class NetworkClient extends Network{
         switch(this.getReader().readDiscriminant()){
             case Protocol.R_ACTION_SUCCESS:
                 break;
-            case Protocol.ERROR_CREATE_CHARACTER:
-                throw new ErrorResponseException(Protocol.ERROR_CREATE_CHARACTER);
+            case Protocol.ERROR_CREATE_BRUTE:
+                throw new ErrorResponseException(Protocol.ERROR_CREATE_BRUTE);
             case Protocol.ERROR_TOKEN:
                 throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
     }
-    public void sendUpdateCharacter(String token, String name) throws IOException, InvalidResponseException, ErrorResponseException{
-        this.getWriter().writeDiscriminant(Protocol.D_UPDATE_CHARACTER)
+    public void sendUpdateBrute(String token, String name) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_UPDATE_BRUTE)
                 .writeString(token)
                 .writeString(name)
                 .send();
@@ -79,24 +79,24 @@ public class NetworkClient extends Network{
         switch(this.getReader().readDiscriminant()){
             case Protocol.R_ACTION_SUCCESS:
                 break;
-            case Protocol.ERROR_UPDATE_CHARACTER:
-                throw new ErrorResponseException(Protocol.ERROR_UPDATE_CHARACTER);
+            case Protocol.ERROR_UPDATE_BRUTE:
+                throw new ErrorResponseException(Protocol.ERROR_UPDATE_BRUTE);
             case Protocol.ERROR_TOKEN:
                 throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
     }
-    public void sendDeleteCharacter(String token) throws IOException, InvalidResponseException, ErrorResponseException{
-        this.getWriter().writeDiscriminant(Protocol.D_DELETE_CHARACTER)
+    public void sendDeleteBrute(String token) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_DELETE_BRUTE)
                 .writeString(token)
                 .send();
         this.getReader().readMessageSize();
         switch(this.getReader().readDiscriminant()){
             case Protocol.R_ACTION_SUCCESS:
                 break;
-            case Protocol.ERROR_DELETE_CHARACTER:
-                throw new ErrorResponseException(Protocol.ERROR_UPDATE_CHARACTER);
+            case Protocol.ERROR_DELETE_BRUTE:
+                throw new ErrorResponseException(Protocol.ERROR_UPDATE_BRUTE);
             case Protocol.ERROR_TOKEN:
                 throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
@@ -104,27 +104,27 @@ public class NetworkClient extends Network{
         }
     }
     
-    private int sendGetCharacterId(byte getIdDiscriminant, String token) throws IOException, InvalidResponseException, ErrorResponseException{
+    private int sendGetBruteId(byte getIdDiscriminant, String token) throws IOException, InvalidResponseException, ErrorResponseException{
         this.getWriter().writeDiscriminant(getIdDiscriminant)
                 .writeString(token)
                 .send();
         this.getReader().readMessageSize();
         switch(this.getReader().readDiscriminant()){
-            case Protocol.R_CHARACTER:
+            case Protocol.R_BRUTE:
                 return this.getReader().readLongInt();
-            case Protocol.ERROR_CHARACTER_NOT_FOUND:
-                throw new ErrorResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+            case Protocol.ERROR_BRUTE_NOT_FOUND:
+                throw new ErrorResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
             case Protocol.ERROR_TOKEN:
                 throw new ErrorResponseException(Protocol.ERROR_TOKEN);
             default:
                 throw new InvalidResponseException();
         }
     }
-    public int sendGetMyCharacterId(String token) throws IOException, InvalidResponseException, ErrorResponseException{
-        return this.sendGetCharacterId(Protocol.D_GET_MY_CHARACTER_ID, token);
+    public int sendGetMyBruteId(String token) throws IOException, InvalidResponseException, ErrorResponseException{
+        return this.sendGetBruteId(Protocol.D_GET_MY_BRUTE_ID, token);
     }
-    public int sendGetChallengerCharacterId(String token) throws IOException, InvalidResponseException, ErrorResponseException{
-        return this.sendGetCharacterId(Protocol.D_GET_CHALLENGER_CHARACTER_ID, token);
+    public int sendGetChallengerBruteId(String token) throws IOException, InvalidResponseException, ErrorResponseException{
+        return this.sendGetBruteId(Protocol.D_GET_CHALLENGER_BRUTE_ID, token);
     }
     
     private boolean sendFight(byte fightType, String token) throws IOException, InvalidResponseException, ErrorResponseException{
@@ -155,13 +155,13 @@ public class NetworkClient extends Network{
     public boolean sendDoFight(String token) throws IOException, InvalidResponseException, ErrorResponseException{
         return sendFight(Protocol.D_DO_FIGHT, token);
     }
-    public brutes.game.Character getDataCharacter(int id) throws IOException, InvalidResponseException, ErrorResponseException{
-        this.getWriter().writeDiscriminant(Protocol.D_GET_CHARACTER)
+    public Brute getDataBrute(int id) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_GET_BRUTE)
                 .writeLongInt(id)
                 .send();
         this.getReader().readMessageSize();
         switch(this.getReader().readDiscriminant()){
-            case Protocol.R_DATA_CHARACTER:
+            case Protocol.R_DATA_BRUTE:
                 int chId = this.getReader().readLongInt();
                 String name = this.getReader().readString();
                 short level = this.getReader().readShortInt();
@@ -170,15 +170,15 @@ public class NetworkClient extends Network{
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readLongInt();
                 int[] bonusesID = this.getReader().readLongIntArray();
-                Bonus[] bonuses = new Bonus[(bonusesID.length < Character.MAX_BONUSES)?bonusesID.length:Character.MAX_BONUSES];
+                Bonus[] bonuses = new Bonus[(bonusesID.length < Brute.MAX_BONUSES)?bonusesID.length:Brute.MAX_BONUSES];
                 for(int i = 0; i < bonuses.length; i++){
                     try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                         bonuses[i] = connection.getDataBonus(bonusesID[i]);
                     }
                 }
-                return new brutes.game.Character(chId, name, level, life, strength, speed, imageID, bonuses);
-            case Protocol.ERROR_CHARACTER_NOT_FOUND:
-                throw new ErrorResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+                return new Brute(chId, name, level, life, strength, speed, imageID, bonuses);
+            case Protocol.ERROR_BRUTE_NOT_FOUND:
+                throw new ErrorResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
             default:
                 throw new InvalidResponseException();
         }

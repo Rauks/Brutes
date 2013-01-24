@@ -8,7 +8,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.CreateCharacterController">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.CreateBruteController">
   <children>
     <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <image>
@@ -19,10 +19,10 @@
       <children>
         <Label text="Nom de la brute :">
           <labelFor>
-            <TextField id="name" fx:id="characterName" prefWidth="200.0" />
+            <TextField id="name" fx:id="bruteName" prefWidth="200.0" />
           </labelFor>
         </Label>
-        <fx:reference source="characterName" />
+        <fx:reference source="bruteName" />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />

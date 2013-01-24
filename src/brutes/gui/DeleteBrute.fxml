@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.DeleteCharacterController">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.DeleteBruteController">
   <children>
     <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
       <image>

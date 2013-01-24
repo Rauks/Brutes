@@ -17,13 +17,13 @@ import java.sql.SQLException;
 public class FightEntity implements Entity {
 
     static public Fight create(ResultSet r) throws SQLException, IOException {
-        return new Fight(r.getInt("id"), CharacterEntity.findById(r.getInt("brute_id1")), CharacterEntity.findById(r.getInt("brute_id2")));
+        return new Fight(r.getInt("id"), BruteEntity.findById(r.getInt("brute_id1")), BruteEntity.findById(r.getInt("brute_id2")));
     }
 
     public static int save(Connection con, Fight fight) throws IOException, SQLException {
         PreparedStatement psql = con.prepareStatement("UPDATE Fights SET brute_id1 = ?, brute_id2 = ?, winner_id = ? WHERE id = ?");
-        psql.setInt(1, fight.getCharacter1().getId());
-        psql.setInt(2, fight.getCharacter2().getId());
+        psql.setInt(1, fight.getBrute1().getId());
+        psql.setInt(2, fight.getBrute2().getId());
         psql.setInt(3, fight.getWinner() != null ? fight.getWinner().getId() : null);
         psql.setInt(4, fight.getId());
         return psql.executeUpdate();
@@ -31,13 +31,13 @@ public class FightEntity implements Entity {
 
     public static Fight insert(Connection con, Fight fight) throws IOException, SQLException {
         PreparedStatement psql = con.prepareStatement("INSERT INTO Fights (brute_id1, brute_id2) VALUES(?, ?)");
-        psql.setInt(1, fight.getCharacter1().getId());
-        psql.setInt(2, fight.getCharacter2().getId());
+        psql.setInt(1, fight.getBrute1().getId());
+        psql.setInt(2, fight.getBrute2().getId());
         return findById(psql.executeUpdate());
     }
 
     public static Fight findByUser(User user) throws IOException, SQLException {
-        return findByBruteId(CharacterEntity.findByUser(user).getId());
+        return findByBruteId(BruteEntity.findByUser(user).getId());
     }
 
     public static Fight findByBruteId(int id) throws IOException, SQLException {

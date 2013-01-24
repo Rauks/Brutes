@@ -20,7 +20,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -28,10 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class UpdateCharacterController implements Initializable {
-    @FXML
-    private TextField characterName;
-    
+public class DeleteBruteController implements Initializable {
     @FXML
     private void handleCancelAction(ActionEvent e){
         this.closeStage(e);
@@ -44,14 +40,15 @@ public class UpdateCharacterController implements Initializable {
             public void run() {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendUpdateCharacter(ScenesContext.getInstance().getSession().getToken(), characterName.getText());
+                        connection.sendDeleteBrute(ScenesContext.getInstance().getSession().getToken());
+                        ScenesContext.getInstance().getSession().getMyBrute().unload();
+                        ScenesContext.getInstance().getSession().getChallengerBrute().unload();
                     } catch (InvalidResponseException | ErrorResponseException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ScenesContext.getInstance().getSession().netLoadMyCharacter();
             }
         }.start();
         this.closeStage(e);
@@ -67,6 +64,6 @@ public class UpdateCharacterController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.characterName.setText(ScenesContext.getInstance().getSession().getMyCharacter().getNameProperty().getValue());
+        // TODO
     }    
 }

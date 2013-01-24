@@ -5,7 +5,7 @@
 package brutes.gui;
 
 import brutes.ScenesContext;
-import brutes.game.ObservableCharacter;
+import brutes.game.ObservableBrute;
 import brutes.net.Protocol;
 import brutes.net.client.ErrorResponseException;
 import brutes.net.client.InvalidResponseException;
@@ -117,8 +117,8 @@ public class FightController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
                 if(newState == Worker.State.SUCCEEDED){
-                    ScenesContext.getInstance().getSession().netLoadMyCharacter();
-                    ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
+                    ScenesContext.getInstance().getSession().netLoadMyBrute();
+                    ScenesContext.getInstance().getSession().netLoadChallengerBrute();
                     isFighting.set(false);
                     try {
                         Parent root;
@@ -166,9 +166,9 @@ public class FightController implements Initializable {
         this.doFight(FightTask.FightType.REGULAR);
     }
     @FXML
-    private void handleMenuCharacterNew(ActionEvent e){
+    private void handleMenuBruteNew(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("CreateCharacter.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("CreateBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
@@ -181,9 +181,9 @@ public class FightController implements Initializable {
         }
     }
     @FXML
-    private void handleMenuCharacterUpdate(ActionEvent e){
+    private void handleMenuBruteUpdate(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("UpdateCharacter.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("UpdateBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
@@ -196,9 +196,9 @@ public class FightController implements Initializable {
         }
     }
     @FXML
-    private void handleMenuCharacterDelete(ActionEvent e){
+    private void handleMenuBruteDelete(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("DeleteCharacter.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("DeleteBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
@@ -248,8 +248,8 @@ public class FightController implements Initializable {
         this.isFighting = new ReadOnlyBooleanWrapper();
         this.isFighting.set(false);
         
-        ObservableCharacter me = ScenesContext.getInstance().getSession().getMyCharacter();
-        ObservableCharacter ch = ScenesContext.getInstance().getSession().getChallengerCharacter();
+        ObservableBrute me = ScenesContext.getInstance().getSession().getMyBrute();
+        ObservableBrute ch = ScenesContext.getInstance().getSession().getChallengerBrute();
         
         this.myName.textProperty().bind(me.getNameProperty());
         this.myLevel.textProperty().bind(me.getLevelProperty().asString());
@@ -281,7 +281,7 @@ public class FightController implements Initializable {
         this.menuOptRename.disableProperty().bind(me.isLoadedProperty().not());
         this.menuOptDelete.disableProperty().bind(me.isLoadedProperty().not());
         
-        ScenesContext.getInstance().getSession().netLoadMyCharacter();
-        ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
+        ScenesContext.getInstance().getSession().netLoadMyBrute();
+        ScenesContext.getInstance().getSession().netLoadChallengerBrute();
     }    
 }
