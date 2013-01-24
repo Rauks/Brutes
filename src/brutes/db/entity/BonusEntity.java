@@ -17,7 +17,9 @@ import java.sql.SQLException;
 public class BonusEntity implements Entity {
 
     static public Bonus create(ResultSet r) throws SQLException {
-        return new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
+        Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
+        bonus.setCharacterId(r.getInt("brute_id"));
+        return bonus;
     }
 
     public static int save(Connection con, Bonus bonus) throws IOException, SQLException {
@@ -27,6 +29,16 @@ public class BonusEntity implements Entity {
         psql.setInt(3, bonus.getStrength());
         psql.setInt(4, bonus.getSpeed());
         psql.setInt(5, bonus.getId());
+        return psql.executeUpdate();
+    }
+    
+    public static int insert(Connection con, Bonus bonus) throws IOException, SQLException {
+        PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, strength, speed) VALUES(?, ?, ?, ?, ?)");
+        psql.setInt(1, bonus.getCharacterId());
+        psql.setString(2, bonus.getName());
+        psql.setInt(3, bonus.getLevel());
+        psql.setInt(4, bonus.getStrength());
+        psql.setInt(5, bonus.getSpeed());
         return psql.executeUpdate();
     }
 
@@ -53,5 +65,26 @@ public class BonusEntity implements Entity {
         }
 
         return bonus;
+    }
+
+    public static Bonus findRandomByCharacter(Character character) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id = ? ORDER BY Random() LIMIT 1");
+        psql.setInt(1, character.getId());
+        ResultSet rs = psql.executeQuery();
+
+        if( rs.next() ) {
+            return BonusEntity.create(rs);
+        }
+        return null;
+    }
+    
+    public static Bonus findRandom() throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus ORDER BY Random() LIMIT 1");
+        ResultSet rs = psql.executeQuery();
+
+        if( rs.next() ) {
+            return BonusEntity.create(rs);
+        }
+        return null;
     }
 }
