@@ -131,7 +131,11 @@ public class Character implements Identifiable {
             this.bonuses[i] = Bonus.EMPTY_BONUS;
         }
         if(bonuses != null){
-            System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Character.MAX_BONUSES)?bonuses.length:Character.MAX_BONUSES);
+            for (int i = 0; i < ((bonuses.length < Character.MAX_BONUSES)?bonuses.length:Character.MAX_BONUSES); i++) {
+                if(bonuses[i] != null){
+                    this.bonuses[i] = bonuses[i];
+                }
+            }
         }
     }
 
