@@ -94,6 +94,8 @@ public class DatasManager {
         try {
             Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
             
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::save", obj.getClass().getSimpleName());
+            
             classObj.getMethod("save", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
             
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
@@ -104,6 +106,8 @@ public class DatasManager {
     public static <T> T insert(T obj) throws IOException {
         try {
             Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::insert", obj.getClass().getSimpleName());
             
             return (T) classObj.getMethod("insert", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
             
@@ -116,6 +120,8 @@ public class DatasManager {
     public static <T> void delete(T obj) throws IOException {
         try {
             Class classObj = Class.forName("brutes.db.entity." + obj.getClass().getSimpleName() + "Entity");
+            
+            Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call brutes.db.entity.{0}Entity::delete", obj.getClass().getSimpleName());
             
             classObj.getMethod("delete", new Class[]{Connection.class, obj.getClass()}).invoke(null, DatasManager.getInstance(), obj);
             
