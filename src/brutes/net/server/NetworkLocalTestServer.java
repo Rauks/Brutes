@@ -204,7 +204,6 @@ public class NetworkLocalTestServer extends Network {
         int i = 0;
         int lost;
         while( fight.getCharacter1().getLife() > 0 && fight.getCharacter2().getLife() > 0 ) {
-            System.out.println("FIGHT: " + (++i) + " ");
             
             for( int j = 0 ; j < 2 ; j++ )
             {
@@ -230,7 +229,6 @@ public class NetworkLocalTestServer extends Network {
                 }
             }
         }
-        System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
         if( fight.getCharacter1().getLife() > 0 ) {
             this.readCheatFightWin(token);
         }
