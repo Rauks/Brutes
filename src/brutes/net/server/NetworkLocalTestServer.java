@@ -11,6 +11,7 @@ import brutes.db.entity.CharacterEntity;
 import brutes.db.entity.FightEntity;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
+import brutes.game.Character;
 import brutes.game.Fight;
 import brutes.game.User;
 import brutes.net.Network;
@@ -40,7 +41,6 @@ public class NetworkLocalTestServer extends Network {
 
     protected String checkToken(String rToken) throws NetworkResponseException {
         if (!rToken.equals(this.token)) {
-            //throw new Exception("Bad token: " + rToken + " - " + this.token);
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);
         }
         return rToken;
@@ -116,6 +116,8 @@ public class NetworkLocalTestServer extends Network {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
         
+        // @TODO fight == null
+        
         fight.setWinner(fight.getCharacter1());
         DatasManager.save(fight);
 
@@ -127,6 +129,8 @@ public class NetworkLocalTestServer extends Network {
     private void readCheatFightLoose(String token) throws IOException, SQLException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
+        
+        // @TODO fight == null
 
         fight.setWinner(fight.getCharacter2());
         DatasManager.save(fight);
@@ -144,9 +148,57 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readDoFight(String token) throws IOException {
+    private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
+        User user = UserEntity.findByToken(token);
+        Fight fight = FightEntity.findByUser(user);
+        System.out.println("[DoFight]");
+        
+        
+        // @TODO fight == null
+        
+        System.out.println("SET ch" + fight.getCharacter1().getId() + "[life=" + fight.getCharacter1().getLife() + "] VS ch" + fight.getCharacter2().getId() + "[life=" + fight.getCharacter2().getLife() + "]");
+        
+        int i = 0;
+        int lost;
+        while( fight.getCharacter1().getLife() > 0 && fight.getCharacter2().getLife() > 0 ) {
+            System.out.println("FIGHT: " + (++i) + " ");
+            System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
+            
+            for( int j = 0 ; j < 2 ; j++ )
+            {
+                Character ch1 = j==0 ? fight.getCharacter1() : fight.getCharacter2();
+                Character ch2 = j==0 ? fight.getCharacter2() : fight.getCharacter1();
+                int random = ui.random(0, 10);
+                
+                System.out.print("Brute[" + ch1.getName() + "] ");
+                if( random == 0 ) {
+                    System.out.println("rate son attaque ...");
+                }
+                else if( random == 1 ) {
+                    System.out.println("est enragé et gagne +1 dans chaque compétance !");
+                    ch1.setSpeed((short) (ch1.getSpeed()+1));
+                    ch1.setStrength((short) (ch1.getStrength()+1));
+                }
+                else {
+                    double pWin = ((double)(10*ch1.getLevel() + ch1.getStrength()));
+                    pWin *= ((double) ch1.getSpeed()/((double)(1+ch1.getSpeed()+ch2.getSpeed())));
+                    pWin *= ((double) ch1.getStrength()/((double)(1+ch1.getStrength()+ch2.getStrength())));
+                    pWin *= 1+((double) ch1.getLife()/((double)(1+ch1.getLife()+ch2.getLife())));
+                    // DEBUG
+                    //System.out.println("@@" + pWin);
+                    //System.out.println("@@ 100*(10*" + ch1.getLevel() + "+" + ch1.getStrength() + ")*(" + ch1.getSpeed() + "/(1+" + ch1.getSpeed() + "+" + ch2.getSpeed() + ")");
+                    //System.out.println(ch1.getLife() + "/(1+" + ch1.getLife() + "+" + ch2.getLife() + ")");
+                    ch2.setLife((short) (fight.getCharacter2().getLife() - pWin));
+                    
+                    System.out.println("attaque. ATK " + ((short) pWin) + " pv");
+                }
+            }
+        }
+        System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
+        
+        System.out.println("\t\tVous " + (fight.getCharacter1().getLife() > 0 ? "gagnez" : "perdez"));
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
-                .writeBoolean(true)
+                .writeBoolean(fight.getCharacter1().getLife() > 0)
                 .send();
     }
 
