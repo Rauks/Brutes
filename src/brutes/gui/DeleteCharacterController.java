@@ -42,7 +42,7 @@ public class DeleteCharacterController implements Initializable {
                     try {
                         connection.sendDeleteCharacter(ScenesContext.getInstance().getSession().getToken());
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

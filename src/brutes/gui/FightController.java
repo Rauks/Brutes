@@ -212,7 +212,7 @@ public class FightController implements Initializable {
                     try {
                         connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

@@ -44,7 +44,7 @@ public class FightTask extends Task{
                     try {
                         this.result.set(connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                         throw ex;
                     }
                 } catch (IOException ex) {
@@ -57,7 +57,7 @@ public class FightTask extends Task{
                     try {
                         this.result.set(connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                         throw ex;
                     }
                 } catch (IOException ex) {
@@ -70,7 +70,7 @@ public class FightTask extends Task{
                     try {
                         this.result.set(connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                         throw ex;
                     }
                 } catch (IOException ex) {
@@ -83,7 +83,7 @@ public class FightTask extends Task{
                     try {
                         this.result.set(connection.sendDoFight(ScenesContext.getInstance().getSession().getToken()));
                     } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                         throw ex;
                     }
                 } catch (IOException ex) {
