@@ -44,14 +44,11 @@ public class BonusEntity implements Entity {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id = ?");
         psql.setInt(1, character.getId());
         ResultSet rs = psql.executeQuery();
-        
-        System.out.println("Find Bonus for Brute#" + character.getId());
 
         Bonus[] bonus = new Bonus[Character.MAX_BONUSES];
 
         int i = 0;
         while (rs.next() && i < 3) {
-            System.out.println("\tBonus#" + rs.getInt("id"));
             bonus[i++] = BonusEntity.create(rs);
         }
 

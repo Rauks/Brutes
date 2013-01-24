@@ -23,7 +23,6 @@ import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,11 +111,13 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readCheatFightWin(String token) throws IOException, SQLException {
+    private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
         
-        // @TODO fight == null
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
         
         fight.setWinner(fight.getCharacter1());
         DatasManager.save(fight);
@@ -126,11 +127,13 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose(String token) throws IOException, SQLException {
+    private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
         
-        // @TODO fight == null
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
 
         fight.setWinner(fight.getCharacter2());
         DatasManager.save(fight);
@@ -140,7 +143,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom(String token) throws IOException, SQLException {
+    private void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose(token);
         } else {
@@ -153,8 +156,9 @@ public class NetworkLocalTestServer extends Network {
         Fight fight = FightEntity.findByUser(user);
         System.out.println("[DoFight]");
         
-        
-        // @TODO fight == null
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
         
         System.out.println("SET ch" + fight.getCharacter1().getId() + "[life=" + fight.getCharacter1().getLife() + "] VS ch" + fight.getCharacter2().getId() + "[life=" + fight.getCharacter2().getLife() + "]");
         
@@ -305,7 +309,6 @@ public class NetworkLocalTestServer extends Network {
         }
         
         character.setBonuses(BonusEntity.findAllByCharacter(character));
-        System.out.println("BONUS=" + character.getBonusesIDs());
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(id)
@@ -315,7 +318,7 @@ public class NetworkLocalTestServer extends Network {
                 .writeShortInt((short) character.getStrength())
                 .writeShortInt((short) character.getSpeed())
                 .writeLongInt(id) // @TODO : image
-                .writeLongIntArray(character.getBonusesIDs()) // @TODO : bonus
+                .writeLongIntArray(character.getBonusesIDs())
                 .send();
     }
 
