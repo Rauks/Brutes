@@ -192,7 +192,7 @@ public class NetworkLocalTestServer extends Network {
                     //System.out.println("@@" + pWin);
                     //System.out.println("@@ 100*(10*" + ch1.getLevel() + "+" + ch1.getStrength() + ")*(" + ch1.getSpeed() + "/(1+" + ch1.getSpeed() + "+" + ch2.getSpeed() + ")");
                     //System.out.println(ch1.getLife() + "/(1+" + ch1.getLife() + "+" + ch2.getLife() + ")");
-                    ch2.setLife((short) (fight.getCharacter2().getLife() - pWin));
+                    ch2.setLife((short) (ch2.getLife() - pWin));
                     
                     System.out.println("attaque. ATK " + ((short) pWin) + " pv");
                 }
@@ -201,9 +201,12 @@ public class NetworkLocalTestServer extends Network {
         System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
         
         System.out.println("\t\tVous " + (fight.getCharacter1().getLife() > 0 ? "gagnez" : "perdez"));
-        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
-                .writeBoolean(fight.getCharacter1().getLife() > 0)
-                .send();
+        if( fight.getCharacter1().getLife() > 0 ) {
+            this.readCheatFightWin(token);
+        }
+        else {
+            this.readCheatFightLoose(token);
+        }
     }
 
     private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException {
