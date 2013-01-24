@@ -119,7 +119,46 @@ public class NetworkLocalTestServer extends Network {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
         
-        fight.setWinner(fight.getCharacter1());
+        Character character = fight.getCharacter1();
+        switch(ui.random(1, 6))
+        {
+            case 1: // Level Up
+                character.setLevel((short)(character.getLevel()+1));
+                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 character level ({0})", character.getLevel());
+                DatasManager.save(character);
+                break;
+            case 2: // Bonus Up
+            case 3: // Bonus Up
+                Bonus bonus = BonusEntity.findRandomByCharacter(character);
+                if( bonus != null )
+                {
+                    bonus.setLevel((short)(bonus.getLevel()+1));
+                    bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
+                    bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
+                    DatasManager.save(bonus);
+                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 bonus level ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                }
+                else
+                {
+                    bonus = BonusEntity.findRandomByCharacter(fight.getCharacter2());
+                    if( bonus != null )
+                    {
+                        bonus.setLevel((short) ui.random(1, (int)(character.getLevel()/2)));
+                        bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
+                        bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
+                        bonus.setCharacterId(character.getId());
+                        DatasManager.insert(bonus);
+                        Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: new bonus ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                    }
+                    
+                }
+                break;
+            default: // New
+                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: Nothing ...");
+                break;
+        }
+        
+        fight.setWinner(character);
         DatasManager.save(fight);
 
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
@@ -154,32 +193,23 @@ public class NetworkLocalTestServer extends Network {
     private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
-        System.out.println("[DoFight]");
         
         if( fight == null ) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
         
-        System.out.println("SET ch" + fight.getCharacter1().getId() + "[life=" + fight.getCharacter1().getLife() + "] VS ch" + fight.getCharacter2().getId() + "[life=" + fight.getCharacter2().getLife() + "]");
-        
         int i = 0;
         int lost;
         while( fight.getCharacter1().getLife() > 0 && fight.getCharacter2().getLife() > 0 ) {
-            System.out.println("FIGHT: " + (++i) + " ");
-            System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
             
             for( int j = 0 ; j < 2 ; j++ )
             {
                 Character ch1 = j==0 ? fight.getCharacter1() : fight.getCharacter2();
                 Character ch2 = j==0 ? fight.getCharacter2() : fight.getCharacter1();
                 int random = ui.random(0, 10);
-                
-                System.out.print("\t\tBrute[" + ch1.getName() + "] ");
                 if( random == 0 ) {
-                    System.out.println("rate son attaque ...");
                 }
                 else if( random == 1 ) {
-                    System.out.println("est enragé et gagne +1 dans chaque compétance !");
                     ch1.setSpeed((short) (ch1.getSpeed()+1));
                     ch1.setStrength((short) (ch1.getStrength()+1));
                 }
@@ -192,18 +222,16 @@ public class NetworkLocalTestServer extends Network {
                     //System.out.println("@@" + pWin);
                     //System.out.println("@@ 100*(10*" + ch1.getLevel() + "+" + ch1.getStrength() + ")*(" + ch1.getSpeed() + "/(1+" + ch1.getSpeed() + "+" + ch2.getSpeed() + ")");
                     //System.out.println(ch1.getLife() + "/(1+" + ch1.getLife() + "+" + ch2.getLife() + ")");
-                    ch2.setLife((short) (fight.getCharacter2().getLife() - pWin));
-                    
-                    System.out.println("attaque. ATK " + ((short) pWin) + " pv");
+                    ch2.setLife((short) (ch2.getLife() - pWin));
                 }
             }
         }
-        System.out.println("\tBrute[" + fight.getCharacter1().getName() + "] (" + fight.getCharacter1().getLife() + "pv) VS Brute[" + fight.getCharacter2().getName() + "] (" + fight.getCharacter2().getLife() + "pv)");
-        
-        System.out.println("\t\tVous " + (fight.getCharacter1().getLife() > 0 ? "gagnez" : "perdez"));
-        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
-                .writeBoolean(fight.getCharacter1().getLife() > 0)
-                .send();
+        if( fight.getCharacter1().getLife() > 0 ) {
+            this.readCheatFightWin(token);
+        }
+        else {
+            this.readCheatFightLoose(token);
+        }
     }
 
     private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException {

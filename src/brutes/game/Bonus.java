@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package brutes.game;
 
 import brutes.db.Identifiable;
@@ -19,6 +15,9 @@ public class Bonus implements Identifiable {
     private short strength;
     private short speed;
     private int imageID;
+    
+    /* more */
+    private int characterId;
     
     private Bonus(){
         this.id = 0;
@@ -49,7 +48,7 @@ public class Bonus implements Identifiable {
         return level;
     }
     public short getStrength() {
-        return strength;
+        return (short) (strength*(1+ (double) this.level/2));
     }
     public short getSpeed() {
         return speed;
@@ -57,4 +56,20 @@ public class Bonus implements Identifiable {
     public int getImage() {
         return imageID;
     }
+    public void setLevel(short level) {
+        this.level = level;
+    }
+    public int getCharacterId() {
+        return characterId;
+    }
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
+    }
+    public void setStrength(short strength) {
+        this.strength = strength;
+    }
+    public void setSpeed(short speed) {
+        this.speed = speed;
+    }
+    
 }

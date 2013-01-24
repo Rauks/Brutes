@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package brutes.db.entity;
 
 import brutes.db.DatasManager;
@@ -41,18 +37,25 @@ public class FightEntity implements Entity {
     }
 
     public static Fight findByUser(User user) throws IOException, SQLException {
-        System.out.println("FightEntity::FindByUser(" + user.getId() + ")");
-        return findById(CharacterEntity.findByUser(user).getId());
+        return findByBruteId(CharacterEntity.findByUser(user).getId());
     }
 
-    public static Fight findById(int id) throws IOException, SQLException {
-        System.out.println("FightEntity::FindById(" + id + ")");
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
+    public static Fight findByBruteId(int id) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL ORDER BY date_created DESC LIMIT 1");
         psql.setInt(1, id);
         psql.setInt(2, id);
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
-            System.out.println("FightEntity::FindById = " + rs.getInt("id") + ";");
+            return FightEntity.create(rs);
+        }
+        return null;
+    }
+    
+    public static Fight findById(int id) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE id = ?");
+        psql.setInt(1, id);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
             return FightEntity.create(rs);
         }
         return null;
