@@ -49,7 +49,11 @@ public class FightController implements Initializable {
     @FXML
     private Text myStrength;
     @FXML
+    private Text myBonusStrength;
+    @FXML
     private Text mySpeed;
+    @FXML
+    private Text myBonusSpeed;
     @FXML
     private Text myBonus1;
     @FXML
@@ -73,7 +77,11 @@ public class FightController implements Initializable {
     @FXML
     private Text chStrength;
     @FXML
+    private Text chBonusStrength;
+    @FXML
     private Text chSpeed;
+    @FXML
+    private Text chBonusSpeed;
     @FXML
     private Text chBonus1;
     @FXML
@@ -247,7 +255,9 @@ public class FightController implements Initializable {
         this.myLevel.textProperty().bind(me.getLevelProperty().asString());
         this.myLifes.textProperty().bind(me.getLifeProperty().asString());
         this.myStrength.textProperty().bind(me.getStrengthProperty().asString());
+        this.myBonusStrength.textProperty().bind(me.getBonusStrengthProperty().asString());
         this.mySpeed.textProperty().bind(me.getSpeedProperty().asString());
+        this.myBonusSpeed.textProperty().bind(me.getBonusSpeedProperty().asString());
         this.myBonus1.textProperty().bind(me.getBonus(0).getNameProperty());
         this.myBonus2.textProperty().bind(me.getBonus(1).getNameProperty());
         this.myBonus3.textProperty().bind(me.getBonus(2).getNameProperty());
@@ -256,7 +266,9 @@ public class FightController implements Initializable {
         this.chLevel.textProperty().bind(ch.getLevelProperty().asString());
         this.chLifes.textProperty().bind(ch.getLifeProperty().asString());
         this.chStrength.textProperty().bind(ch.getStrengthProperty().asString());
+        this.chBonusStrength.textProperty().bind(ch.getBonusStrengthProperty().asString());
         this.chSpeed.textProperty().bind(ch.getSpeedProperty().asString());
+        this.chBonusSpeed.textProperty().bind(ch.getBonusSpeedProperty().asString());
         this.chBonus1.textProperty().bind(ch.getBonus(0).getNameProperty());
         this.chBonus2.textProperty().bind(ch.getBonus(1).getNameProperty());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getNameProperty());
