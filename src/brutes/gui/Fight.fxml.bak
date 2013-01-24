@@ -27,7 +27,7 @@
     </ImageView>
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-        <VBox minWidth="-Infinity" prefWidth="300.0">
+        <VBox fx:id="myBruteStats" minWidth="-Infinity" prefWidth="300.0">
           <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ma Brute">
               <font>
@@ -94,15 +94,18 @@
                     </HBox>
                   </children>
                 </VBox>
-                <ImageView fx:id="myImage" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="myImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
               </children>
+              <padding>
+                <Insets bottom="5.0" top="5.0" fx:id="x2" />
+              </padding>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
               <children>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
-                    <Text id="bonus1" fx:id="myBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                    <Text id="bonus1" fx:id="myBonus1" scaleX="1.0000015258789063" scaleY="1.0000076480665687" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                     <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                 </VBox>
@@ -119,8 +122,11 @@
                   </children>
                 </VBox>
               </children>
+              <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x5" />
+              </padding>
               <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x2" />
+                <Insets fx:id="x4" />
               </VBox.margin>
             </HBox>
           </children>
@@ -130,10 +136,10 @@
         </VBox>
       </left>
       <right>
-        <VBox minWidth="-Infinity" prefWidth="300.0">
+        <VBox fx:id="chBruteStats" minWidth="-Infinity" prefWidth="300.0">
           <children>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire" />
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="260.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" padding="$x2" prefHeight="140.0" prefWidth="260.0">
               <children>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="180.0">
                   <children>
@@ -185,11 +191,11 @@
                     </HBox>
                   </children>
                 </VBox>
-                <ImageView id="myImage" fx:id="chImage" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.margin="$x4" />
+                <ImageView id="myImage" fx:id="chImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.margin="$x4" />
               </children>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+            <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.margin="$x4">
               <children>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
@@ -210,9 +216,6 @@
                   </children>
                 </VBox>
               </children>
-              <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x2" />
-              </VBox.margin>
             </HBox>
           </children>
           <padding>

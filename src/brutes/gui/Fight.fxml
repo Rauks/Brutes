@@ -19,7 +19,7 @@
         <Image url="@Background.jpg" preserveRatio="false" smooth="false" />
       </image>
     </ImageView>
-    <Line endY="350.0" layoutX="300.0" stroke="#cc0000" strokeWidth="2.5" />
+    <Line endY="350.0" layoutX="300.0" stroke="#990000" strokeWidth="2.5" />
     <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="275.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@LogoVS.png" preserveRatio="false" smooth="false" />
@@ -191,11 +191,15 @@
                     </HBox>
                   </children>
                 </VBox>
-                <ImageView id="myImage" fx:id="chImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.margin="$x4" />
+                <ImageView id="myImage" fx:id="chImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                    <Insets fx:id="x4" />
+                  </HBox.margin>
+                </ImageView>
               </children>
             </HBox>
             <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.margin="$x4">
+            <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
               <children>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                   <children>
@@ -216,6 +220,9 @@
                   </children>
                 </VBox>
               </children>
+              <VBox.margin>
+                <Insets fx:id="x4" />
+              </VBox.margin>
             </HBox>
           </children>
           <padding>
