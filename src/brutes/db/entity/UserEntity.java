@@ -57,4 +57,13 @@ public class UserEntity {
         
         return token;
     }
+
+    public static void updateTokenToNull(String token) throws IOException, SQLException {
+        User user = UserEntity.findByToken(token);
+        user.setToken(null);
+        DatasManager.save(user);
+        /*PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
+        psql.setString(1, token);
+        psql.executeUpdate();*/
+    }
 }

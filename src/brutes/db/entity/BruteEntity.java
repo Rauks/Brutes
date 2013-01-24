@@ -70,4 +70,15 @@ public class BruteEntity implements Entity {
         }
         return null;
     }
+    
+    public static Brute findRandomAnotherToBattleByUser(User user) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
+        psql.setInt(1, user.getId());
+        ResultSet rs = psql.executeQuery();
+            
+        if (rs.next()) {
+            return BruteEntity.create(rs);
+        }
+        return null;
+    }
 }

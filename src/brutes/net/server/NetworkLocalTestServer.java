@@ -262,9 +262,7 @@ public class NetworkLocalTestServer extends Network {
     }
 
     private void readLogout(String token) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
-        psql.setString(1, token);
-        psql.executeUpdate();
+        UserEntity.updateTokenToNull(token);
 
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
@@ -302,8 +300,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDeleteBrute(String token) throws IOException, SQLException {
-        User user = UserEntity.findByToken(token);
+    private void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException {
+        User user = this.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findByUser(user);
         DatasManager.delete(brute);
         
@@ -360,17 +358,15 @@ public class NetworkLocalTestServer extends Network {
         Fight fight = FightEntity.findByUser(user);
         
         if (fight == null) {
-            PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
-            psql.setInt(1, user.getId());
-            ResultSet query = psql.executeQuery();
+            Brute otherBrute = BruteEntity.findRandomAnotherToBattleByUser(user);
             
-            if( !query.next() ) {
+            if( otherBrute == null ) {
                 throw new NetworkResponseException(Protocol.ERROR_FIGHT);
             }
             
             fight = new Fight();
             fight.setBrute1(brute);
-            fight.setBrute2(BruteEntity.findById(query.getInt("id")));
+            fight.setBrute2(otherBrute);
             DatasManager.insert(fight);
         }
         
