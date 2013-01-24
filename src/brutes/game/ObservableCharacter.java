@@ -18,6 +18,8 @@ public class ObservableCharacter {
     private ReadOnlyIntegerWrapper life;
     private ReadOnlyIntegerWrapper strength;
     private ReadOnlyIntegerWrapper speed;
+    private ReadOnlyIntegerWrapper bonusStrength;
+    private ReadOnlyIntegerWrapper bonusSpeed;
     private ReadOnlyIntegerWrapper imageID;
     private ObservableBonus[] bonuses;
     private ReadOnlyBooleanWrapper isLoaded;
@@ -31,6 +33,8 @@ public class ObservableCharacter {
         this.life = new ReadOnlyIntegerWrapper(0);
         this.strength = new ReadOnlyIntegerWrapper(0);
         this.speed = new ReadOnlyIntegerWrapper(0);
+        this.bonusStrength = new ReadOnlyIntegerWrapper(0);
+        this.bonusSpeed = new ReadOnlyIntegerWrapper(0);
         this.imageID = new ReadOnlyIntegerWrapper(0);
         this.bonuses = new ObservableBonus[Character.MAX_BONUSES];
         for(int i = 0; i < Character.MAX_BONUSES; i++){
@@ -46,6 +50,8 @@ public class ObservableCharacter {
         this.life.set(c.getLife());
         this.strength.set(c.getStrength());
         this.speed.set(c.getSpeed());
+        this.bonusStrength.set(c.getBonusStrength());
+        this.bonusSpeed.set(c.getBonusSpeed());
         this.imageID.set(c.getImageID());
         Bonus[] bonus = c.getBonuses();
         for(int i = 0; i < Character.MAX_BONUSES; i++){
@@ -60,6 +66,8 @@ public class ObservableCharacter {
         this.life.set(0);
         this.strength.set(0);
         this.speed.set(0);
+        this.bonusStrength.set(0);
+        this.bonusSpeed.set(0);
         this.imageID.set(0);
         for(int i = 0; i < Character.MAX_BONUSES; i++){
             this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
@@ -89,6 +97,12 @@ public class ObservableCharacter {
     }
     public ReadOnlyIntegerProperty getSpeedProperty() {
         return this.speed.getReadOnlyProperty();
+    }
+    public ReadOnlyIntegerProperty getBonusStrengthProperty() {
+        return this.bonusStrength.getReadOnlyProperty();
+    }
+    public ReadOnlyIntegerProperty getBonusSpeedProperty() {
+        return this.bonusSpeed.getReadOnlyProperty();
     }
     public ReadOnlyIntegerProperty getImageIDProperty() {
         return this.imageID.getReadOnlyProperty();
