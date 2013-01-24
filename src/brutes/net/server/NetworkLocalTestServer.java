@@ -193,13 +193,10 @@ public class NetworkLocalTestServer extends Network {
     private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         Fight fight = FightEntity.findByUser(user);
-        System.out.println("[DoFight]");
         
         if( fight == null ) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
-        
-        System.out.println("SET ch" + fight.getCharacter1().getId() + "[life=" + fight.getCharacter1().getLife() + "] VS ch" + fight.getCharacter2().getId() + "[life=" + fight.getCharacter2().getLife() + "]");
         
         int i = 0;
         int lost;
