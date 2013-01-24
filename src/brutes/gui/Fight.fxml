@@ -218,9 +218,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Options">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCharacterDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>

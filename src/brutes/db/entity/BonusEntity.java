@@ -3,7 +3,7 @@ package brutes.db.entity;
 import brutes.db.DatasManager;
 import brutes.db.Entity;
 import brutes.game.Bonus;
-import brutes.game.Character;
+import brutes.game.Brute;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class BonusEntity implements Entity {
 
     static public Bonus create(ResultSet r) throws SQLException {
         Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
-        bonus.setCharacterId(r.getInt("brute_id"));
+        bonus.setBruteId(r.getInt("brute_id"));
         return bonus;
     }
 
@@ -34,7 +34,7 @@ public class BonusEntity implements Entity {
     
     public static int insert(Connection con, Bonus bonus) throws IOException, SQLException {
         PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, strength, speed) VALUES(?, ?, ?, ?, ?)");
-        psql.setInt(1, bonus.getCharacterId());
+        psql.setInt(1, bonus.getBruteId());
         psql.setString(2, bonus.getName());
         psql.setInt(3, bonus.getLevel());
         psql.setInt(4, bonus.getStrength());
@@ -52,12 +52,12 @@ public class BonusEntity implements Entity {
         return null;
     }
 
-    public static Bonus[] findAllByCharacter(Character character) throws IOException, SQLException {
+    public static Bonus[] findAllByBrute(Brute brute) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id = ?");
-        psql.setInt(1, character.getId());
+        psql.setInt(1, brute.getId());
         ResultSet rs = psql.executeQuery();
 
-        Bonus[] bonus = new Bonus[Character.MAX_BONUSES];
+        Bonus[] bonus = new Bonus[Brute.MAX_BONUSES];
 
         int i = 0;
         while (rs.next() && i < 3) {
@@ -67,9 +67,9 @@ public class BonusEntity implements Entity {
         return bonus;
     }
 
-    public static Bonus findRandomByCharacter(Character character) throws IOException, SQLException {
+    public static Bonus findRandomByBrute(Brute brute) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id = ? ORDER BY Random() LIMIT 1");
-        psql.setInt(1, character.getId());
+        psql.setInt(1, brute.getId());
         ResultSet rs = psql.executeQuery();
 
         if( rs.next() ) {

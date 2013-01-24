@@ -13,44 +13,44 @@ import brutes.db.Identifiable;
 public class Fight implements Identifiable {
 
     private int id;
-    private Character character1;
-    private Character character2;
-    private Character winner;
+    private Brute brute1;
+    private Brute brute2;
+    private Brute winner;
 
     public Fight() {
     }
 
-    public Fight(int id, Character character1, Character character2) {
+    public Fight(int id, Brute brute1, Brute brute2) {
         this.id = id;
-        this.character1 = character1;
-        this.character2 = character2;
+        this.brute1 = brute1;
+        this.brute2 = brute2;
     }
 
     public int getId() {
         return id;
     }
 
-    public Character getCharacter1() {
-        return character1;
+    public Brute getBrute1() {
+        return brute1;
     }
 
-    public void setCharacter1(Character character1) {
-        this.character1 = character1;
+    public void setBrute1(Brute brute1) {
+        this.brute1 = brute1;
     }
 
-    public Character getCharacter2() {
-        return character2;
+    public Brute getBrute2() {
+        return brute2;
     }
 
-    public void setCharacter2(Character character2) {
-        this.character2 = character2;
+    public void setBrute2(Brute brute2) {
+        this.brute2 = brute2;
     }
 
-    public Character getWinner() {
+    public Brute getWinner() {
         return winner;
     }
 
-    public void setWinner(Character winner) {
+    public void setWinner(Brute winner) {
         this.winner = winner;
     }
 }

@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class DeleteCharacterController implements Initializable {
+public class DeleteBruteController implements Initializable {
     @FXML
     private void handleCancelAction(ActionEvent e){
         this.closeStage(e);
@@ -40,9 +40,9 @@ public class DeleteCharacterController implements Initializable {
             public void run() {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendDeleteCharacter(ScenesContext.getInstance().getSession().getToken());
-                        ScenesContext.getInstance().getSession().getMyCharacter().unload();
-                        ScenesContext.getInstance().getSession().getChallengerCharacter().unload();
+                        connection.sendDeleteBrute(ScenesContext.getInstance().getSession().getToken());
+                        ScenesContext.getInstance().getSession().getMyBrute().unload();
+                        ScenesContext.getInstance().getSession().getChallengerBrute().unload();
                     } catch (InvalidResponseException | ErrorResponseException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }

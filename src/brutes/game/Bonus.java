@@ -17,7 +17,7 @@ public class Bonus implements Identifiable {
     private int imageID;
     
     /* more */
-    private int characterId;
+    private int bruteId;
     
     private Bonus(){
         this.id = 0;
@@ -59,11 +59,11 @@ public class Bonus implements Identifiable {
     public void setLevel(short level) {
         this.level = level;
     }
-    public int getCharacterId() {
-        return characterId;
+    public int getBruteId() {
+        return bruteId;
     }
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
+    public void setBruteId(int bruteId) {
+        this.bruteId = bruteId;
     }
     public void setStrength(short strength) {
         this.strength = strength;

@@ -11,7 +11,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
  *
  * @author Karl
  */
-public class ObservableCharacter {
+public class ObservableBrute {
     private ReadOnlyIntegerWrapper id;
     private ReadOnlyStringWrapper name;
     private ReadOnlyIntegerWrapper level;
@@ -24,7 +24,7 @@ public class ObservableCharacter {
     private ObservableBonus[] bonuses;
     private ReadOnlyBooleanWrapper isLoaded;
     
-    public ObservableCharacter(){
+    public ObservableBrute(){
         this.isLoaded = new ReadOnlyBooleanWrapper();
         this.isLoaded.set(false);
         this.id = new ReadOnlyIntegerWrapper(0);
@@ -36,13 +36,13 @@ public class ObservableCharacter {
         this.bonusStrength = new ReadOnlyIntegerWrapper(0);
         this.bonusSpeed = new ReadOnlyIntegerWrapper(0);
         this.imageID = new ReadOnlyIntegerWrapper(0);
-        this.bonuses = new ObservableBonus[Character.MAX_BONUSES];
-        for(int i = 0; i < Character.MAX_BONUSES; i++){
+        this.bonuses = new ObservableBonus[Brute.MAX_BONUSES];
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
             this.bonuses[i] = new ObservableBonus();
         }
     }
     
-    public void loadCharacter(Character c){
+    public void loadBrute(Brute c){
         this.isLoaded.set(true);
         this.id.set(c.getId());
         this.name.set(c.getName());
@@ -54,7 +54,7 @@ public class ObservableCharacter {
         this.bonusSpeed.set(c.getBonusSpeed());
         this.imageID.set(c.getImageID());
         Bonus[] bonus = c.getBonuses();
-        for(int i = 0; i < Character.MAX_BONUSES; i++){
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
             this.bonuses[i].loadBonus(bonus[i]);
         }
     }
@@ -69,7 +69,7 @@ public class ObservableCharacter {
         this.bonusStrength.set(0);
         this.bonusSpeed.set(0);
         this.imageID.set(0);
-        for(int i = 0; i < Character.MAX_BONUSES; i++){
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
             this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
         }
     }

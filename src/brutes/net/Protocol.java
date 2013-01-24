@@ -31,19 +31,19 @@ public abstract class Protocol {
     public static final byte D_LOGIN = (byte)0x80;
     public static final byte D_LOGOUT = (byte)0x81;
     
-    public static final byte D_CREATE_CHARACTER = (byte)0x90;
-    public static final byte D_UPDATE_CHARACTER = (byte)0x91;
-    public static final byte D_DELETE_CHARACTER = (byte)0x92;
+    public static final byte D_CREATE_BRUTE = (byte)0x90;
+    public static final byte D_UPDATE_BRUTE = (byte)0x91;
+    public static final byte D_DELETE_BRUTE = (byte)0x92;
     
-    public static final byte D_GET_MY_CHARACTER_ID = (byte)0xA0;
-    public static final byte D_GET_CHALLENGER_CHARACTER_ID = (byte)0xA1;
+    public static final byte D_GET_MY_BRUTE_ID = (byte)0xA0;
+    public static final byte D_GET_CHALLENGER_BRUTE_ID = (byte)0xA1;
     
     public static final byte D_CHEAT_FIGHT_WIN = (byte)0xB0;
     public static final byte D_CHEAT_FIGHT_LOOSE = (byte)0xB1;
     public static final byte D_CHEAT_FIGHT_RANDOM = (byte)0xB2;
     public static final byte D_DO_FIGHT = (byte)0xB3;
     
-    public static final byte D_GET_CHARACTER = (byte)0xC0;
+    public static final byte D_GET_BRUTE = (byte)0xC0;
     public static final byte D_GET_IMAGE = (byte)0xC2;
     public static final byte D_GET_BONUS = (byte)0xC3;
     
@@ -53,20 +53,20 @@ public abstract class Protocol {
     
     public static final byte R_ACTION_SUCCESS = (byte)0x03;
     
-    public static final byte R_CHARACTER = (byte)0x10;
+    public static final byte R_BRUTE = (byte)0x10;
     public static final byte R_FIGHT_RESULT = (byte)0x11;
     
-    public static final byte R_DATA_CHARACTER = (byte)0x20;
+    public static final byte R_DATA_BRUTE = (byte)0x20;
     public static final byte R_DATA_IMAGE = (byte)0x21;
     public static final byte R_DATA_BONUS = (byte)0x22;
     
     public static final byte ERROR = (byte)0x40;
     public static final byte ERROR_LOGIN_NOT_FOUND = (byte)0x41;
     public static final byte ERROR_WRONG_PASSWORD = (byte)0x42;
-    public static final byte ERROR_CREATE_CHARACTER = (byte)0x43;
-    public static final byte ERROR_UPDATE_CHARACTER = (byte)0x44;
-    public static final byte ERROR_DELETE_CHARACTER = (byte)0x45;
-    public static final byte ERROR_CHARACTER_NOT_FOUND = (byte)0x46;
+    public static final byte ERROR_CREATE_BRUTE = (byte)0x43;
+    public static final byte ERROR_UPDATE_BRUTE = (byte)0x44;
+    public static final byte ERROR_DELETE_BRUTE = (byte)0x45;
+    public static final byte ERROR_BRUTE_NOT_FOUND = (byte)0x46;
     public static final byte ERROR_IMAGE_NOT_FOUND = (byte)0x47;
     public static final byte ERROR_BONUS_NOT_FOUND = (byte)0x48;
     public static final byte ERROR_FIGHT = (byte)0x49;

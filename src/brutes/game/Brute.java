@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  * @author Karl
  */
-public class Character implements Identifiable {
+public class Brute implements Identifiable {
 
     public static final int MAX_BONUSES = 3;
     
@@ -24,7 +24,7 @@ public class Character implements Identifiable {
     /* more */
     private int userid;
 
-    public Character(int id, String name, short level, short life, short strength, short speed, int imageID) {
+    public Brute(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -32,15 +32,15 @@ public class Character implements Identifiable {
         this.strength = strength;
         this.speed = speed;
         this.imageID = imageID;
-        this.bonuses = new Bonus[Character.MAX_BONUSES];
+        this.bonuses = new Bonus[Brute.MAX_BONUSES];
         for (int i = 0; i < this.bonuses.length; i++) {
             this.bonuses[i] = Bonus.EMPTY_BONUS;
         }
     }
 
-    public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
+    public Brute(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
         this(id, name, level, life, strength, speed, imageID);
-        System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Character.MAX_BONUSES) ? bonuses.length : Character.MAX_BONUSES);
+        System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Brute.MAX_BONUSES) ? bonuses.length : Brute.MAX_BONUSES);
     }
 
     @Override
@@ -97,8 +97,8 @@ public class Character implements Identifiable {
     }
     
     public int[] getBonusesIDs() {
-        ArrayList<Integer> bonusesIds = new ArrayList<>(Character.MAX_BONUSES);
-        for(int i = 0; i < Character.MAX_BONUSES; i++){
+        ArrayList<Integer> bonusesIds = new ArrayList<>(Brute.MAX_BONUSES);
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
             if(this.bonuses[i] != Bonus.EMPTY_BONUS){
                 bonusesIds.add(new Integer(this.bonuses[i].getId()));
             }
@@ -131,11 +131,11 @@ public class Character implements Identifiable {
     }
 
     public void setBonuses(Bonus[] bonuses) {
-        for (int i = 0; i < Character.MAX_BONUSES; i++) {
+        for (int i = 0; i < Brute.MAX_BONUSES; i++) {
             this.bonuses[i] = Bonus.EMPTY_BONUS;
         }
         if(bonuses != null){
-            for (int i = 0; i < ((bonuses.length < Character.MAX_BONUSES)?bonuses.length:Character.MAX_BONUSES); i++) {
+            for (int i = 0; i < ((bonuses.length < Brute.MAX_BONUSES)?bonuses.length:Brute.MAX_BONUSES); i++) {
                 if(bonuses[i] != null){
                     this.bonuses[i] = bonuses[i];
                 }

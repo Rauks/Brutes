@@ -13,7 +13,7 @@ public class User implements Identifiable {
     private String pseudo;
     private String password;
     private String token;
-    private HashMap<String, Character> characters = new HashMap<>();
+    private HashMap<String, Brute> brutes = new HashMap<>();
 
     public User(int id, String pseudo, String password, String token) {
         this.id = id;
@@ -51,21 +51,21 @@ public class User implements Identifiable {
         this.token = token;
     }
 
-    public HashMap<String, Character> getCharacters() {
-        return characters;
+    public HashMap<String, Brute> getBrutes() {
+        return brutes;
     }
 
-    public void setCharacters(HashMap<String, Character> characters) {
-        this.characters = characters;
+    public void setBrutes(HashMap<String, Brute> brutes) {
+        this.brutes = brutes;
     }
 
-    public void addCharacter(String name, Character character) {
-        this.characters.put(name, character);
+    public void addBrute(String name, Brute brute) {
+        this.brutes.put(name, brute);
     }
 
     /*
-     public void removeCharacter(String name, Character character) {
-     this.characters.remove(name);
+     public void removeBrute(String name, Brute brute) {
+     this.brutes.remove(name);
      }
      //*/
 }

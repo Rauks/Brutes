@@ -28,9 +28,9 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class CreateCharacterController implements Initializable {
+public class CreateBruteController implements Initializable {
     @FXML
-    private TextField characterName;
+    private TextField bruteName;
     
     @FXML
     private void handleCancelAction(ActionEvent e){
@@ -44,15 +44,15 @@ public class CreateCharacterController implements Initializable {
             public void run() {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendCreateCharacter(ScenesContext.getInstance().getSession().getToken(), characterName.getText());
+                        connection.sendCreateBrute(ScenesContext.getInstance().getSession().getToken(), bruteName.getText());
                     } catch (InvalidResponseException | ErrorResponseException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ScenesContext.getInstance().getSession().netLoadMyCharacter();
-                ScenesContext.getInstance().getSession().netLoadChallengerCharacter();
+                ScenesContext.getInstance().getSession().netLoadMyBrute();
+                ScenesContext.getInstance().getSession().netLoadChallengerBrute();
             }
         }.start();
         this.closeStage(e);

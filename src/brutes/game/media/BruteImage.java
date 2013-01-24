@@ -8,8 +8,8 @@ package brutes.game.media;
  *
  * @author Karl
  */
-public class CharacterImage extends DataImage{
-    public CharacterImage(int id){
+public class BruteImage extends DataImage{
+    public BruteImage(int id){
         super(id);
     }
 }

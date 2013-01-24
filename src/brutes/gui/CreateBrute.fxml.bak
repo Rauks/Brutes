@@ -7,16 +7,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.CreateCharacterController">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.gui.CreateBruteController">
   <children>
     <VBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="240.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
       <children>
         <Label text="Nom de la brute :">
           <labelFor>
-            <TextField id="name" fx:id="characterName" prefWidth="200.0" />
+            <TextField id="name" fx:id="bruteName" prefWidth="200.0" />
           </labelFor>
         </Label>
-        <fx:reference source="characterName" />
+        <fx:reference source="bruteName" />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />

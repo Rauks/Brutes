@@ -50,8 +50,8 @@ public class DatasManager {
             DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (5, 'Vif d''or', 5, 0, 60)");
 
             DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return DatasManager.con;
