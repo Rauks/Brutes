@@ -69,8 +69,6 @@ public class LoginController implements Initializable {
     }
     
     private synchronized void login(){
-        Logger.getLogger(LoginController.class.getName()).log(Level.INFO, "Login thread");
-        
         this.setDisableForm(true);
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
