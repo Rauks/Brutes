@@ -28,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -40,6 +41,10 @@ public class FightController implements Initializable {
     private Stage currentDialogStage;
     private ReadOnlyBooleanWrapper isFighting;
     
+    @FXML
+    private VBox myBruteStats;
+    @FXML
+    private VBox chBruteStats;
     @FXML
     private Text myName;
     @FXML
@@ -251,6 +256,9 @@ public class FightController implements Initializable {
         ObservableBrute me = ScenesContext.getInstance().getSession().getMyBrute();
         ObservableBrute ch = ScenesContext.getInstance().getSession().getChallengerBrute();
         
+        this.myBruteStats.visibleProperty().bind(me.isLoadedProperty());
+        this.chBruteStats.visibleProperty().bind(ch.isLoadedProperty());
+        
         this.myName.textProperty().bind(me.getNameProperty());
         this.myLevel.textProperty().bind(me.getLevelProperty().asString());
         this.myLifes.textProperty().bind(me.getLifeProperty().asString());
@@ -277,6 +285,7 @@ public class FightController implements Initializable {
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightRandom.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightRegular.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        
         this.menuOptCreate.disableProperty().bind(me.isLoadedProperty());
         this.menuOptRename.disableProperty().bind(me.isLoadedProperty().not());
         this.menuOptDelete.disableProperty().bind(me.isLoadedProperty().not());
