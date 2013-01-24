@@ -34,10 +34,17 @@ public class FightEntity implements Entity {
         return psql.executeUpdate();
     }
 
+    public static Fight insert(Connection con, Fight fight) throws IOException, SQLException {
+        PreparedStatement psql = con.prepareStatement("INSERT INTO Fights (brute_id1, brute_id2) VALUES(?, ?)");
+        psql.setInt(1, fight.getCharacter1().getId());
+        psql.setInt(2, fight.getCharacter2().getId());
+        return findById(psql.executeUpdate());
+    }
+
     public static Fight findByUser(User user) throws IOException, SQLException {
         return findById(user.getId());
     }
-    
+
     public static Fight findById(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL");
         psql.setInt(1, id);
