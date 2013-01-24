@@ -4,8 +4,6 @@
  */
 package brutes.net.client;
 
-import brutes.gui.FightController;
-import brutes.gui.LoginController;
 import brutes.ScenesContext;
 import brutes.game.Bonus;
 import brutes.game.Character;
@@ -13,8 +11,6 @@ import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

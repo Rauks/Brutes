@@ -4,22 +4,11 @@
  */
 package brutes.db;
 
-import brutes.db.entity.BonusEntity;
-import brutes.db.entity.CharacterEntity;
-import brutes.db.entity.FightEntity;
-import brutes.db.entity.UserEntity;
-import brutes.game.Bonus;
-import brutes.game.Fight;
-import brutes.game.User;
-import brutes.game.Character;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.Random;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.sqlite.JDBC;
 
 /**
  *

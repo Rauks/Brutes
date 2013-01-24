@@ -4,12 +4,7 @@
  */
 package brutes.game;
 
-import brutes.db.DatasManager;
 import brutes.db.Identifiable;
-import brutes.db.SQL;
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *

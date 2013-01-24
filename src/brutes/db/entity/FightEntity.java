@@ -6,7 +6,6 @@ package brutes.db.entity;
 
 import brutes.db.DatasManager;
 import brutes.db.Entity;
-import brutes.game.Bonus;
 import brutes.game.Fight;
 import brutes.game.User;
 import java.io.IOException;
