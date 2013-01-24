@@ -64,8 +64,8 @@ public class Character implements Identifiable {
         return this.strength;
     }
 
-    public short getStrengthWithBonus() {
-        short sum = this.strength;
+    public short getBonusStrength() {
+        short sum = 0;
         for (int i = 0; i < this.bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
                 sum += this.bonuses[i].getStrength();
@@ -78,8 +78,8 @@ public class Character implements Identifiable {
         return this.speed;
     }
 
-    public short getSpeedWithBonus() {
-        short sum = this.speed;
+    public short getBonusSpeed() {
+        short sum = 0;
         for (int i = 0; i < bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
                 sum += bonuses[i].getSpeed();
