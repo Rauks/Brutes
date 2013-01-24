@@ -247,7 +247,7 @@ public class NetworkLocalTestServer extends Network {
         }
         
         character.setBonuses(BonusEntity.findAllByCharacter(character));
-        System.out.println("BONUS=" + character.getIntBonuses());
+        System.out.println("BONUS=" + character.getBonusesIDs());
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_CHARACTER)
                 .writeLongInt(id)
@@ -257,7 +257,7 @@ public class NetworkLocalTestServer extends Network {
                 .writeShortInt((short) character.getStrength())
                 .writeShortInt((short) character.getSpeed())
                 .writeLongInt(id) // @TODO : image
-                .writeLongIntArray(character.getIntBonuses()) // @TODO : bonus
+                .writeLongIntArray(character.getBonusesIDs()) // @TODO : bonus
                 .send();
     }
 

@@ -5,6 +5,7 @@
 package brutes.game;
 
 import brutes.db.Identifiable;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,7 +36,10 @@ public class Character implements Identifiable {
         this.strength = strength;
         this.speed = speed;
         this.imageID = imageID;
-        this.setBonuses(null);
+        this.bonuses = new Bonus[Character.MAX_BONUSES];
+        for (int i = 0; i < this.bonuses.length; i++) {
+            this.bonuses[i] = Bonus.EMPTY_BONUS;
+        }
     }
 
     public Character(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
@@ -88,15 +92,18 @@ public class Character implements Identifiable {
         return this.bonuses;
     }
     
-    public int[] getIntBonuses() {
-        int[] ibonus = new int[Character.MAX_BONUSES];
-        int i = 0;
-        for (Bonus bonus : this.bonuses) {
-            if( bonus != Bonus.EMPTY_BONUS && bonus != null ) {
-                ibonus[i++] = bonus.getId();
+    public int[] getBonusesIDs() {
+        ArrayList<Integer> bonusesIds = new ArrayList<>(Character.MAX_BONUSES);
+        for(int i = 0; i < Character.MAX_BONUSES; i++){
+            if(this.bonuses[i] != Bonus.EMPTY_BONUS){
+                bonusesIds.add(new Integer(this.bonuses[i].getId()));
             }
         }
-        return ibonus;
+        int[] intIDs = new int[bonusesIds.size()];
+        for(int i = 0; i < intIDs.length; i++){
+            intIDs[i] = bonusesIds.get(i).intValue();
+        }
+        return intIDs;
     }
 
     public void setName(String name) {
@@ -120,9 +127,10 @@ public class Character implements Identifiable {
     }
 
     public void setBonuses(Bonus[] bonuses) {
-        this.bonuses = new Bonus[Character.MAX_BONUSES];
-        for (int i = 0; i < this.bonuses.length; i++) {
-            this.bonuses[i] = ((bonuses != null && bonuses[i] != null) ? bonuses[i] : Bonus.EMPTY_BONUS);
+        if(bonuses != null){
+            for (int i = 0; i < Character.MAX_BONUSES; i++) {
+                this.bonuses[i] = (bonuses[i] != null)?bonuses[i]:Bonus.EMPTY_BONUS;
+            }
         }
     }
 
