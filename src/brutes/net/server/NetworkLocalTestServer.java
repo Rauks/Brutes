@@ -239,8 +239,13 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCreateCharacter(String token, String name) throws IOException, SQLException {
+    private void readCreateCharacter(String token, String name) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
+        
+        // Character already exists !
+        if( CharacterEntity.findByUser(user) != null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CREATE_CHARACTER);
+        }
         
         short level = 1;
         short strength = (short) ui.random(3, 10);
@@ -314,22 +319,40 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerCharacterId(String token) throws IOException, SQLException {
+    private void readGetChallengerCharacterId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         brutes.game.Character character = CharacterEntity.findByUser(user);
+        
+        if( character == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_CHARACTER_NOT_FOUND);
+        }
+        
         Fight fight = FightEntity.findByUser(user);
+        
         if (fight == null) {
             PreparedStatement psql = DatasManager.prepare("SELECT id FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
             psql.setInt(1, user.getId());
             ResultSet query = psql.executeQuery();
-            query.next();
+            
+            if( !query.next() ) {
+                throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+            }
+            
+            fight = new Fight();
+            fight.setCharacter1(character);
+            fight.setCharacter2(CharacterEntity.findById(query.getInt("id")));
+            DatasManager.insert(fight);
 
-            psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
+            /*psql = DatasManager.prepare("INSERT INTO fights (brute_id1, brute_id2) VALUES (?, ?)");
             psql.setInt(1, character.getId());
             psql.setInt(2, query.getInt("id")); // @TODO: random
-            psql.executeUpdate();
+            psql.executeUpdate();*/
 
-            fight = FightEntity.findByUser(user);
+            //fight = FightEntity.findByUser(user);
+        }
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
 
         this.getWriter().writeDiscriminant(Protocol.R_CHARACTER)
