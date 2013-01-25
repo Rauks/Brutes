@@ -4,6 +4,8 @@
  */
 package brutes;
 
+import brutes.client.ScenesContext;
+import brutes.server.ServerThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
