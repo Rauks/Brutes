@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.client.gui.CreditsController">
   <children>
-    <ImageView fitHeight="150.0" fitWidth="300.0" layoutX="50.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@BackgroundDialog.jpg" preserveRatio="false" smooth="false" />
       </image>
@@ -43,7 +43,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Georges Olivarès" HBox.margin="$x2" />
           </children>
         </HBox>
-        <Hyperlink alignment="TOP_LEFT" text="https://github.com/Rauks/TP-Brutes" textFill="#0052cc" underline="true" />
+        <Text fill="#cc0000" strokeType="OUTSIDE" strokeWidth="0.0" text="https://github.com/Rauks/TP-Brutes" />
         <HBox alignment="TOP_CENTER">
           <children>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleCloseAction" prefWidth="80.0" text="Fermer" />
