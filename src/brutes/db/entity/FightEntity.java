@@ -39,6 +39,14 @@ public class FightEntity implements Entity {
     public static Fight findByUser(User user) throws IOException, SQLException {
         return findByBruteId(BruteEntity.findByUser(user).getId());
     }
+    
+    public static Fight findOneByUser(User user) throws IOException, SQLException, NotFoundEntityException {
+        Fight object = findByUser(user);
+        if (object == null) {
+            throw new NotFoundEntityException(User.class);
+        }
+        return object;
+    }
 
     public static Fight findByBruteId(int id) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM fights WHERE (brute_id1 = ? OR brute_id2 = ?) AND winner_id IS NULL ORDER BY date_created DESC LIMIT 1");

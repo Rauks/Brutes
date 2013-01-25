@@ -9,6 +9,7 @@ import brutes.db.DatasManager;
 import brutes.db.entity.BonusEntity;
 import brutes.db.entity.BruteEntity;
 import brutes.db.entity.FightEntity;
+import brutes.db.entity.NotFoundEntityException;
 import brutes.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Brute;
@@ -36,8 +37,8 @@ public class NetworkLocalTestServer extends Network {
         super(connection);
     }
 
-    protected User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException {
-        User user = UserEntity.findByToken(token);
+    protected User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+        User user = UserEntity.findOneByToken(token);
         if (user == null) {
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);
         }
@@ -117,10 +118,22 @@ public class NetworkLocalTestServer extends Network {
             }
         } catch (NetworkResponseException e) {
             this.getWriter().writeDiscriminant(e.getError()).send();
+        } catch (NotFoundEntityException e) {
+            System.out.println("NotFoundEntityException " + e.getClassType());
+            if( e.getClassTypeIs(Bonus.class) ) {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_BONUS_NOT_FOUND).send();
+            }
+            else if( e.getClassTypeIs(Brute.class) ) {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_BRUTE_NOT_FOUND).send();
+            }
+            else if( e.getClassTypeIs(Fight.class) ) {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_FIGHT).send();
+                /*@TODO define it ! ERROR_FIGHT_NOT_FOUND */
+            }
         }
     }
 
-    private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
         Fight fight = FightEntity.findByUser(user);
         
@@ -175,9 +188,9 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Fight fight = FightEntity.findByUser(user);
+        Fight fight = FightEntity.findOneByUser(user);
         
         if( fight == null ) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
@@ -191,7 +204,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose(token);
         } else {
@@ -199,13 +212,9 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Fight fight = FightEntity.findByUser(user);
-        
-        if( fight == null ) {
-            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
-        }
+        Fight fight = FightEntity.findOneByUser(user);
         
         int i = 0;
         int lost;
@@ -243,7 +252,7 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException {
+    private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
 
         if (login.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
@@ -271,14 +280,14 @@ public class NetworkLocalTestServer extends Network {
         }
     }
 
-    private void readLogout(String token) throws IOException, SQLException {
+    private void readLogout(String token) throws IOException, SQLException, NotFoundEntityException {
         UserEntity.updateTokenToNull(token);
 
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
                 .send();
     }
 
-    private void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
+    private void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
         
         // Brute already exists !
@@ -313,7 +322,7 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
+    private void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
         
         if( name.isEmpty() ) {
@@ -326,7 +335,7 @@ public class NetworkLocalTestServer extends Network {
          * }
          */
         
-        Brute brute = BruteEntity.findByUser(user);
+        Brute brute = BruteEntity.findOneByUser(user);
         brute.setName(name);
         DatasManager.save(brute);
         
@@ -334,13 +343,9 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findByUser(user);
-        
-        if (brute == null) {
-            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
-        }
+        Brute brute = BruteEntity.findOneByUser(user);
         
         DatasManager.delete(brute);
         
@@ -348,12 +353,8 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException {
-        Bonus bonus = BonusEntity.findById(id);
-
-        if (bonus == null) {
-            throw new NetworkResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
-        }
+    private void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+        Bonus bonus = BonusEntity.findOneById(id);
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
                 .writeLongInt(id)
@@ -365,13 +366,9 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readDataBrute(int id) throws IOException, SQLException, NetworkResponseException {
-        Brute brute = BruteEntity.findById(id);
+    private void readDataBrute(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+        Brute brute = BruteEntity.findOneById(id);
 
-        if (brute == null) {
-            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
-        }
-        
         brute.setBonuses(BonusEntity.findAllByBrute(brute));
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BRUTE)
@@ -386,22 +383,14 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findByUser(user);
+        Brute brute = BruteEntity.findOneByUser(user);
         
-        if( brute == null ) {
-            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
-        }
-        
-        Fight fight = FightEntity.findByUser(user);
+        Fight fight = FightEntity.findByUser(user); // and not findOneByUser
         
         if (fight == null) {
-            Brute otherBrute = BruteEntity.findRandomAnotherToBattleByUser(user);
-            
-            if( otherBrute == null ) {
-                throw new NetworkResponseException(Protocol.ERROR_FIGHT);
-            }
+            Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
             
             fight = new Fight();
             fight.setBrute1(brute);
@@ -418,14 +407,10 @@ public class NetworkLocalTestServer extends Network {
                 .send();
     }
 
-    private void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findByUser(user);
+        Brute brute = BruteEntity.findOneByUser(user);
         
-        if(  brute == null ) {
-            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
-        }
-
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
                 .writeLongInt(brute.getId())
                 .send();
@@ -451,7 +436,7 @@ public class NetworkLocalTestServer extends Network {
         
     }
     
-    private void readDeleteUser(String token) throws IOException, SQLException, NetworkResponseException {
+    private void readDeleteUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
         DatasManager.delete(user);
     

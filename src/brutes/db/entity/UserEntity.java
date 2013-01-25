@@ -37,7 +37,15 @@ public class UserEntity {
         }
         return null;
     }
-    
+
+    public static User findOneById(int id) throws IOException, SQLException, NotFoundEntityException {
+        User object = findById(id);
+        if (object == null) {
+            throw new NotFoundEntityException(User.class);
+        }
+        return object;
+    }
+
     public static User findByToken(String token) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Users WHERE token = ?");
         psql.setString(1, token);
@@ -48,6 +56,14 @@ public class UserEntity {
         return null;
     }
     
+    public static User findOneByToken(String token) throws IOException, SQLException, NotFoundEntityException {
+        User object = findByToken(token);
+        if (object == null) {
+            throw new NotFoundEntityException(User.class);
+        }
+        return object;
+    }
+
     public static User findByPseudo(String pseudo) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Users WHERE pseudo = ?");
         psql.setString(1, pseudo);
@@ -57,23 +73,24 @@ public class UserEntity {
         }
         return null;
     }
-    
-    public static String updateToken(int id) throws IOException, SQLException {
+
+    public static String updateToken(int id) throws IOException, SQLException, NotFoundEntityException {
         String token = UUID.randomUUID().toString();
 
-        User user = UserEntity.findById(id);
+        User user = UserEntity.findOneById(id);
         user.setToken(token);
         DatasManager.save(user);
-        
+
         return token;
     }
 
-    public static void updateTokenToNull(String token) throws IOException, SQLException {
-        User user = UserEntity.findByToken(token);
+    public static void updateTokenToNull(String token) throws IOException, SQLException, NotFoundEntityException {
+        User user = UserEntity.findOneByToken(token);
         user.setToken(null);
         DatasManager.save(user);
         /*PreparedStatement psql = DatasManager.prepare("UPDATE users SET token = NULL WHERE token = ?");
-        psql.setString(1, token);
-        psql.executeUpdate();*/
+         psql.setString(1, token);
+         psql.executeUpdate();*/
     }
+
 }

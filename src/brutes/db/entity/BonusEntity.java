@@ -51,6 +51,14 @@ public class BonusEntity implements Entity {
         }
         return null;
     }
+    
+    public static Bonus findOneById(int id) throws IOException, SQLException, NotFoundEntityException {
+        Bonus object = findById(id);
+        if (object == null) {
+            throw new NotFoundEntityException(Bonus.class);
+        }
+        return object;
+    }
 
     public static Bonus[] findAllByBrute(Brute brute) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id = ?");
