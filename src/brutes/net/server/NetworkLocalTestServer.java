@@ -286,6 +286,13 @@ public class NetworkLocalTestServer extends Network {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
         }
         
+        if( name.isEmpty() ) {
+            throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
+            /* @TODO define it !
+             * Protocol.ERROR_BRUTE_ALREADY_USED
+             */
+        }
+        
         /* @TODO
          * if( BruteEntity.findByName(name) != null ) {
          *    throw new NetworkResponseException(Protocol.ERROR_BRUTE_ALREADY_USED);
@@ -310,7 +317,7 @@ public class NetworkLocalTestServer extends Network {
         User user = this.checkTokenAndReturnUser(token);
         
         if( name.isEmpty() ) {
-            throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
+            throw new NetworkResponseException(Protocol.ERROR_UPDATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
         }
         
         /* @TODO define it !
