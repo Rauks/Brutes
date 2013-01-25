@@ -81,4 +81,15 @@ public class BruteEntity implements Entity {
         }
         return null;
     }
+
+    public static Brute findByName(String name) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE name = ?");
+        psql.setString(1, name);
+        ResultSet rs = psql.executeQuery();
+            
+        if (rs.next()) {
+            return BruteEntity.create(rs);
+        }
+        return null;
+    }
 }

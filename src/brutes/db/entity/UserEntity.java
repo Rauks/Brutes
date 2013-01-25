@@ -48,6 +48,16 @@ public class UserEntity {
         return null;
     }
     
+    public static User findByPseudo(String pseudo) throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Users WHERE pseudo = ?");
+        psql.setString(1, pseudo);
+        ResultSet rs = psql.executeQuery();
+        if (rs.next()) {
+            return UserEntity.create(rs);
+        }
+        return null;
+    }
+    
     public static String updateToken(int id) throws IOException, SQLException {
         String token = UUID.randomUUID().toString();
 
