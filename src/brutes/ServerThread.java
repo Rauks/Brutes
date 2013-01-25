@@ -4,7 +4,7 @@
  */
 package brutes;
 
-import brutes.db.DatasManager;
+import brutes.net.server.db.DatasManager;
 import brutes.net.server.NetworkLocalTestServer;
 import java.io.File;
 import java.io.IOException;

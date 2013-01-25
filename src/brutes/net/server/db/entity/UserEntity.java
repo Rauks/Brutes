@@ -1,6 +1,6 @@
-package brutes.db.entity;
+package brutes.net.server.db.entity;
 
-import brutes.db.DatasManager;
+import brutes.net.server.db.DatasManager;
 import brutes.game.User;
 import java.io.IOException;
 import java.sql.Connection;

@@ -4,7 +4,7 @@
  */
 package brutes.game;
 
-import brutes.db.Identifiable;
+import brutes.net.server.db.Identifiable;
 
 /**
  *
@@ -26,6 +26,7 @@ public class Fight implements Identifiable {
         this.brute2 = brute2;
     }
 
+    @Override
     public int getId() {
         return id;
     }

@@ -1,4 +1,4 @@
-package brutes.db.entity;
+package brutes.net.server.db.entity;
 
 import brutes.game.User;
 

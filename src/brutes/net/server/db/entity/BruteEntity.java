@@ -1,7 +1,7 @@
-package brutes.db.entity;
+package brutes.net.server.db.entity;
 
-import brutes.db.DatasManager;
-import brutes.db.Entity;
+import brutes.net.server.db.DatasManager;
+import brutes.net.server.db.Entity;
 import brutes.game.Brute;
 import brutes.game.Fight;
 import brutes.game.User;

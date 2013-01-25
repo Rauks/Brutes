@@ -5,12 +5,12 @@
 package brutes.net.server;
 
 import brutes.Brutes;
-import brutes.db.DatasManager;
-import brutes.db.entity.BonusEntity;
-import brutes.db.entity.BruteEntity;
-import brutes.db.entity.FightEntity;
-import brutes.db.entity.NotFoundEntityException;
-import brutes.db.entity.UserEntity;
+import brutes.net.server.db.DatasManager;
+import brutes.net.server.db.entity.BonusEntity;
+import brutes.net.server.db.entity.BruteEntity;
+import brutes.net.server.db.entity.FightEntity;
+import brutes.net.server.db.entity.NotFoundEntityException;
+import brutes.net.server.db.entity.UserEntity;
 import brutes.game.Bonus;
 import brutes.game.Brute;
 import brutes.game.Fight;

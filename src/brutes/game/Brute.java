@@ -1,6 +1,6 @@
 package brutes.game;
 
-import brutes.db.Identifiable;
+import brutes.net.server.db.Identifiable;
 import java.util.ArrayList;
 
 /**

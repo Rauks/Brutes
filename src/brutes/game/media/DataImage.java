@@ -4,7 +4,7 @@
  */
 package brutes.game.media;
 
-import brutes.db.Identifiable;
+import brutes.net.server.db.Identifiable;
 import javafx.scene.image.Image;
 
 /**

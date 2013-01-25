@@ -1,4 +1,4 @@
-package brutes.db;
+package brutes.net.server.db;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

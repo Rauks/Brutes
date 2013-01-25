@@ -1,4 +1,4 @@
-package brutes.db;
+package brutes.net.server.db;
 
 /**
  *
