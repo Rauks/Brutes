@@ -249,6 +249,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="?">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos..." />
+              </items>
+            </Menu>
           </menus>
         </MenuBar>
       </top>

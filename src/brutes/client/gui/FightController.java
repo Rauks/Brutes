@@ -234,6 +234,21 @@ public class FightController implements Initializable {
         this.closeCurrentDialogStage();
         ScenesContext.getInstance().showLogin();
     }
+    @FXML
+    private void handleMenuCredits(ActionEvent e){
+        try {
+            Parent root = FXMLLoader.load(this.getClass().getResource("Credits.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setTitle("À propos...");
+            window.setResizable(false);
+            this.setCurrentDialogStage(window);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     private void setCurrentDialogStage(Stage stage){
         this.closeCurrentDialogStage();
