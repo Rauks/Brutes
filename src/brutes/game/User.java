@@ -13,7 +13,6 @@ public class User implements Identifiable {
     private String pseudo;
     private String password;
     private String token;
-    private HashMap<String, Brute> brutes = new HashMap<>();
 
     public User(int id, String pseudo, String password, String token) {
         this.id = id;
@@ -50,22 +49,4 @@ public class User implements Identifiable {
     public void setToken(String token) {
         this.token = token;
     }
-
-    public HashMap<String, Brute> getBrutes() {
-        return brutes;
-    }
-
-    public void setBrutes(HashMap<String, Brute> brutes) {
-        this.brutes = brutes;
-    }
-
-    public void addBrute(String name, Brute brute) {
-        this.brutes.put(name, brute);
-    }
-
-    /*
-     public void removeBrute(String name, Brute brute) {
-     this.brutes.remove(name);
-     }
-     //*/
 }
