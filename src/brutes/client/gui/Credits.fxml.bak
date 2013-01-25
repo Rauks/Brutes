@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.client.gui.CreditsController">
+  <children>
+    <ImageView fitHeight="150.0" fitWidth="300.0" layoutX="50.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@BackgroundDialog.jpg" preserveRatio="false" smooth="false" />
+      </image>
+    </ImageView>
+    <VBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+      <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENSISA - TP Réseaux 2012/2013" textAlignment="CENTER" wrappingWidth="240.0">
+          <font>
+            <Font name="System Bold" size="15.0" />
+          </font>
+        </Text>
+        <HBox>
+          <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Client :">
+              <font>
+                <Font name="System Bold" size="12.0" fx:id="x1" />
+              </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Karl Woditsch">
+              <HBox.margin>
+                <Insets left="2.0" fx:id="x2" />
+              </HBox.margin>
+            </Text>
+          </children>
+        </HBox>
+        <HBox>
+          <children>
+            <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Serveur :" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Georges Olivarès" HBox.margin="$x2" />
+          </children>
+        </HBox>
+        <Hyperlink alignment="TOP_LEFT" text="https://github.com/Rauks/TP-Brutes" textFill="#0052cc" underline="true" />
+        <HBox alignment="TOP_CENTER">
+          <children>
+            <Button defaultButton="true" mnemonicParsing="false" prefWidth="80.0" text="Fermer" />
+          </children>
+          <VBox.margin>
+            <Insets top="10.0" />
+          </VBox.margin>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
