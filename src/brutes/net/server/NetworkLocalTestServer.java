@@ -292,6 +292,11 @@ public class NetworkLocalTestServer extends Network {
 
     private void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
         User user = this.checkTokenAndReturnUser(token);
+        
+        if( name.isEmpty() ) {
+            throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
+        }
+        
         Brute brute = BruteEntity.findByUser(user);
         brute.setName(name);
         DatasManager.save(brute);
@@ -303,6 +308,11 @@ public class NetworkLocalTestServer extends Network {
     private void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException {
         User user = this.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findByUser(user);
+        
+        if (brute == null) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
+        }
+        
         DatasManager.delete(brute);
         
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
@@ -389,6 +399,27 @@ public class NetworkLocalTestServer extends Network {
 
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
                 .writeLongInt(brute.getId())
+                .send();
+    }
+    
+    private void readCreateUser(String pseudo, String password) throws IOException, SQLException, NetworkResponseException {
+        if( pseudo.isEmpty() || password.isEmpty() ) {
+            throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
+        }
+        
+        User user = new User(0, pseudo, password, null);
+        DatasManager.insert(user);
+        
+        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
+                .send();
+        
+    }
+    
+    private void readDeleteUser(String token) throws IOException, SQLException, NetworkResponseException {
+        User user = this.checkTokenAndReturnUser(token);
+        DatasManager.delete(user);
+    
+        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
 }
