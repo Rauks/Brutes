@@ -102,6 +102,16 @@ public class NetworkLocalTestServer extends Network {
                     // token
                     this.readLogout(r.readString());
                     break;
+                /* @TODO define it !
+                 * case Protocol.D_CREATE_USER:
+                 *    // pseudo, password
+                 *    this.readCreateUser(r.readString(), r.readString());
+                 *    break;
+                 * case Protocol.D_DELETE_USER:
+                 *    // token
+                 *    this.readDeleteUser(r.readString());
+                 *    break;
+                 */
                 default:
                     throw new NetworkResponseException(Protocol.ERROR_SRLY_WTF);
             }
@@ -276,6 +286,12 @@ public class NetworkLocalTestServer extends Network {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
         }
         
+        /* @TODO
+         * if( BruteEntity.findByName(name) != null ) {
+         *    throw new NetworkResponseException(Protocol.ERROR_BRUTE_ALREADY_USED);
+         * }
+         */
+        
         short level = 1;
         short strength = (short) ui.random(3, 10);
         short speed    = (short) ui.random(3, 10);
@@ -296,6 +312,12 @@ public class NetworkLocalTestServer extends Network {
         if( name.isEmpty() ) {
             throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
         }
+        
+        /* @TODO define it !
+         * if( BruteEntity.findByName(name) != null ) {
+         *    throw new NetworkResponseException(Protocol.ERROR_BRUTE_ALREADY_USED);
+         * }
+         */
         
         Brute brute = BruteEntity.findByUser(user);
         brute.setName(name);
@@ -406,6 +428,13 @@ public class NetworkLocalTestServer extends Network {
         if( pseudo.isEmpty() || password.isEmpty() ) {
             throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
         }
+        
+        
+        /* @TODO define it !
+         * if( UserEntity.findByPseudo(pseudo) != null ) {
+         *    throw new NetworkResponseException(Protocol.ERROR_USER_ALREADY_USED);
+         * }
+         */
         
         User user = new User(0, pseudo, password, null);
         DatasManager.insert(user);
