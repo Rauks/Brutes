@@ -16,7 +16,7 @@
   <children>
     <ImageView fitHeight="350.0" fitWidth="600.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <image>
-        <Image url="@Background.jpg" preserveRatio="false" smooth="false" />
+        <Image url="@res/Background.jpg" preserveRatio="false" smooth="false" />
       </image>
     </ImageView>
     <Line endY="350.0" layoutX="300.0" stroke="#990000" strokeWidth="2.5" />
