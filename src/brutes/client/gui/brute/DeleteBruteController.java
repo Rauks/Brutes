@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package brutes.client.gui;
+package brutes.client.gui.brute;
 
 import brutes.client.ScenesContext;
+import brutes.client.gui.FightController;
+import brutes.client.gui.LoginController;
 import brutes.net.Protocol;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;
@@ -20,7 +22,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -28,10 +29,7 @@ import javafx.stage.Stage;
  *
  * @author Karl
  */
-public class UpdateBruteController implements Initializable {
-    @FXML
-    private TextField bruteName;
-    
+public class DeleteBruteController implements Initializable {
     @FXML
     private void handleCancelAction(ActionEvent e){
         this.closeStage(e);
@@ -44,14 +42,15 @@ public class UpdateBruteController implements Initializable {
             public void run() {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendUpdateBrute(ScenesContext.getInstance().getSession().getToken(), bruteName.getText());
+                        connection.sendDeleteBrute(ScenesContext.getInstance().getSession().getToken());
+                        ScenesContext.getInstance().getSession().getMyBrute().unload();
+                        ScenesContext.getInstance().getSession().getChallengerBrute().unload();
                     } catch (InvalidResponseException | ErrorResponseException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ScenesContext.getInstance().getSession().netLoadMyBrute();
             }
         }.start();
         this.closeStage(e);
@@ -67,6 +66,6 @@ public class UpdateBruteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.bruteName.setText(ScenesContext.getInstance().getSession().getMyBrute().getNameProperty().getValue());
+        // TODO
     }    
 }

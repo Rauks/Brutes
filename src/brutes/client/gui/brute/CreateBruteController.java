@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package brutes.client.gui;
+package brutes.client.gui.brute;
 
 import brutes.client.ScenesContext;
+import brutes.client.gui.FightController;
+import brutes.client.gui.LoginController;
 import brutes.net.Protocol;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;

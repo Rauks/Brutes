@@ -15,7 +15,7 @@
   <children>
     <ImageView fitHeight="350.0" fitWidth="600.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <image>
-        <Image url="@Background.jpg" preserveRatio="false" smooth="false" />
+        <Image url="@res/Background.jpg" preserveRatio="false" smooth="false" />
       </image>
     </ImageView>
     <VBox spacing="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">

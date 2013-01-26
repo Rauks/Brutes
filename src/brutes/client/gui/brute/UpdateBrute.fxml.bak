@@ -7,10 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.client.gui.DeleteBruteController">
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="brutes.client.gui.brute.UpdateBruteController">
   <children>
     <ImageView fitHeight="150.0" fitWidth="300.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -19,19 +17,16 @@
     </ImageView>
     <VBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
       <children>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attention !">
-          <fill>
-            <Color blue="0.000" green="0.000" red="0.800" fx:id="x1" />
-          </fill>
-          <font>
-            <Font name="System Bold" size="12.0" />
-          </font>
-        </Text>
-        <Text fill="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Toute suppression est définitive." />
+        <Label text="Nom de la brute :">
+          <labelFor>
+            <TextField id="name" fx:id="bruteName" prefWidth="200.0" />
+          </labelFor>
+        </Label>
+        <fx:reference source="bruteName" />
         <HBox alignment="TOP_CENTER" spacing="20.0">
           <children>
-            <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
-            <Button mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Supprimer" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="80.0" text="Annuler" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitAction" prefWidth="80.0" text="Modifier" />
           </children>
           <VBox.margin>
             <Insets top="20.0" />

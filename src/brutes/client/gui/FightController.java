@@ -130,11 +130,11 @@ public class FightController implements Initializable {
                         Stage window = new Stage();
                         window.setResizable(false);
                         if(fightTask.getResultProperty().get()){
-                            root = FXMLLoader.load(this.getClass().getResource("FightResultWin.fxml"));
+                            root = FXMLLoader.load(this.getClass().getResource("result/FightResultWin.fxml"));
                             window.setTitle("Victoire !");
                         }
                         else{
-                            root = FXMLLoader.load(this.getClass().getResource("FightResultLoose.fxml"));
+                            root = FXMLLoader.load(this.getClass().getResource("result/FightResultLoose.fxml"));
                             window.setTitle("Défaite !");
                         }
                         Scene scene = new Scene(root);
@@ -173,7 +173,7 @@ public class FightController implements Initializable {
     @FXML
     private void handleMenuBruteNew(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("CreateBrute.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("brute/CreateBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
@@ -188,7 +188,7 @@ public class FightController implements Initializable {
     @FXML
     private void handleMenuBruteUpdate(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("UpdateBrute.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("brute/UpdateBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
@@ -203,7 +203,7 @@ public class FightController implements Initializable {
     @FXML
     private void handleMenuBruteDelete(ActionEvent e){
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("DeleteBrute.fxml"));
+            Parent root = FXMLLoader.load(this.getClass().getResource("brute/DeleteBrute.fxml"));
             Scene scene = new Scene(root);
             Stage window = new Stage();
             window.setScene(scene);
