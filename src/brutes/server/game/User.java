@@ -1,7 +1,6 @@
 package brutes.server.game;
 
 import brutes.server.db.Identifiable;
-import java.util.HashMap;
 
 /**
  *

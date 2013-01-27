@@ -170,6 +170,7 @@ public class NetworkClient extends Network{
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readLongInt();
                 int[] bonusesID = this.getReader().readLongIntArray();
+                this.close();
                 Bonus[] bonuses = new Bonus[(bonusesID.length < Brute.MAX_BONUSES)?bonusesID.length:Brute.MAX_BONUSES];
                 for(int i = 0; i < bonuses.length; i++){
                     try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package brutes.server.net;
 
 import brutes.Brutes;
@@ -135,7 +131,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Fight fight = FightEntity.findByUser(user);
+        Fight fight = this.getFightWithChallenger(user);
         
         if( fight == null ) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
@@ -190,7 +186,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Fight fight = FightEntity.findOneByUser(user);
+        Fight fight = this.getFightWithChallenger(user);
         
         if( fight == null ) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
@@ -214,7 +210,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readDoFight(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Fight fight = FightEntity.findOneByUser(user);
+        Fight fight = this.getFightWithChallenger(user);
         
         int i = 0;
         int lost;
@@ -385,22 +381,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = this.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findOneByUser(user);
-        
-        Fight fight = FightEntity.findByUser(user); // and not findOneByUser
-        
-        if (fight == null) {
-            Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
-            
-            fight = new Fight();
-            fight.setBrute1(brute);
-            fight.setBrute2(otherBrute);
-            DatasManager.insert(fight);
-        }
-        
-        if( fight == null ) {
-            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
-        }
+        Fight fight = this.getFightWithChallenger(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
                 .writeLongInt(fight.getBrute2().getId())
@@ -442,5 +423,25 @@ public class NetworkLocalTestServer extends Network {
     
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
+    }
+
+    private Fight getFightWithChallenger(User user) throws IOException, SQLException, NotFoundEntityException, NetworkResponseException {
+        Brute brute = BruteEntity.findOneByUser(user);
+        
+        Fight fight = FightEntity.findByUser(user); // and not findOneByUser
+        
+        if (fight == null) {
+            Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
+            
+            fight = new Fight();
+            fight.setBrute1(brute);
+            fight.setBrute2(otherBrute);
+            DatasManager.insert(fight);
+        }
+        
+        if( fight == null ) {
+            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+        }
+        return fight;
     }
 }
