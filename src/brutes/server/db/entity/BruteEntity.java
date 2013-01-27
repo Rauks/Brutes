@@ -3,7 +3,6 @@ package brutes.server.db.entity;
 import brutes.server.db.DatasManager;
 import brutes.server.db.Entity;
 import brutes.server.game.Brute;
-import brutes.server.game.Fight;
 import brutes.server.game.User;
 import java.io.IOException;
 import java.sql.Connection;

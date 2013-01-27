@@ -1,7 +1,5 @@
 package brutes.server.db.entity;
 
-import brutes.server.game.User;
-
 /**
  *
  * @author Thiktak
