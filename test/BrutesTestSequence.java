@@ -1,4 +1,4 @@
-package brutes;
+
 
 import brutes.client.ScenesContext;
 import brutes.client.net.ErrorResponseException;
@@ -6,15 +6,12 @@ import brutes.client.net.InvalidResponseException;
 import brutes.client.net.NetworkClient;
 import brutes.client.user.Session;
 import brutes.net.Protocol;
-import brutes.server.ServerThread;
 import brutes.server.db.DatasManager;
 import brutes.server.net.NetworkLocalTestServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,11 +39,11 @@ public class BrutesTestSequence {
                     try(NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)){
                         n.read();
                     } catch (Exception ex) {
-                        Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(BrutesTestSequence.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BrutesTestSequence.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     };
