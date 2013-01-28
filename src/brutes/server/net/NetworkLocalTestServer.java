@@ -17,9 +17,6 @@ import brutes.server.ui;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +26,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Karl
+ * @author Thiktak
  */
 public class NetworkLocalTestServer extends Network {
 
@@ -418,11 +416,6 @@ public class NetworkLocalTestServer extends Network {
         Brute brute = BruteEntity.findOneById(id);
 
         brute.setBonuses(BonusEntity.findAllByBrute(brute));
-        
-        System.out.println("readDataBrute(" + id + ") imageId=" + brute.getImageID());
-        for( int b : brute.getBonusesIDs() ) {
-            System.out.println("\t> " + b);
-        }
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BRUTE)
                 .writeLongInt(id)
@@ -431,7 +424,7 @@ public class NetworkLocalTestServer extends Network {
                 .writeShortInt((short) brute.getLife())
                 .writeShortInt((short) brute.getStrength())
                 .writeShortInt((short) brute.getSpeed())
-                .writeLongInt(brute.getImageID()) // @TODO : image
+                .writeLongInt(brute.getImageID())
                 .writeLongIntArray(brute.getBonusesIDs())
                 .send();
     }
