@@ -4,9 +4,12 @@
  */
 package brutes.net;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,5 +112,19 @@ public class NetworkReader {
             array[i] = this.readString();
         }
         return array;
+    }
+    
+    public URI readImage(URI dest) throws IOException{
+        short imgSize = this.readShortInt();
+        byte[] bFile = new byte[imgSize];
+        this.is.read(bFile);
+        
+        File file = new File(dest);
+        file.mkdirs();
+        try (FileOutputStream fos = new FileOutputStream(new File(dest))) {
+            fos.write(bFile);
+        }
+        
+        return dest;
     }
 }
