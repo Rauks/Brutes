@@ -12,3 +12,6 @@ nb-configuration.xml
 
 # Office #
 ~$*
+
+# Cache files #
+cache/

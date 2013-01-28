@@ -16,7 +16,8 @@ import java.util.UUID;
 public class UserEntity {
 
     public static User create(ResultSet r) throws SQLException {
-        return new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
+        User user = new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
+        return user;
     }
 
     public static int save(Connection con, User user) throws IOException, SQLException {
@@ -55,7 +56,7 @@ public class UserEntity {
         }
         return null;
     }
-    
+
     public static User findOneByToken(String token) throws IOException, SQLException, NotFoundEntityException {
         User object = findByToken(token);
         if (object == null) {
@@ -92,5 +93,4 @@ public class UserEntity {
          psql.setString(1, token);
          psql.executeUpdate();*/
     }
-
 }

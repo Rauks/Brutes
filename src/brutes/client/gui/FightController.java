@@ -6,10 +6,10 @@ package brutes.client.gui;
 
 import brutes.client.ScenesContext;
 import brutes.client.game.ObservableBrute;
-import brutes.net.Protocol;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;
 import brutes.client.net.NetworkClient;
+import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -285,6 +285,11 @@ public class FightController implements Initializable {
         this.myBonus2.textProperty().bind(me.getBonus(1).getNameProperty());
         this.myBonus3.textProperty().bind(me.getBonus(2).getNameProperty());
         
+        this.myImage.imageProperty().bind(me.getImageProperty());
+        this.myBonus1Image.imageProperty().bind(me.getBonus(0).getImageProperty());
+        this.myBonus2Image.imageProperty().bind(me.getBonus(1).getImageProperty());
+        this.myBonus3Image.imageProperty().bind(me.getBonus(2).getImageProperty());
+        
         this.chName.textProperty().bind(ch.getNameProperty());
         this.chLevel.textProperty().bind(ch.getLevelProperty().asString());
         this.chLifes.textProperty().bind(ch.getLifeProperty().asString());
@@ -295,6 +300,11 @@ public class FightController implements Initializable {
         this.chBonus1.textProperty().bind(ch.getBonus(0).getNameProperty());
         this.chBonus2.textProperty().bind(ch.getBonus(1).getNameProperty());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getNameProperty());
+        
+        this.chImage.imageProperty().bind(ch.getImageProperty());
+        this.chBonus1Image.imageProperty().bind(ch.getBonus(0).getImageProperty());
+        this.chBonus2Image.imageProperty().bind(ch.getBonus(1).getImageProperty());
+        this.chBonus3Image.imageProperty().bind(ch.getBonus(2).getImageProperty());
         
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));

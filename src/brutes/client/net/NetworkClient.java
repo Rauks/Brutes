@@ -7,8 +7,10 @@ package brutes.client.net;
 import brutes.client.ScenesContext;
 import brutes.client.game.Bonus;
 import brutes.client.game.Brute;
+import brutes.client.game.media.DataImage;
 import brutes.net.Network;
 import brutes.net.Protocol;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -17,6 +19,8 @@ import java.net.Socket;
  * @author Karl
  */
 public class NetworkClient extends Network{
+    public static final String CACHE_DIR = "cache/";
+    
     public NetworkClient(Socket connection) throws IOException{
         super(connection);
     }
@@ -177,7 +181,11 @@ public class NetworkClient extends Network{
                         bonuses[i] = connection.getDataBonus(bonusesID[i]);
                     }
                 }
-                return new Brute(chId, name, level, life, strength, speed, imageID, bonuses);
+                DataImage image;
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    image = connection.getDataImage(imageID);
+                }
+                return new Brute(chId, name, level, life, strength, speed, image, bonuses);
             case Protocol.ERROR_BRUTE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
             default:
@@ -196,9 +204,34 @@ public class NetworkClient extends Network{
                 short level = this.getReader().readShortInt();
                 short strength = this.getReader().readShortInt();
                 short speed = this.getReader().readShortInt();
-                int imageID = this.getReader().readShortInt();
-                return new Bonus(boId, name, level, strength, speed, imageID);
+                int imageID = this.getReader().readLongInt();
+                DataImage image;
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    image = connection.getDataImage(imageID);
+                }
+                return new Bonus(boId, name, level, strength, speed, image);
             case Protocol.ERROR_BONUS_NOT_FOUND:
+                throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
+            default:
+                throw new InvalidResponseException();
+        }
+    }
+    public DataImage getDataImage(int id) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_GET_IMAGE)
+                .writeLongInt(id)
+                .send();
+        this.getReader().readMessageSize();
+        switch(this.getReader().readDiscriminant()){
+            case Protocol.R_DATA_IMAGE:
+                if(this.getReader().readLongInt() != id){
+                    throw new InvalidResponseException();
+                }
+                File cacheDir = new File(NetworkClient.CACHE_DIR);
+                if(!cacheDir.exists()){
+                    cacheDir.mkdirs();
+                }
+                return new DataImage(this.getReader().readImage(NetworkClient.CACHE_DIR + id + ".png"));
+            case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
                 throw new InvalidResponseException();

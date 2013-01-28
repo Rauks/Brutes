@@ -33,6 +33,7 @@ public class BrutesTestSequence {
                 // DEBUG
                 (new File("~$bdd.db")).delete();
                 DatasManager.getInstance("sqlite", "~$bdd.db");
+                DatasManager.populate();
 
                 while(true){
                     Socket sockcli = sockserv.accept();

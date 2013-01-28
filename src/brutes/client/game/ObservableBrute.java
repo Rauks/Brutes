@@ -4,8 +4,11 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -20,7 +23,7 @@ public class ObservableBrute {
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper bonusStrength;
     private ReadOnlyIntegerWrapper bonusSpeed;
-    private ReadOnlyIntegerWrapper imageID;
+    private ReadOnlyObjectWrapper<Image> image;
     private ObservableBonus[] bonuses;
     private ReadOnlyBooleanWrapper isLoaded;
     
@@ -35,7 +38,7 @@ public class ObservableBrute {
         this.speed = new ReadOnlyIntegerWrapper(0);
         this.bonusStrength = new ReadOnlyIntegerWrapper(0);
         this.bonusSpeed = new ReadOnlyIntegerWrapper(0);
-        this.imageID = new ReadOnlyIntegerWrapper(0);
+        this.image = new ReadOnlyObjectWrapper<>(null);
         this.bonuses = new ObservableBonus[Brute.MAX_BONUSES];
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
             this.bonuses[i] = new ObservableBonus();
@@ -52,10 +55,15 @@ public class ObservableBrute {
         this.speed.set(c.getSpeed());
         this.bonusStrength.set(c.getBonusStrength());
         this.bonusSpeed.set(c.getBonusSpeed());
-        this.imageID.set(c.getImageID());
+        this.image.set(c.getDataImage());
         Bonus[] bonus = c.getBonuses();
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
-            this.bonuses[i].loadBonus(bonus[i]);
+            this.bonuses[i].unload();
+        }
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
+            if(bonus[i] != Bonus.EMPTY_BONUS){
+                this.bonuses[i].loadBonus(bonus[i]);
+            }
         }
     }
     public void unload() {
@@ -68,9 +76,9 @@ public class ObservableBrute {
         this.speed.set(0);
         this.bonusStrength.set(0);
         this.bonusSpeed.set(0);
-        this.imageID.set(0);
+        this.image.set(null);
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
-            this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
+            this.bonuses[i].unload();
         }
     }
     public ReadOnlyBooleanProperty isLoadedProperty(){
@@ -104,7 +112,7 @@ public class ObservableBrute {
     public ReadOnlyIntegerProperty getBonusSpeedProperty() {
         return this.bonusSpeed.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getImageIDProperty() {
-        return this.imageID.getReadOnlyProperty();
+    public ReadOnlyObjectProperty<Image> getImageProperty(){
+        return this.image.getReadOnlyProperty();
     }
 }

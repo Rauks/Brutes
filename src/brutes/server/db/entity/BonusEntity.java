@@ -19,27 +19,37 @@ public class BonusEntity implements Entity {
     static public Bonus create(ResultSet r) throws SQLException {
         Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
         bonus.setBruteId(r.getInt("brute_id"));
+        bonus.setImageID(r.getInt("image_id"));
         return bonus;
     }
 
     public static int save(Connection con, Bonus bonus) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("UPDATE Bonus SET name = ?, level = ?, strength = ?, speed = ? WHERE id = ?");
+        PreparedStatement psql = con.prepareStatement("UPDATE Bonus SET name = ?, level = ?, strength = ?, speed = ?, image_id = ? WHERE id = ?");
         psql.setString(1, bonus.getName());
         psql.setInt(2, bonus.getLevel());
         psql.setInt(3, bonus.getStrength());
         psql.setInt(4, bonus.getSpeed());
-        psql.setInt(5, bonus.getId());
+        psql.setInt(5, bonus.getImageID());
+        psql.setInt(6, bonus.getId());
         return psql.executeUpdate();
     }
-    
+
     public static int insert(Connection con, Bonus bonus) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, strength, speed) VALUES(?, ?, ?, ?, ?)");
+        PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, strength, speed, image_id) VALUES(?, ?, ?, ?, ?, ?)");
         psql.setInt(1, bonus.getBruteId());
         psql.setString(2, bonus.getName());
         psql.setInt(3, bonus.getLevel());
         psql.setInt(4, bonus.getStrength());
         psql.setInt(5, bonus.getSpeed());
+        psql.setInt(6, bonus.getImageID());
         return psql.executeUpdate();
+    }
+
+    public static int delete(Connection con, Bonus bonus) throws IOException, SQLException {
+        PreparedStatement psql = con.prepareStatement("DELETE FROM Bonus WHERE id = ?");
+        psql.setInt(1, bonus.getId());
+        int a = psql.executeUpdate();
+        return a;
     }
 
     public static Bonus findById(int id) throws IOException, SQLException {
@@ -51,7 +61,7 @@ public class BonusEntity implements Entity {
         }
         return null;
     }
-    
+
     public static Bonus findOneById(int id) throws IOException, SQLException, NotFoundEntityException {
         Bonus object = findById(id);
         if (object == null) {
@@ -80,17 +90,17 @@ public class BonusEntity implements Entity {
         psql.setInt(1, brute.getId());
         ResultSet rs = psql.executeQuery();
 
-        if( rs.next() ) {
+        if (rs.next()) {
             return BonusEntity.create(rs);
         }
         return null;
     }
-    
+
     public static Bonus findRandom() throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus ORDER BY Random() LIMIT 1");
         ResultSet rs = psql.executeQuery();
 
-        if( rs.next() ) {
+        if (rs.next()) {
             return BonusEntity.create(rs);
         }
         return null;

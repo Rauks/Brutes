@@ -4,6 +4,8 @@
  */
 package brutes.net;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -35,22 +37,31 @@ public class NetworkReader {
     }
     public short readShortInt() throws IOException{
         byte[] b = new byte[Protocol.SIZE_SHORTINT];
-        this.is.read(b);
+        int read = 0;
+        while(read < Protocol.SIZE_SHORTINT){
+            read += this.is.read(b, read, Protocol.SIZE_SHORTINT - read);
+        }
         ByteBuffer bb = ByteBuffer.wrap(b);
         return bb.getShort();
     }
     public int readLongInt() throws IOException{
         byte[] b = new byte[Protocol.SIZE_LONGINT];
-        this.is.read(b);
+        int read = 0;
+        while(read < Protocol.SIZE_LONGINT){
+            read += this.is.read(b, read, Protocol.SIZE_LONGINT - read);
+        }
         ByteBuffer bb = ByteBuffer.wrap(b);
         return bb.getInt();
     }
     public String readString() throws IOException{
         String out = null;
         try {
-            short length = this.readShortInt();
+            int length = this.readShortInt() & 0xffff;
             byte[] b = new byte[length];
-            this.is.read(b);
+            int read = 0;
+            while(read < length){
+                read += this.is.read(b, read, length - read);
+            }
             out = new String(b, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,7 +74,7 @@ public class NetworkReader {
         return (b[0] != 0x00);
     }
     public boolean[] readBooleanArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_BOOLEAN){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -75,7 +86,7 @@ public class NetworkReader {
         return array;
     }
     public int[] readLongIntArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_LONG){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -87,7 +98,7 @@ public class NetworkReader {
         return array;
     }
     public short[] readShortIntArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_SHORT){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -99,7 +110,7 @@ public class NetworkReader {
         return array;
     }
     public String[] readStringArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_STRING){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -109,5 +120,21 @@ public class NetworkReader {
             array[i] = this.readString();
         }
         return array;
+    }
+    
+    public String readImage(String dest) throws IOException{
+        int imgSize = this.readShortInt() & 0xffff;
+        byte[] bFile = new byte[imgSize];
+        int read = 0;
+        while(read < imgSize){
+            read += this.is.read(bFile, read, imgSize - read);
+        }
+        
+        File file = new File(dest);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(bFile);
+        }
+        
+        return file.getPath();
     }
 }

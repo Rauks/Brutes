@@ -7,7 +7,7 @@ import brutes.server.db.Identifiable;
  * @author Thiktak
  */
 public class User implements Identifiable {
-    
+
     private int id;
     private String pseudo;
     private String password;
