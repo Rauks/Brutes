@@ -4,6 +4,7 @@
  */
 package brutes.client.game.media;
 
+import java.net.URI;
 import javafx.scene.image.Image;
 
 /**
@@ -11,18 +12,13 @@ import javafx.scene.image.Image;
  * @author Karl
  */
 public class DataImage{
-    private int id;
     private Image image;
 
-    public DataImage(int id) {
-        this.id = id;
+    public DataImage(URI uri) {
+        this.image = new Image(uri.getPath());
     }
     
     public Image getImage(){
         return this.image;
-    }
-
-    public int getId(){
-        return this.id;
     }
 }

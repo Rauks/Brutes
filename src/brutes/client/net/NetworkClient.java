@@ -7,10 +7,15 @@ package brutes.client.net;
 import brutes.client.ScenesContext;
 import brutes.client.game.Bonus;
 import brutes.client.game.Brute;
+import brutes.client.game.media.DataImage;
 import brutes.net.Network;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -199,6 +204,28 @@ public class NetworkClient extends Network{
                 int imageID = this.getReader().readShortInt();
                 return new Bonus(boId, name, level, strength, speed, imageID);
             case Protocol.ERROR_BONUS_NOT_FOUND:
+                throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
+            default:
+                throw new InvalidResponseException();
+        }
+    }
+    public DataImage getDataImage(int id) throws IOException, InvalidResponseException, ErrorResponseException{
+        this.getWriter().writeDiscriminant(Protocol.D_GET_IMAGE)
+                .writeLongInt(id)
+                .send();
+        this.getReader().readMessageSize();
+        switch(this.getReader().readDiscriminant()){
+            case Protocol.R_DATA_IMAGE:
+                if(this.getReader().readLongInt() != id){
+                    throw new InvalidResponseException();
+                }
+                try {
+                    return new DataImage(this.getReader().readImage(new URI("cache/" + id + ".png")));
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+            case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
                 throw new InvalidResponseException();
