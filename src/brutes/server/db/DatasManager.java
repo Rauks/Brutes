@@ -59,6 +59,8 @@ public class DatasManager {
             c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (2, 'Robe de lin', 1, 1, 10)");
             c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (3, 'Anneau de la forge', 10, 100, 30)");
             c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (5, 'Vif d''or', 5, 0, 60)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (6, 'Robe a tutu', 5, 1, 15)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (6, 'Jolie chapeau', 1, 8, 10)");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
         } catch (SQLException ex) {
