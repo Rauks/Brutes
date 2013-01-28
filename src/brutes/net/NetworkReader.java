@@ -124,6 +124,6 @@ public class NetworkReader {
             fos.write(bFile);
         }
         
-        return dest;
+        return file.getPath();
     }
 }

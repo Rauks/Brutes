@@ -10,18 +10,17 @@ import brutes.client.game.Brute;
 import brutes.client.game.media.DataImage;
 import brutes.net.Network;
 import brutes.net.Protocol;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Karl
  */
 public class NetworkClient extends Network{
+    public static final String CACHE_DIR = "cache/";
+    
     public NetworkClient(Socket connection) throws IOException{
         super(connection);
     }
@@ -223,7 +222,11 @@ public class NetworkClient extends Network{
                 if(this.getReader().readLongInt() != id){
                     throw new InvalidResponseException();
                 }
-                return new DataImage(this.getReader().readImage("cache/" + id + ".png"));
+                File cacheDir = new File(NetworkClient.CACHE_DIR);
+                if(!cacheDir.exists()){
+                    cacheDir.mkdirs();
+                }
+                return new DataImage(this.getReader().readImage(NetworkClient.CACHE_DIR + id + ".png"));
             case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:

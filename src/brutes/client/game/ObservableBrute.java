@@ -55,7 +55,7 @@ public class ObservableBrute {
         this.speed.set(c.getSpeed());
         this.bonusStrength.set(c.getBonusStrength());
         this.bonusSpeed.set(c.getBonusSpeed());
-        this.image.set(c.getImage());
+        this.image.set(c.getImage().getImage());
         Bonus[] bonus = c.getBonuses();
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
             this.bonuses[i].loadBonus(bonus[i]);

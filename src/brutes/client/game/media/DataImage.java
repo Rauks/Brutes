@@ -14,7 +14,7 @@ public class DataImage{
     private Image image;
 
     public DataImage(String uri) {
-        this.image = new Image(uri);
+        this.image = new Image("file:/" + uri);
     }
     
     public Image getImage(){
