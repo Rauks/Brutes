@@ -114,7 +114,7 @@ public class NetworkLocalTestServer extends Network {
         } catch (NetworkResponseException e) {
             this.getWriter().writeDiscriminant(e.getError()).send();
         } catch (NotFoundEntityException e) {
-            System.out.println("NotFoundEntityException " + e.getClassType());
+            System.out.println("NotFoundEntityException " + e.getClassType() + " <- " + e.toString());
             if( e.getClassTypeIs(Bonus.class) ) {
                 this.getWriter().writeDiscriminant(Protocol.ERROR_BONUS_NOT_FOUND).send();
             }
@@ -124,6 +124,12 @@ public class NetworkLocalTestServer extends Network {
             else if( e.getClassTypeIs(Fight.class) ) {
                 this.getWriter().writeDiscriminant(Protocol.ERROR_FIGHT).send();
                 /*@TODO define it ! ERROR_FIGHT_NOT_FOUND */
+            }else if( e.getClassTypeIs(User.class) ) {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_TOKEN).send();
+                /*@TODO define it ! ERROR_FIGHT_NOT_FOUND */
+            }
+            else {
+                this.getWriter().writeDiscriminant(Protocol.ERROR_SRLY_WTF).send();
             }
         }
     }
@@ -257,7 +263,8 @@ public class NetworkLocalTestServer extends Network {
             PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
             psql.setString(1, login);
             ResultSet rs = psql.executeQuery();
-
+            //throw new NotFoundEntityException(User.class);
+        
             if (!rs.next()) {
                 throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
             } else {
