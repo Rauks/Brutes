@@ -16,7 +16,9 @@ import java.util.UUID;
 public class UserEntity {
 
     public static User create(ResultSet r) throws SQLException {
-        return new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
+        User user = new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
+        user.setImageId(r.getInt("image_id"));
+        return user;
     }
 
     public static int save(Connection con, User user) throws IOException, SQLException {

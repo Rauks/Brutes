@@ -40,11 +40,11 @@ public class DatasManager {
     public static void populate() throws IOException {
         try {
             Connection c = DatasManager.getInstance();
-            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, pseudo TEXT, password TEXT, token TEXT, date_created DATETIME DEFAULT current_timestamp)");
-            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bots', 'WTF')");
-            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Thiktak', 'root1')");
-            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Kirauks', 'root2')");
-            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bruno', 'mdp')");
+            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, pseudo TEXT, password TEXT, token TEXT, image_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password, image_id) VALUES ('Bots', 'WTF', 1)");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password, image_id) VALUES ('Thiktak', 'root1', 2)");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password, image_id) VALUES ('Kirauks', 'root2', 3)");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password, image_id) VALUES ('Bruno', 'mdp', 4)");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, date_created DATETIME DEFAULT current_timestamp)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1 : Kikou', 3, 10, 2, 4)");
