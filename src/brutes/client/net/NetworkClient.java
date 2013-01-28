@@ -223,7 +223,7 @@ public class NetworkClient extends Network{
                 if(this.getReader().readLongInt() != id){
                     throw new InvalidResponseException();
                 }
-                return new DataImage(this.getReader().readImage(id + ".png"));
+                return new DataImage(this.getReader().readImage("cache/" + id + ".png"));
             case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
