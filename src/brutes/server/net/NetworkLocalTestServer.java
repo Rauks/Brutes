@@ -454,15 +454,11 @@ public class NetworkLocalTestServer extends Network {
         return fight;
     }
 
-    private void readGetImage(int id) throws NetworkResponseException {
-        try {
-            URI fileUrl = NetworkLocalTestServer.class.getResource("/res/" + id + ".png").toURI();
-            this.getWriter().writeDiscriminant(Protocol.R_DATA_IMAGE)
-                    .writeLongInt(id)
-                    .writeImage(fileUrl)
-                    .send();
-        } catch (URISyntaxException ex) {
-            throw new NetworkResponseException(Protocol.ERROR_IMAGE_NOT_FOUND);
-        }
+    private void readGetImage(int id) {
+        String fileUrl = "res/" + id + ".png";
+        this.getWriter().writeDiscriminant(Protocol.R_DATA_IMAGE)
+                .writeLongInt(id)
+                .writeImage(fileUrl)
+                .send();
     }
 }

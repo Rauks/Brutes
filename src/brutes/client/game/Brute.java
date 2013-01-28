@@ -1,5 +1,6 @@
 package brutes.client.game;
 
+import brutes.client.game.media.DataImage;
 import java.util.ArrayList;
 
 /**
@@ -16,25 +17,25 @@ public class Brute {
     private short life;
     private short strength;
     private short speed;
-    private int imageID;
+    private DataImage image;
     private Bonus[] bonuses;
 
-    public Brute(int id, String name, short level, short life, short strength, short speed, int imageID) {
+    public Brute(int id, String name, short level, short life, short strength, short speed, DataImage image) {
         this.id = id;
         this.name = name;
         this.level = level;
         this.life = life;
         this.strength = strength;
         this.speed = speed;
-        this.imageID = imageID;
+        this.image = image;
         this.bonuses = new Bonus[Brute.MAX_BONUSES];
         for (int i = 0; i < this.bonuses.length; i++) {
             this.bonuses[i] = Bonus.EMPTY_BONUS;
         }
     }
 
-    public Brute(int id, String name, short level, short life, short strength, short speed, int imageID, Bonus[] bonuses) {
-        this(id, name, level, life, strength, speed, imageID);
+    public Brute(int id, String name, short level, short life, short strength, short speed, DataImage image, Bonus[] bonuses) {
+        this(id, name, level, life, strength, speed, image);
         System.arraycopy(bonuses, 0, this.bonuses, 0, (bonuses.length < Brute.MAX_BONUSES) ? bonuses.length : Brute.MAX_BONUSES);
     }
 
@@ -82,8 +83,8 @@ public class Brute {
         return sum;
     }
 
-    public int getImageID() {
-        return this.imageID;
+    public DataImage getImage() {
+        return this.image;
     }
 
     public Bonus[] getBonuses() {

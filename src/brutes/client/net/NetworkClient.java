@@ -182,7 +182,11 @@ public class NetworkClient extends Network{
                         bonuses[i] = connection.getDataBonus(bonusesID[i]);
                     }
                 }
-                return new Brute(chId, name, level, life, strength, speed, imageID, bonuses);
+                DataImage image;
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    image = connection.getDataImage(imageID);
+                }
+                return new Brute(chId, name, level, life, strength, speed, image, bonuses);
             case Protocol.ERROR_BRUTE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
             default:
@@ -219,12 +223,7 @@ public class NetworkClient extends Network{
                 if(this.getReader().readLongInt() != id){
                     throw new InvalidResponseException();
                 }
-                try {
-                    return new DataImage(this.getReader().readImage(new URI("cache/" + id + ".png")));
-                } catch (URISyntaxException ex) {
-                    Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
-                    return null;
-                }
+                return new DataImage(this.getReader().readImage(id + ".png"));
             case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:

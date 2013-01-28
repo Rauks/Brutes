@@ -114,14 +114,14 @@ public class NetworkReader {
         return array;
     }
     
-    public URI readImage(URI dest) throws IOException{
+    public String readImage(String dest) throws IOException{
         short imgSize = this.readShortInt();
         byte[] bFile = new byte[imgSize];
         this.is.read(bFile);
         
         File file = new File(dest);
         file.mkdirs();
-        try (FileOutputStream fos = new FileOutputStream(new File(dest))) {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(bFile);
         }
         

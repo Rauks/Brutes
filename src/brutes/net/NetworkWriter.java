@@ -113,7 +113,7 @@ public class NetworkWriter {
         }
         return this;
     }
-    public NetworkWriter writeImage(URI uri){
+    public NetworkWriter writeImage(String uri){
         File file = new File(uri);
         byte[] bFile = new byte[(int)file.length()];
         try (FileInputStream fis = new FileInputStream(file)) {

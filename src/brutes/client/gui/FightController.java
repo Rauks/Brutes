@@ -285,6 +285,8 @@ public class FightController implements Initializable {
         this.myBonus2.textProperty().bind(me.getBonus(1).getNameProperty());
         this.myBonus3.textProperty().bind(me.getBonus(2).getNameProperty());
         
+        this.myImage.imageProperty().bind(me.getImageProperty());
+        
         this.chName.textProperty().bind(ch.getNameProperty());
         this.chLevel.textProperty().bind(ch.getLevelProperty().asString());
         this.chLifes.textProperty().bind(ch.getLifeProperty().asString());
