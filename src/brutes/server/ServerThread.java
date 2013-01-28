@@ -25,7 +25,7 @@ public class ServerThread extends Thread {
             sockserv.setSoTimeout(ServerThread.TIMEOUT_ACCEPT);
 
             // DEBUG
-            (new File("~$bdd.db")).delete();
+            //(new File("~$bdd.db")).delete();
             //File file = new File("~$bdd.db");
             //boolean toPopulate = !file.exists();
 
