@@ -5,8 +5,12 @@
 package brutes.net;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -106,6 +110,18 @@ public class NetworkWriter {
         this.writeByte(Protocol.TYPE_STRING);
         for(int i = 0; i < array.length; i++){
             this.writeString(array[i]);
+        }
+        return this;
+    }
+    public NetworkWriter writeImage(URI uri){
+        File file = new File(uri);
+        byte[] bFile = new byte[(int)file.length()];
+        try (FileInputStream fis = new FileInputStream(file)) {
+            fis.read(bFile);
+            this.writeShortInt((short)bFile.length);
+            this.baos.write(bFile);
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkWriter.class.getName()).log(Level.WARNING, null, ex);
         }
         return this;
     }
