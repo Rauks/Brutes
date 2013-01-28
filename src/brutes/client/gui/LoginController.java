@@ -7,6 +7,7 @@ package brutes.client.gui;
 
 import brutes.Brutes;
 import brutes.client.ScenesContext;
+import brutes.client.net.NetworkClient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -76,6 +77,7 @@ public class LoginController implements Initializable {
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
+                    NetworkClient.clearCache();
                     ScenesContext.getInstance().showFight();
                     setDisableForm(false);
                 }
