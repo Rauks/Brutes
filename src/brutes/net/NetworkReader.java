@@ -120,7 +120,6 @@ public class NetworkReader {
         this.is.read(bFile);
         
         File file = new File(dest);
-        file.mkdirs();
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(bFile);
         }
