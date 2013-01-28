@@ -38,13 +38,19 @@ public class NetworkReader {
     }
     public short readShortInt() throws IOException{
         byte[] b = new byte[Protocol.SIZE_SHORTINT];
-        this.is.read(b);
+        int read = 0;
+        while(read < Protocol.SIZE_SHORTINT){
+            read += this.is.read(b, read, Protocol.SIZE_SHORTINT - read);
+        }
         ByteBuffer bb = ByteBuffer.wrap(b);
         return bb.getShort();
     }
     public int readLongInt() throws IOException{
         byte[] b = new byte[Protocol.SIZE_LONGINT];
-        this.is.read(b);
+        int read = 0;
+        while(read < Protocol.SIZE_LONGINT){
+            read += this.is.read(b, read, Protocol.SIZE_LONGINT - read);
+        }
         ByteBuffer bb = ByteBuffer.wrap(b);
         return bb.getInt();
     }
@@ -53,7 +59,10 @@ public class NetworkReader {
         try {
             short length = this.readShortInt();
             byte[] b = new byte[length];
-            this.is.read(b);
+            int read = 0;
+            while(read < length){
+                read += this.is.read(b, read, length - read);
+            }
             out = new String(b, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(NetworkReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,7 +126,10 @@ public class NetworkReader {
     public String readImage(String dest) throws IOException{
         short imgSize = this.readShortInt();
         byte[] bFile = new byte[imgSize];
-        this.is.read(bFile);
+        int read = 0;
+        while(read < imgSize){
+            read += this.is.read(bFile, read, imgSize - read);
+        }
         
         File file = new File(dest);
         try (FileOutputStream fos = new FileOutputStream(file)) {
