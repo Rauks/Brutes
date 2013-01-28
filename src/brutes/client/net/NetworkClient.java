@@ -182,8 +182,12 @@ public class NetworkClient extends Network{
                     }
                 }
                 DataImage image;
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    image = connection.getDataImage(imageID);
+                try{
+                    image = this.getDataImageInCache(imageID);
+                } catch(UncachedException ex){
+                    try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                        image = connection.getDataImage(imageID);
+                    }
                 }
                 return new Brute(chId, name, level, life, strength, speed, image, bonuses);
             case Protocol.ERROR_BRUTE_NOT_FOUND:
@@ -207,8 +211,12 @@ public class NetworkClient extends Network{
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readLongInt();
                 DataImage image;
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    image = connection.getDataImage(imageID);
+                try{
+                    image = this.getDataImageInCache(imageID);
+                } catch(UncachedException ex){
+                    try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                        image = connection.getDataImage(imageID);
+                    }
                 }
                 return new Bonus(boId, name, level, life, strength, speed, image);
             case Protocol.ERROR_BONUS_NOT_FOUND:
@@ -217,7 +225,18 @@ public class NetworkClient extends Network{
                 throw new InvalidResponseException();
         }
     }
+    private DataImage getDataImageInCache(int id) throws UncachedException{
+        String imageUri = new StringBuilder().append(NetworkClient.CACHE_DIR).append(id).append(".png").toString();
+        File imageFile = new File(imageUri);
+        if(imageFile.exists()){
+            return new DataImage(imageUri);
+        }
+        else{
+            throw new UncachedException();
+        }
+    }
     public DataImage getDataImage(int id) throws IOException, InvalidResponseException, ErrorResponseException{
+        String imageUri = new StringBuilder().append(NetworkClient.CACHE_DIR).append(id).append(".png").toString();
         this.getWriter().writeDiscriminant(Protocol.D_GET_IMAGE)
                 .writeLongInt(id)
                 .send();
@@ -231,7 +250,7 @@ public class NetworkClient extends Network{
                 if(!cacheDir.exists()){
                     cacheDir.mkdirs();
                 }
-                return new DataImage(this.getReader().readImage(NetworkClient.CACHE_DIR + id + ".png"));
+                return new DataImage(this.getReader().readImage(imageUri));
             case Protocol.ERROR_IMAGE_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
