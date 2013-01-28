@@ -55,7 +55,7 @@ public class UserEntity {
         }
         return null;
     }
-    
+
     public static User findOneByToken(String token) throws IOException, SQLException, NotFoundEntityException {
         User object = findByToken(token);
         if (object == null) {
@@ -92,5 +92,4 @@ public class UserEntity {
          psql.setString(1, token);
          psql.executeUpdate();*/
     }
-
 }

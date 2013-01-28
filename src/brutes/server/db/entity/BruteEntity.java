@@ -60,7 +60,7 @@ public class BruteEntity implements Entity {
         }
         return null;
     }
-    
+
     public static Brute findOneById(int id) throws IOException, SQLException, NotFoundEntityException {
         Brute object = findById(id);
         if (object == null) {
@@ -70,7 +70,7 @@ public class BruteEntity implements Entity {
     }
 
     public static Brute findByUser(User user) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ?");
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM brutes WHERE user_id = ? ORDER BY id DESC");
         psql.setInt(1, user.getId());
         ResultSet rs = psql.executeQuery();
         if (rs.next()) {
@@ -78,27 +78,27 @@ public class BruteEntity implements Entity {
         }
         return null;
     }
-    
-    public static Brute findOneByUser(User user) throws IOException, SQLException, NotFoundEntityException {    
+
+    public static Brute findOneByUser(User user) throws IOException, SQLException, NotFoundEntityException {
         Brute object = findByUser(user);
         if (object == null) {
             throw new NotFoundEntityException(User.class);
         }
         return object;
     }
-    
+
     public static Brute findRandomAnotherToBattleByUser(User user) throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? ORDER BY RANDOM() LIMIT 1");
         psql.setInt(1, user.getId());
         ResultSet rs = psql.executeQuery();
-            
+
         if (rs.next()) {
             return BruteEntity.create(rs);
         }
         return null;
     }
-    
-    public static Brute findOneRandomAnotherToBattleByUser(User user) throws IOException, SQLException, NotFoundEntityException {    
+
+    public static Brute findOneRandomAnotherToBattleByUser(User user) throws IOException, SQLException, NotFoundEntityException {
         Brute object = findRandomAnotherToBattleByUser(user);
         if (object == null) {
             throw new NotFoundEntityException(User.class);
@@ -107,10 +107,10 @@ public class BruteEntity implements Entity {
     }
 
     public static Brute findByName(String name) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE name = ?");
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE name = ? ORDER BY id DESC");
         psql.setString(1, name);
         ResultSet rs = psql.executeQuery();
-            
+
         if (rs.next()) {
             return BruteEntity.create(rs);
         }
