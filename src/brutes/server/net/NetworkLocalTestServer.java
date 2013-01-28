@@ -152,7 +152,7 @@ public class NetworkLocalTestServer extends Network {
         Brute brute = fight.getBrute1();
         
         // level UP !
-        brute.setLevel((short)(brute.getLevel()+1));
+        brute.setLevel((short)Math.min(brute.getLevel()+1, 100));
         
         // force UP !
         if( ui.random() ) // 50%
@@ -179,6 +179,11 @@ public class NetworkLocalTestServer extends Network {
                 // On trouve quelque chose ...
                 Bonus bonusTreasure = BonusEntity.findRandom();
                 bonusTreasure.setBruteId(brute.getId());
+                
+                bonusTreasure.setLevel((short) ui.randomMiddle(brute.getLevel()/2, .5));
+                bonusTreasure.setStrength((short) ui.randomMiddle(brute.getStrength()/2, .5));
+                bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed()/2, .5));
+                
                 DatasManager.insert(bonusTreasure);
                 Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
             }
@@ -353,7 +358,7 @@ public class NetworkLocalTestServer extends Network {
         short strength = (short) ui.random(3, 10);
         short speed    = (short) ui.random(3, 10);
         short life     = (short) (ui.random(10, 20) + strength/3);
-        int imageID = ui.random(1, 3);
+        int imageID = ui.random(1, 13);
         
         Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
         brute.setUserId(user.getId());

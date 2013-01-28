@@ -32,4 +32,8 @@ public class ui {
         }
         return length;
     }
+
+    public static int randomMiddle(int i, double d) {
+        return ui.random((int) (i - d * i), (int) (i + d * i));
+    }
 }
