@@ -19,6 +19,7 @@ public class BruteEntity implements Entity {
     public static Brute create(ResultSet r) throws IOException, SQLException {
         Brute brute = new Brute(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("life"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
         brute.setUserId(r.getInt("user_id"));
+        brute.setImageID(r.getInt("image_id"));
         brute.setBonuses(BonusEntity.findAllByBrute(brute));
         return brute;
     }

@@ -19,6 +19,7 @@ public class BonusEntity implements Entity {
     static public Bonus create(ResultSet r) throws SQLException {
         Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
         bonus.setBruteId(r.getInt("brute_id"));
+        bonus.setImageID(r.getInt("image_id"));
         return bonus;
     }
 

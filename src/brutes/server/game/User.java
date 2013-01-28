@@ -12,7 +12,6 @@ public class User implements Identifiable {
     private String pseudo;
     private String password;
     private String token;
-    private int imageId;
 
     public User(int id, String pseudo, String password, String token) {
         this.id = id;
@@ -48,13 +47,5 @@ public class User implements Identifiable {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
     }
 }

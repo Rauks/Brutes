@@ -71,5 +71,12 @@ public class Bonus implements Identifiable {
     public void setSpeed(short speed) {
         this.speed = speed;
     }
-    
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
+    }
 }

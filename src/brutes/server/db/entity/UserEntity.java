@@ -17,7 +17,6 @@ public class UserEntity {
 
     public static User create(ResultSet r) throws SQLException {
         User user = new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
-        user.setImageId(r.getInt("image_id"));
         return user;
     }
 

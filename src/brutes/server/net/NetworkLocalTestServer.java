@@ -403,7 +403,7 @@ public class NetworkLocalTestServer extends Network {
                 .writeShortInt((short) bonus.getLevel())
                 .writeShortInt((short) bonus.getStrength())
                 .writeShortInt((short) bonus.getSpeed())
-                .writeLongInt(id)
+                .writeLongInt(bonus.getImageID())
                 .send();
     }
 
@@ -419,7 +419,7 @@ public class NetworkLocalTestServer extends Network {
                 .writeShortInt((short) brute.getLife())
                 .writeShortInt((short) brute.getStrength())
                 .writeShortInt((short) brute.getSpeed())
-                .writeLongInt(id) // @TODO : image
+                .writeLongInt(brute.getImageID()) // @TODO : image
                 .writeLongIntArray(brute.getBonusesIDs())
                 .send();
     }

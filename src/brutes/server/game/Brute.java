@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Brute implements Identifiable {
 
     public static final int MAX_BONUSES = 3;
-    
     private int id;
     private String name;
     private short level;
@@ -18,9 +17,7 @@ public class Brute implements Identifiable {
     private short strength;
     private short speed;
     private int imageID;
-    
     private Bonus[] bonuses;
-    
     /* more */
     private int userid;
 
@@ -59,7 +56,7 @@ public class Brute implements Identifiable {
     public short getLife() {
         return this.life;
     }
-    
+
     public short getStrength() {
         return this.strength;
     }
@@ -88,6 +85,10 @@ public class Brute implements Identifiable {
         return sum;
     }
 
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
+    }
+
     public int getImageID() {
         return this.imageID;
     }
@@ -95,16 +96,16 @@ public class Brute implements Identifiable {
     public Bonus[] getBonuses() {
         return this.bonuses;
     }
-    
+
     public int[] getBonusesIDs() {
         ArrayList<Integer> bonusesIds = new ArrayList<>(Brute.MAX_BONUSES);
-        for(int i = 0; i < Brute.MAX_BONUSES; i++){
-            if(this.bonuses[i] != Bonus.EMPTY_BONUS){
+        for (int i = 0; i < Brute.MAX_BONUSES; i++) {
+            if (this.bonuses[i] != Bonus.EMPTY_BONUS) {
                 bonusesIds.add(new Integer(this.bonuses[i].getId()));
             }
         }
         int[] intIDs = new int[bonusesIds.size()];
-        for(int i = 0; i < intIDs.length; i++){
+        for (int i = 0; i < intIDs.length; i++) {
             intIDs[i] = bonusesIds.get(i).intValue();
         }
         return intIDs;
@@ -134,9 +135,9 @@ public class Brute implements Identifiable {
         for (int i = 0; i < Brute.MAX_BONUSES; i++) {
             this.bonuses[i] = Bonus.EMPTY_BONUS;
         }
-        if(bonuses != null){
-            for (int i = 0; i < ((bonuses.length < Brute.MAX_BONUSES)?bonuses.length:Brute.MAX_BONUSES); i++) {
-                if(bonuses[i] != null){
+        if (bonuses != null) {
+            for (int i = 0; i < ((bonuses.length < Brute.MAX_BONUSES) ? bonuses.length : Brute.MAX_BONUSES); i++) {
+                if (bonuses[i] != null) {
                     this.bonuses[i] = bonuses[i];
                 }
             }
@@ -150,5 +151,4 @@ public class Brute implements Identifiable {
     public void setUserId(int userid) {
         this.userid = userid;
     }
-    
 }
