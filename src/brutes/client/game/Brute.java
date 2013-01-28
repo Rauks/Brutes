@@ -2,6 +2,7 @@ package brutes.client.game;
 
 import brutes.client.game.media.DataImage;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -83,8 +84,8 @@ public class Brute {
         return sum;
     }
 
-    public DataImage getImage() {
-        return this.image;
+    public Image getImage() {
+        return this.image.getImage();
     }
 
     public Bonus[] getBonuses() {
