@@ -58,34 +58,42 @@ public class FightResponse extends Response {
         }
 
         Brute brute = fight.getBrute1();
+        System.out.println("!! win !!");
 
         // level UP !
         brute.setLevel((short) Math.min(brute.getLevel() + 1, 100));
+        System.out.println("Life UP");
 
         // force UP !
         if (ui.random()) // 50%
         {
+            System.out.println("Force:");
             switch (ui.random(1, 3)) {
                 case 1:
                     brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
+                    System.out.println("  Life UP");
                     break;
                 case 2:
                     brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
+                    System.out.println("  Speed UP");
                     break;
                 case 3:
                     brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
+                    System.out.println("  Strength UP");
                     break;
             }
         }
 
         // Bonus UP
         if (ui.random()) {
+            System.out.println("Bonus:");
             Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
             // S'il y a déjà 3 bonus
             Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
-            if (bonusCharacter != null) {
+            if (bonusCharacter != null && ui.random()) {
                 Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete (" + bonusCharacter.getName() + ")");
                 DatasManager.delete(bonusCharacter);
+                System.out.println("  delete");
             }
 
             int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
@@ -101,6 +109,7 @@ public class FightResponse extends Response {
                 bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed() / 2, .5));
 
                 DatasManager.insert(bonusTreasure);
+                System.out.println("  insert");
                 Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
             }
         }
