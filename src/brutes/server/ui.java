@@ -1,7 +1,6 @@
 package brutes.server;
 
 import brutes.server.db.DatasManager;
-import brutes.server.game.Bonus;
 
 /**
  *

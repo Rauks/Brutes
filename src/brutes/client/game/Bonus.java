@@ -1,7 +1,6 @@
 package brutes.client.game;
 
 import brutes.client.game.media.DataImage;
-import javafx.scene.image.Image;
 
 /**
  *

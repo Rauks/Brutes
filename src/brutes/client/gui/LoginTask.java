@@ -5,12 +5,11 @@
 package brutes.client.gui;
 
 import brutes.client.ScenesContext;
-import brutes.client.gui.LoginController;
-import brutes.net.Protocol;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;
 import brutes.client.net.NetworkClient;
 import brutes.client.user.Session;
+import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;

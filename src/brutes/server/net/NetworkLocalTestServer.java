@@ -1,17 +1,17 @@
 package brutes.server.net;
 
+import brutes.net.Network;
+import brutes.net.NetworkReader;
+import brutes.net.Protocol;
 import brutes.server.db.entity.NotFoundEntityException;
 import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
 import brutes.server.game.Fight;
 import brutes.server.game.User;
-import brutes.net.Network;
-import brutes.net.NetworkReader;
-import brutes.net.Protocol;
 import brutes.server.net.response.BonusResponse;
 import brutes.server.net.response.BruteResponse;
-import brutes.server.net.response.UserResponse;
 import brutes.server.net.response.FightResponse;
+import brutes.server.net.response.UserResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
