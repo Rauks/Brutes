@@ -31,33 +31,39 @@ public class DatasManager {
         }
         try {
             DatasManager.con = DriverManager.getConnection(dbpath);
-
-            DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, pseudo TEXT, password TEXT, token TEXT, date_created DATETIME DEFAULT current_timestamp)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bots', 'WTF')");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Thiktak', 'root1')");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Kirauks', 'root2')");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bruno', 'mdp')");
-
-            DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, date_created DATETIME DEFAULT current_timestamp)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1 : Kikou', 3, 10, 2, 4)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_2 : Ultimate', 10, 250, 23, 18)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_3 : 贝努瓦', 1, 100, 0, 0)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Yéti', 2, 62, 5, 5)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (3, 'Rauks', 1, 50, 3, 8)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (4, 'Test1', 1, 500, 25, 80)");
-
-            DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, level INTEGER, strength INTEGER, speed INTEGER)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (1, 'Hache', 1, 15, 5)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (2, 'Robe de lin', 1, 1, 10)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (3, 'Anneau de la forge', 10, 100, 30)");
-            DatasManager.con.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (5, 'Vif d''or', 5, 0, 60)");
-
-            DatasManager.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
         } catch (SQLException ex) {
             Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return DatasManager.con;
+    }
+
+    public static void populate() throws IOException {
+        try {
+            Connection c = DatasManager.getInstance();
+            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, pseudo TEXT, password TEXT, token TEXT, date_created DATETIME DEFAULT current_timestamp)");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bots', 'WTF')");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Thiktak', 'root1')");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Kirauks', 'root2')");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bruno', 'mdp')");
+
+            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, date_created DATETIME DEFAULT current_timestamp)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_1 : Kikou', 3, 10, 2, 4)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_2 : Ultimate', 10, 250, 23, 18)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (1, 'Bot_3 : 贝努瓦', 1, 100, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (2, 'Yéti', 2, 62, 5, 5)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (3, 'Rauks', 1, 50, 3, 8)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, name, level, life, strength, speed) VALUES (4, 'Test1', 1, 500, 25, 80)");
+
+            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, level INTEGER, strength INTEGER, speed INTEGER)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (1, 'Hache', 1, 15, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (2, 'Robe de lin', 1, 1, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (3, 'Anneau de la forge', 10, 100, 30)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, name, level, strength, speed) VALUES (5, 'Vif d''or', 5, 0, 60)");
+
+            c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
+        } catch (SQLException ex) {
+            Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static Connection getInstance() throws IOException {
