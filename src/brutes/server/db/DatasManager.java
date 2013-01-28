@@ -62,7 +62,7 @@ public class DatasManager {
             
             c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 4, 37, 'Grizzly', 1, 15, 5)");
             c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 5, 38, 'Grizzly enragé', 3, 45, 5)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 6, 38, 'Squash', 5, 55, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 6, 38, 'Sasquatch', 5, 55, 5)");
             
             //c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 7, 'Hache', 1, 15, 5)");
             
