@@ -35,6 +35,7 @@ public class ObservableBonus {
     }
     
     public void loadBonus(Bonus b){
+        System.out.println(b.getName() + "#" + b.getId());
         this.id.set(b.getId());
         this.name.set(b.getName());
         this.level.set(b.getLevel());

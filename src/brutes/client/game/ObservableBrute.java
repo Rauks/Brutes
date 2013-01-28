@@ -58,7 +58,12 @@ public class ObservableBrute {
         this.image.set(c.getDataImage());
         Bonus[] bonus = c.getBonuses();
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
-            this.bonuses[i].loadBonus(bonus[i]);
+            this.bonuses[i].unload();
+        }
+        for(int i = 0; i < Brute.MAX_BONUSES; i++){
+            if(bonus[i] != Bonus.EMPTY_BONUS){
+                this.bonuses[i].loadBonus(bonus[i]);
+            }
         }
     }
     public void unload() {
@@ -73,7 +78,7 @@ public class ObservableBrute {
         this.bonusSpeed.set(0);
         this.image.set(null);
         for(int i = 0; i < Brute.MAX_BONUSES; i++){
-            this.bonuses[i].loadBonus(Bonus.EMPTY_BONUS);
+            this.bonuses[i].unload();
         }
     }
     public ReadOnlyBooleanProperty isLoadedProperty(){
