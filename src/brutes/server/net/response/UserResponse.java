@@ -9,6 +9,7 @@ import brutes.net.Protocol;
 import brutes.server.db.DatasManager;
 import brutes.server.db.entity.NotFoundEntityException;
 import brutes.server.db.entity.UserEntity;
+import brutes.server.game.User;
 import brutes.server.net.NetworkLocalTestServer;
 import brutes.server.net.NetworkResponseException;
 import java.io.IOException;
@@ -60,6 +61,34 @@ public class UserResponse extends Response {
         UserEntity.updateTokenToNull(token);
 
         this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
+                .send();
+    }
+
+    private void readCreateUser(String pseudo, String password) throws IOException, SQLException, NetworkResponseException {
+        if (pseudo.isEmpty() || password.isEmpty()) {
+            throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
+        }
+
+
+        /* @TODO define it !
+         * if( UserEntity.findByPseudo(pseudo) != null ) {
+         *    throw new NetworkResponseException(Protocol.ERROR_USER_ALREADY_USED);
+         * }
+         */
+
+        User user = new User(0, pseudo, password, null);
+        DatasManager.insert(user);
+
+        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
+                .send();
+
+    }
+
+    private void readDeleteUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+        User user = this.checkTokenAndReturnUser(token);
+        DatasManager.delete(user);
+
+        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
 }
