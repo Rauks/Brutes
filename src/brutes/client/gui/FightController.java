@@ -298,6 +298,8 @@ public class FightController implements Initializable {
         this.chBonus2.textProperty().bind(ch.getBonus(1).getNameProperty());
         this.chBonus3.textProperty().bind(ch.getBonus(2).getNameProperty());
         
+        this.chImage.imageProperty().bind(ch.getImageProperty());
+        
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightRandom.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
