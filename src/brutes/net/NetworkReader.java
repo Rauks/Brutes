@@ -125,7 +125,6 @@ public class NetworkReader {
     
     public String readImage(String dest) throws IOException{
         int imgSize = this.readShortInt() & 0xffff;
-        System.out.println(imgSize);
         byte[] bFile = new byte[imgSize];
         int read = 0;
         while(read < imgSize){
