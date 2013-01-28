@@ -204,7 +204,7 @@ public class NetworkClient extends Network{
                 short level = this.getReader().readShortInt();
                 short strength = this.getReader().readShortInt();
                 short speed = this.getReader().readShortInt();
-                int imageID = this.getReader().readShortInt();
+                int imageID = this.getReader().readLongInt();
                 DataImage image;
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     image = connection.getDataImage(imageID);

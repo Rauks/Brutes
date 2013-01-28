@@ -70,7 +70,7 @@ public class ObservableBonus {
     public ReadOnlyIntegerProperty getSpeedProperty() {
         return this.speed.getReadOnlyProperty();
     }
-    public ReadOnlyObjectProperty<Image> getImageIDProperty() {
+    public ReadOnlyObjectProperty<Image> getImageProperty() {
         return this.image.getReadOnlyProperty();
     }
 }

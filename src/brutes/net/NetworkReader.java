@@ -57,7 +57,7 @@ public class NetworkReader {
     public String readString() throws IOException{
         String out = null;
         try {
-            short length = this.readShortInt();
+            int length = this.readShortInt() & 0xffff;
             byte[] b = new byte[length];
             int read = 0;
             while(read < length){
@@ -75,7 +75,7 @@ public class NetworkReader {
         return (b[0] != 0x00);
     }
     public boolean[] readBooleanArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_BOOLEAN){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -87,7 +87,7 @@ public class NetworkReader {
         return array;
     }
     public int[] readLongIntArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_LONG){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -99,7 +99,7 @@ public class NetworkReader {
         return array;
     }
     public short[] readShortIntArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_SHORT){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -111,7 +111,7 @@ public class NetworkReader {
         return array;
     }
     public String[] readStringArray() throws IOException{
-        short nbElements = this.readShortInt();
+        int nbElements = this.readShortInt() & 0xffff;
         byte type = this.readByte();
         if(type != Protocol.TYPE_STRING){
             throw new IOException(NetworkException.ARRAY_TYPE);
@@ -124,7 +124,8 @@ public class NetworkReader {
     }
     
     public String readImage(String dest) throws IOException{
-        short imgSize = this.readShortInt();
+        int imgSize = this.readShortInt() & 0xffff;
+        System.out.println(imgSize);
         byte[] bFile = new byte[imgSize];
         int read = 0;
         while(read < imgSize){
