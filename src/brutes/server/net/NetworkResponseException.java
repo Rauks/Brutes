@@ -4,7 +4,7 @@ package brutes.server.net;
  *
  * @author Thiktak
  */
-class NetworkResponseException extends Exception {
+public class NetworkResponseException extends Exception {
     private final byte error;
 
     public NetworkResponseException(byte error) {
