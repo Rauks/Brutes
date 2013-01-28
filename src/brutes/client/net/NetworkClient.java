@@ -238,4 +238,13 @@ public class NetworkClient extends Network{
                 throw new InvalidResponseException();
         }
     }
+    
+    public static void clearCache(){
+        File cacheDir = new File(NetworkClient.CACHE_DIR);
+        String[] files = cacheDir.list();
+        for (int i = 0; i < files.length; i++){
+            new File(cacheDir, files[i]).delete();
+        }
+        cacheDir.delete();
+    }
 }
