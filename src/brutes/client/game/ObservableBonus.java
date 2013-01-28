@@ -4,8 +4,11 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -17,7 +20,7 @@ public class ObservableBonus {
     private ReadOnlyIntegerWrapper level;
     private ReadOnlyIntegerWrapper strength;
     private ReadOnlyIntegerWrapper speed;
-    private ReadOnlyIntegerWrapper imageID;
+    private ReadOnlyObjectWrapper<Image> image;
     private ReadOnlyBooleanWrapper isLoaded;
     
     public ObservableBonus(){
@@ -28,7 +31,7 @@ public class ObservableBonus {
         this.level = new ReadOnlyIntegerWrapper(0);
         this.strength = new ReadOnlyIntegerWrapper(0);
         this.speed = new ReadOnlyIntegerWrapper(0);
-        this.imageID = new ReadOnlyIntegerWrapper(0);
+        this.image = new ReadOnlyObjectWrapper<>(null);
     }
     
     public void loadBonus(Bonus b){
@@ -37,7 +40,7 @@ public class ObservableBonus {
         this.level.set(b.getLevel());
         this.strength.set(b.getStrength());
         this.speed.set(b.getSpeed());
-        this.imageID.set(b.getImage());
+        this.image.set(b.getDataImage().getImage());
     }
     public void unload(){
         this.isLoaded.set(false);
@@ -46,7 +49,7 @@ public class ObservableBonus {
         this.level.set(0);
         this.strength.set(0);
         this.speed.set(0);
-        this.imageID.set(0);
+        this.image.set(null);
     }
     public ReadOnlyBooleanProperty isLoadedProperty(){
         return this.isLoaded.getReadOnlyProperty();
@@ -67,7 +70,7 @@ public class ObservableBonus {
     public ReadOnlyIntegerProperty getSpeedProperty() {
         return this.speed.getReadOnlyProperty();
     }
-    public ReadOnlyIntegerProperty getImageIDProperty() {
-        return this.imageID.getReadOnlyProperty();
+    public ReadOnlyObjectProperty<Image> getImageIDProperty() {
+        return this.image.getReadOnlyProperty();
     }
 }

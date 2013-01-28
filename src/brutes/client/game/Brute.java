@@ -84,7 +84,7 @@ public class Brute {
         return sum;
     }
 
-    public Image getImage() {
+    public Image getDataImage() {
         return this.image.getImage();
     }
 

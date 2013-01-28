@@ -205,7 +205,11 @@ public class NetworkClient extends Network{
                 short strength = this.getReader().readShortInt();
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readShortInt();
-                return new Bonus(boId, name, level, strength, speed, imageID);
+                DataImage image;
+                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                    image = connection.getDataImage(imageID);
+                }
+                return new Bonus(boId, name, level, strength, speed, image);
             case Protocol.ERROR_BONUS_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:
