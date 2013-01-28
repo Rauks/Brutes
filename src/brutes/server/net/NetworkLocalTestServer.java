@@ -33,14 +33,14 @@ public class NetworkLocalTestServer extends Network {
     }
 
     protected User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = UserEntity.findOneByToken(token);
+        User user = UserEntity.findByToken(token);
         if (user == null) {
-            throw new NetworkResponseException(Protocol.ERROR_TOKEN);
+            throw new NetworkResponseException(Protocol.ERROR_SRLY_WTF);
         }
         return user;
     }
 
-    public void read() throws IOException, SQLException {
+    synchronized public void read() throws IOException, SQLException {
         NetworkReader r = this.getReader();
         r.readMessageSize();
         byte disc = this.getReader().readDiscriminant();
@@ -263,7 +263,6 @@ public class NetworkLocalTestServer extends Network {
             PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
             psql.setString(1, login);
             ResultSet rs = psql.executeQuery();
-            //throw new NotFoundEntityException(User.class);
         
             if (!rs.next()) {
                 throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
@@ -293,15 +292,12 @@ public class NetworkLocalTestServer extends Network {
         User user = this.checkTokenAndReturnUser(token);
         
         // Brute already exists !
-        if( BruteEntity.findByUser(user) != null ) {
+        /*if( BruteEntity.findByUser(user) != null ) {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
-        }
+        }*/
         
         if( name.isEmpty() ) {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
-            /* @TODO define it !
-             * Protocol.ERROR_BRUTE_ALREADY_USED
-             */
         }
         
         /* @TODO
