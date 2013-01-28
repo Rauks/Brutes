@@ -13,6 +13,7 @@ import brutes.server.game.User;
 import brutes.net.Network;
 import brutes.net.NetworkReader;
 import brutes.net.Protocol;
+import brutes.server.net.response.UserResponse;
 import brutes.server.ui;
 import java.io.File;
 import java.io.IOException;
@@ -94,11 +95,11 @@ public class NetworkLocalTestServer extends Network {
                     break;
                 case Protocol.D_LOGIN:
                     // pseudo, password
-                    this.readLogin(r.readString(), r.readString());
+                    (new UserResponse(this.getWriter())).readLogin(r.readString(), r.readString());
                     break;
                 case Protocol.D_LOGOUT:
                     // token
-                    this.readLogout(r.readString());
+                    (new UserResponse(this.getWriter())).readLogout(r.readString());
                     break;
                 case Protocol.D_GET_IMAGE:
                     // id
@@ -298,41 +299,6 @@ public class NetworkLocalTestServer extends Network {
         else {
             this.readCheatFightLoose(token);
         }
-    }
-
-    private void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-
-        if (login.isEmpty()) {
-            throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
-        } else if (password.isEmpty()) {
-            throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
-        } else {
-            PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
-            psql.setString(1, login);
-            ResultSet rs = psql.executeQuery();
-        
-            if (!rs.next()) {
-                throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
-            } else {
-                if (!password.equals(rs.getString("password"))) {
-                    throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
-                } else {
-                    String token = UserEntity.updateToken(rs.getInt("id"));
-
-                    Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
-                    this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                            .writeString(token)
-                            .send();
-                }
-            }
-        }
-    }
-
-    private void readLogout(String token) throws IOException, SQLException, NotFoundEntityException {
-        UserEntity.updateTokenToNull(token);
-
-        this.getWriter().writeDiscriminant(Protocol.R_LOGOUT_SUCCESS)
-                .send();
     }
 
     private void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
