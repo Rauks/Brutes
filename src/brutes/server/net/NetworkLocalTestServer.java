@@ -16,6 +16,9 @@ import brutes.net.Protocol;
 import brutes.server.ui;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +82,7 @@ public class NetworkLocalTestServer extends Network {
                     this.readDataBonus(r.readLongInt());
                     break;
                 case Protocol.D_GET_CHALLENGER_BRUTE_ID:
-                    // token
+                    // id
                     this.readGetChallengerBruteId(r.readString());
                     break;
                 case Protocol.D_GET_BRUTE:
@@ -87,7 +90,7 @@ public class NetworkLocalTestServer extends Network {
                     this.readDataBrute(r.readLongInt());
                     break;
                 case Protocol.D_GET_MY_BRUTE_ID:
-                    // token
+                    // id
                     this.readGetMyBruteId(r.readString());
                     break;
                 case Protocol.D_LOGIN:
@@ -97,6 +100,10 @@ public class NetworkLocalTestServer extends Network {
                 case Protocol.D_LOGOUT:
                     // token
                     this.readLogout(r.readString());
+                    break;
+                case Protocol.D_GET_IMAGE:
+                    // id
+                    this.readGetImage(r.readLongInt());
                     break;
                 /* @TODO define it !
                  * case Protocol.D_CREATE_USER:
@@ -445,5 +452,17 @@ public class NetworkLocalTestServer extends Network {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
         return fight;
+    }
+
+    private void readGetImage(int id) throws NetworkResponseException {
+        try {
+            URI fileUrl = NetworkLocalTestServer.class.getResource("/res/" + id + ".png").toURI();
+            this.getWriter().writeDiscriminant(Protocol.R_DATA_IMAGE)
+                    .writeLongInt(id)
+                    .writeImage(fileUrl)
+                    .send();
+        } catch (URISyntaxException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_IMAGE_NOT_FOUND);
+        }
     }
 }
