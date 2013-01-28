@@ -14,6 +14,7 @@ import brutes.net.Network;
 import brutes.net.NetworkReader;
 import brutes.net.Protocol;
 import brutes.server.ui;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URI;
@@ -362,6 +363,7 @@ public class NetworkLocalTestServer extends Network {
         
         Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
         brute.setUserId(user.getId());
+        //brute.setImageID(imageID);
         DatasManager.insert(brute);
         
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
@@ -401,7 +403,7 @@ public class NetworkLocalTestServer extends Network {
 
     private void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         Bonus bonus = BonusEntity.findOneById(id);
-
+        System.out.println("readDataBonus(" + id + ") : imageID=" + bonus.getImageID());
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
                 .writeLongInt(id)
                 .writeString(bonus.getName())
@@ -416,6 +418,11 @@ public class NetworkLocalTestServer extends Network {
         Brute brute = BruteEntity.findOneById(id);
 
         brute.setBonuses(BonusEntity.findAllByBrute(brute));
+        
+        System.out.println("readDataBrute(" + id + ") imageId=" + brute.getImageID());
+        for( int b : brute.getBonusesIDs() ) {
+            System.out.println("\t> " + b);
+        }
 
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BRUTE)
                 .writeLongInt(id)
@@ -495,8 +502,20 @@ public class NetworkLocalTestServer extends Network {
         return fight;
     }
 
-    private void readGetImage(int id) {
+    private void readGetImage(int id) throws NetworkResponseException {
         String fileUrl = "res/" + id + ".png";
+        
+        if( id == 0 ) {
+            System.out.println("SRLY_WTF " + fileUrl);
+            throw new NetworkResponseException(Protocol.ERROR_SRLY_WTF);
+        }
+        
+        if( !(new File(fileUrl)).exists() ) {
+            System.out.println("NOT_FOUND " + fileUrl);
+            throw new NetworkResponseException(Protocol.ERROR_IMAGE_NOT_FOUND);
+        }
+        System.out.println("IMG:" + fileUrl);
+        
         this.getWriter().writeDiscriminant(Protocol.R_DATA_IMAGE)
                 .writeLongInt(id)
                 .writeImage(fileUrl)
