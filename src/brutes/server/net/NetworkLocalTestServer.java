@@ -38,7 +38,7 @@ public class NetworkLocalTestServer extends Network {
     protected User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = UserEntity.findByToken(token);
         if (user == null) {
-            throw new NetworkResponseException(Protocol.ERROR_SRLY_WTF);
+            throw new NetworkResponseException(Protocol.ERROR_TOKEN);
         }
         return user;
     }
@@ -150,7 +150,43 @@ public class NetworkLocalTestServer extends Network {
         }
         
         Brute brute = fight.getBrute1();
-        switch(ui.random(1, 6))
+        
+        // level UP !
+        brute.setLevel((short)(brute.getLevel()+1));
+        
+        // force UP !
+        if( ui.random() ) // 50%
+            switch(ui.random(1, 3)) {
+                case 1: brute.setLife((short) (brute.getLife()+ui.random(1, 10))); break;
+                case 2: brute.setSpeed((short) (brute.getSpeed()+ui.random(1, 5))); break;
+                case 3: brute.setStrength((short) (brute.getStrength()+ui.random(1, 5))); break;
+            }
+        
+        // Bonus UP
+        if( ui.random() ) {
+            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
+            // S'il y a déjà 3 bonus
+            Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
+            if( bonusCharacter != null ) {
+                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete (" + bonusCharacter.getName() + ")");
+                DatasManager.delete(bonusCharacter);
+            }
+            
+            int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
+
+            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = " + AllCharacterBonus);
+            if( AllCharacterBonus < 3 ) {
+                // On trouve quelque chose ...
+                Bonus bonusTreasure = BonusEntity.findRandom();
+                bonusTreasure.setBruteId(brute.getId());
+                DatasManager.insert(bonusTreasure);
+                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
+            }
+        }
+        
+        DatasManager.save(brute);
+        
+        /*switch(ui.random(1, 6))
         {
             case 1: // Level Up
                 brute.setLevel((short)(brute.getLevel()+1));
@@ -186,7 +222,7 @@ public class NetworkLocalTestServer extends Network {
             default: // New
                 Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: Nothing ...");
                 break;
-        }
+        }*/
         
         fight.setWinner(brute);
         DatasManager.save(fight);
