@@ -1,6 +1,5 @@
 package brutes.server;
 
-import brutes.Brutes;
 import brutes.server.db.DatasManager;
 import brutes.server.net.NetworkLocalTestServer;
 import java.io.File;
@@ -38,14 +37,14 @@ public class ServerThread extends Thread{
                             try(NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)){
                                 n.read();
                             } catch (Exception ex) {
-                                Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }.start();
                 } catch(SocketTimeoutException ex){ }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Brutes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

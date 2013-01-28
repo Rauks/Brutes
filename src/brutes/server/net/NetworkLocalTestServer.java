@@ -1,6 +1,5 @@
 package brutes.server.net;
 
-import brutes.Brutes;
 import brutes.server.db.DatasManager;
 import brutes.server.db.entity.BonusEntity;
 import brutes.server.db.entity.BruteEntity;
@@ -142,7 +141,7 @@ public class NetworkLocalTestServer extends Network {
         {
             case 1: // Level Up
                 brute.setLevel((short)(brute.getLevel()+1));
-                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 brute level ({0})", brute.getLevel());
+                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: +1 brute level ({0})", brute.getLevel());
                 DatasManager.save(brute);
                 break;
             case 2: // Bonus Up
@@ -154,7 +153,7 @@ public class NetworkLocalTestServer extends Network {
                     bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
                     bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
                     DatasManager.save(bonus);
-                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: +1 bonus level ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                    Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: +1 bonus level ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
                 }
                 else
                 {
@@ -166,13 +165,13 @@ public class NetworkLocalTestServer extends Network {
                         bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
                         bonus.setBruteId(brute.getId());
                         DatasManager.insert(bonus);
-                        Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: new bonus ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
+                        Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: new bonus ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
                     }
                     
                 }
                 break;
             default: // New
-                Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "Result: Nothing ...");
+                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: Nothing ...");
                 break;
         }
         
@@ -267,7 +266,7 @@ public class NetworkLocalTestServer extends Network {
                 } else {
                     String token = UserEntity.updateToken(rs.getInt("id"));
 
-                    Logger.getLogger(Brutes.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
+                    Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
                             .writeString(token)
                             .send();
