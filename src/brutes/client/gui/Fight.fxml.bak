@@ -233,6 +233,13 @@
       <top>
         <MenuBar>
           <menus>
+            <Menu mnemonicParsing="false" text="Brute">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin" />
@@ -241,11 +248,8 @@
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Options">
+            <Menu mnemonicParsing="false" text="Compte">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>
