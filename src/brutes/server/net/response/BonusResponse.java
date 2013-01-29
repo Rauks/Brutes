@@ -26,6 +26,7 @@ public class BonusResponse extends Response {
                 .writeLongInt(id)
                 .writeString(bonus.getName())
                 .writeShortInt((short) bonus.getLevel())
+                .writeShortInt((short) bonus.getLife())
                 .writeShortInt((short) bonus.getStrength())
                 .writeShortInt((short) bonus.getSpeed())
                 .writeLongInt(bonus.getImageID())

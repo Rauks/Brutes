@@ -27,212 +27,227 @@
     </ImageView>
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-        <VBox fx:id="myBruteStats" minWidth="-Infinity" prefWidth="300.0">
+        <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ma Brute">
-              <font>
-                <Font name="System Bold" size="12.0" fx:id="x1" />
-              </font>
-            </Text>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="260.0">
+            <VBox fx:id="myBruteStats" minWidth="-Infinity" prefWidth="300.0">
               <children>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="180.0" HBox.margin="$x4">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ma Brute">
+                  <font>
+                    <Font name="System Bold" size="12.0" fx:id="x1" />
+                  </font>
+                </Text>
+                <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="260.0">
                   <children>
-                    <HBox spacing="2.0">
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="180.0" HBox.margin="$x4">
                       <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" textAlignment="RIGHT" wrappingWidth="58.0">
-                          <HBox.margin>
-                            <Insets fx:id="x4" />
-                          </HBox.margin>
-                        </Text>
-                        <Text fx:id="myName" scaleY="1.000006265295975" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myName&gt;" wrappingWidth="110.0" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
-                        <Text fx:id="myLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLevel&gt;" HBox.margin="$x4" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
-                        <Text fx:id="myLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLifes&gt;" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Force :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
-                        <Text id="myStrengh" fx:id="myStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myStrength&gt;" />
-                        <HBox>
+                        <HBox spacing="2.0">
                           <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
-                              <fill>
-                                <Color blue="0.000" green="0.600" red="0.047" fx:id="x3" />
-                              </fill>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" textAlignment="RIGHT" wrappingWidth="58.0">
+                              <HBox.margin>
+                                <Insets fx:id="x4" />
+                              </HBox.margin>
                             </Text>
-                            <Text fx:id="myBonusStrength" fill="#0c9900" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                            <Text fx:id="myName" scaleY="1.000006265295975" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myName&gt;" wrappingWidth="110.0" />
                           </children>
                         </HBox>
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vitesse :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text fx:id="mySpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;mySpeed&gt;" />
-                        <HBox>
+                        <HBox spacing="2.0">
                           <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                            <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                            <Text fx:id="myBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
+                            <Text fx:id="myLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLevel&gt;" HBox.margin="$x4" />
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
+                            <Text fx:id="myLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLifes&gt;" />
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Force :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
+                            <Text id="myStrengh" fx:id="myStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myStrength&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                                  <fill>
+                                    <Color blue="0.000" green="0.600" red="0.047" fx:id="x3" />
+                                  </fill>
+                                </Text>
+                                <Text fx:id="myBonusStrength" fill="#0c9900" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vitesse :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text fx:id="mySpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;mySpeed&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="myBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
                           </children>
                         </HBox>
                       </children>
-                    </HBox>
+                    </VBox>
                   </children>
-                </VBox>
-                <ImageView fx:id="myImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                  <padding>
+                    <Insets bottom="5.0" top="5.0" fx:id="x2" />
+                  </padding>
+                </HBox>
+                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <children>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text id="bonus1" fx:id="myBonus1" scaleX="1.0000015258789063" scaleY="1.0000076480665687" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView fx:id="myBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView fx:id="myBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                  </children>
+                  <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x5" />
+                  </padding>
+                  <VBox.margin>
+                    <Insets fx:id="x4" />
+                  </VBox.margin>
+                </HBox>
               </children>
               <padding>
-                <Insets bottom="5.0" top="5.0" fx:id="x2" />
+                <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
               </padding>
-            </HBox>
-            <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-              <children>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text id="bonus1" fx:id="myBonus1" scaleX="1.0000015258789063" scaleY="1.0000076480665687" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView fx:id="myBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView fx:id="myBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-              </children>
-              <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x5" />
-              </padding>
-              <VBox.margin>
-                <Insets fx:id="x4" />
-              </VBox.margin>
-            </HBox>
+            </VBox>
+            <ImageView fx:id="myImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
+              <StackPane.margin>
+                <Insets right="10.0" top="10.0" fx:id="x6" />
+              </StackPane.margin>
+            </ImageView>
           </children>
-          <padding>
-            <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
-          </padding>
-        </VBox>
+        </StackPane>
       </left>
       <right>
-        <VBox fx:id="chBruteStats" minWidth="-Infinity" prefWidth="300.0">
+        <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
-            <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire" />
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" padding="$x2" prefHeight="140.0" prefWidth="260.0">
+            <VBox fx:id="chBruteStats" minWidth="-Infinity" prefWidth="300.0">
               <children>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="180.0">
+                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire" />
+                <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" padding="$x2" prefHeight="140.0" prefWidth="260.0">
                   <children>
-                    <HBox spacing="2.0">
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="180.0">
                       <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text id="myName" fx:id="chName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chName&gt;" wrappingWidth="110.0" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text id="myLevel" fx:id="chLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLevel&gt;" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text id="myLifes" fx:id="chLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLifes&gt;" />
-                      </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Force :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text id="myStrengh" fx:id="chStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chStrength&gt;" />
-                        <HBox>
+                        <HBox spacing="2.0">
                           <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                            <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                            <Text fx:id="chBonusStrength" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text id="myName" fx:id="chName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chName&gt;" wrappingWidth="110.0" />
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Niveau :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text id="myLevel" fx:id="chLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLevel&gt;" />
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text id="myLifes" fx:id="chLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLifes&gt;" />
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Force :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text id="myStrengh" fx:id="chStrength" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chStrength&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="chBonusStrength" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
+                          </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                          <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vitesse :" textAlignment="RIGHT" wrappingWidth="58.0" />
+                            <Text id="mySpeed" fx:id="chSpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chSpeed&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="chBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
                           </children>
                         </HBox>
                       </children>
-                    </HBox>
-                    <HBox spacing="2.0">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vitesse :" textAlignment="RIGHT" wrappingWidth="58.0" />
-                        <Text id="mySpeed" fx:id="chSpeed" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chSpeed&gt;" />
-                        <HBox>
-                          <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                            <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                            <Text fx:id="chBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
-                          </children>
-                        </HBox>
-                      </children>
-                    </HBox>
+                    </VBox>
                   </children>
-                </VBox>
-                <ImageView id="myImage" fx:id="chImage" fitHeight="130.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                  <HBox.margin>
+                </HBox>
+                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
+                <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <children>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </VBox>
+                  </children>
+                  <VBox.margin>
                     <Insets fx:id="x4" />
-                  </HBox.margin>
-                </ImageView>
+                  </VBox.margin>
+                </HBox>
               </children>
-            </HBox>
-            <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
-            <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-              <children>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                  <children>
-                    <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                    <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                </VBox>
-              </children>
-              <VBox.margin>
-                <Insets fx:id="x4" />
-              </VBox.margin>
-            </HBox>
+              <padding>
+                <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
+              </padding>
+            </VBox>
+            <ImageView id="myImage" fx:id="chImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT" StackPane.margin="$x6" />
           </children>
-          <padding>
-            <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
-          </padding>
-        </VBox>
+        </StackPane>
       </right>
       <top>
         <MenuBar>
           <menus>
+            <Menu mnemonicParsing="false" text="Brute">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin" />
@@ -241,11 +256,8 @@
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Options">
+            <Menu mnemonicParsing="false" text="Compte">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
               </items>
             </Menu>

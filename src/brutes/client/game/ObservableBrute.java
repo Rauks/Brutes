@@ -19,6 +19,7 @@ public class ObservableBrute {
     private ReadOnlyStringWrapper name;
     private ReadOnlyIntegerWrapper level;
     private ReadOnlyIntegerWrapper life;
+    private ReadOnlyIntegerWrapper bonusLife;
     private ReadOnlyIntegerWrapper strength;
     private ReadOnlyIntegerWrapper speed;
     private ReadOnlyIntegerWrapper bonusStrength;
@@ -34,6 +35,7 @@ public class ObservableBrute {
         this.name = new ReadOnlyStringWrapper(null);
         this.level = new ReadOnlyIntegerWrapper(0);
         this.life = new ReadOnlyIntegerWrapper(0);
+        this.bonusLife = new ReadOnlyIntegerWrapper(0);
         this.strength = new ReadOnlyIntegerWrapper(0);
         this.speed = new ReadOnlyIntegerWrapper(0);
         this.bonusStrength = new ReadOnlyIntegerWrapper(0);
@@ -53,6 +55,7 @@ public class ObservableBrute {
         this.life.set(c.getLife());
         this.strength.set(c.getStrength());
         this.speed.set(c.getSpeed());
+        this.bonusLife.set(c.getBonusLife());
         this.bonusStrength.set(c.getBonusStrength());
         this.bonusSpeed.set(c.getBonusSpeed());
         this.image.set(c.getDataImage());
@@ -114,5 +117,8 @@ public class ObservableBrute {
     }
     public ReadOnlyObjectProperty<Image> getImageProperty(){
         return this.image.getReadOnlyProperty();
+    }
+    public ReadOnlyIntegerProperty getBonusLifeProperty() {
+        return this.bonusLife.getReadOnlyProperty();
     }
 }

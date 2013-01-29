@@ -202,6 +202,7 @@ public class NetworkClient extends Network{
                 int boId = this.getReader().readLongInt();
                 String name = this.getReader().readString();
                 short level = this.getReader().readShortInt();
+                short life = this.getReader().readShortInt();
                 short strength = this.getReader().readShortInt();
                 short speed = this.getReader().readShortInt();
                 int imageID = this.getReader().readLongInt();
@@ -213,7 +214,7 @@ public class NetworkClient extends Network{
                         image = connection.getDataImage(imageID);
                     }
                 }
-                return new Bonus(boId, name, level, strength, speed, image);
+                return new Bonus(boId, name, level, life, strength, speed, image);
             case Protocol.ERROR_BONUS_NOT_FOUND:
                 throw new ErrorResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
             default:

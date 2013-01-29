@@ -17,31 +17,33 @@ import java.sql.SQLException;
 public class BonusEntity implements Entity {
 
     static public Bonus create(ResultSet r) throws SQLException {
-        Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
+        Bonus bonus = new Bonus(r.getInt("id"), r.getString("name"), r.getShort("level"), r.getShort("life"), r.getShort("strength"), r.getShort("speed"), r.getInt("id") /* TODO: change ID -> IMG */);
         bonus.setBruteId(r.getInt("brute_id"));
         bonus.setImageID(r.getInt("image_id"));
         return bonus;
     }
 
     public static int save(Connection con, Bonus bonus) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("UPDATE Bonus SET name = ?, level = ?, strength = ?, speed = ?, image_id = ? WHERE id = ?");
+        PreparedStatement psql = con.prepareStatement("UPDATE Bonus SET name = ?, level = ?, life = ?, strength = ?, speed = ?, image_id = ? WHERE id = ?");
         psql.setString(1, bonus.getName());
         psql.setInt(2, bonus.getLevel());
-        psql.setInt(3, bonus.getStrength());
-        psql.setInt(4, bonus.getSpeed());
-        psql.setInt(5, bonus.getImageID());
-        psql.setInt(6, bonus.getId());
+        psql.setInt(3, bonus.getLife());
+        psql.setInt(4, bonus.getStrength());
+        psql.setInt(5, bonus.getSpeed());
+        psql.setInt(6, bonus.getImageID());
+        psql.setInt(7, bonus.getId());
         return psql.executeUpdate();
     }
 
     public static int insert(Connection con, Bonus bonus) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, strength, speed, image_id) VALUES(?, ?, ?, ?, ?, ?)");
+        PreparedStatement psql = con.prepareStatement("INSERT INTO Bonus (brute_id, name, level, life, strength, speed, image_id) VALUES(?, ?, ?, ?, ?, ?, ?)");
         psql.setInt(1, bonus.getBruteId());
         psql.setString(2, bonus.getName());
         psql.setInt(3, bonus.getLevel());
-        psql.setInt(4, bonus.getStrength());
-        psql.setInt(5, bonus.getSpeed());
-        psql.setInt(6, bonus.getImageID());
+        psql.setInt(4, bonus.getLife());
+        psql.setInt(5, bonus.getStrength());
+        psql.setInt(6, bonus.getSpeed());
+        psql.setInt(7, bonus.getImageID());
         return psql.executeUpdate();
     }
 
