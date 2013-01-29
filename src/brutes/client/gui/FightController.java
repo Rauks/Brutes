@@ -9,6 +9,7 @@ import brutes.client.game.ObservableBrute;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;
 import brutes.client.net.NetworkClient;
+import brutes.client.user.Session;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
@@ -122,8 +123,11 @@ public class FightController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
                 if(newState == Worker.State.SUCCEEDED){
-                    ScenesContext.getInstance().getSession().netLoadMyBrute();
-                    ScenesContext.getInstance().getSession().netLoadChallengerBrute();
+                    Session s = ScenesContext.getInstance().getSession();
+                    s.getMyBrute().unload();
+                    s.getChallengerBrute().unload();
+                    s.netLoadMyBrute();
+                    s.netLoadChallengerBrute();
                     isFighting.set(false);
                     try {
                         Parent root;
