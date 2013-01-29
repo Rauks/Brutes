@@ -47,35 +47,66 @@ public class DatasManager {
             c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bruno', 'mdp')");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, image_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 1, 'Bot_1 : Kikou', 3, 10, 2, 4)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 2, 'Bot_2 : Ultimate', 10, 250, 23, 18)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 3, 'Bot_3 : 贝努瓦', 1, 100, 0, 0)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (2, 4, 'Yéti', 2, 62, 5, 5)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (3, 5, 'Rauks', 1, 50, 3, 8)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 6, 'Test1', 1, 500, 25, 80)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 1, 'Rukia', 5, 10, 3, 4)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 2, 'Skitt', 1, 10, 4, 3)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 3, 'Tulipe', 3, 10, 5, 2)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 4, 'Zazardify', 2, 10, 6, 1)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 5, 'Gwenn', 3, 10, 1, 6)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 6, 'Ruelle', 2, 10, 2, 5)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 7, 'Sybelle', 3, 10, 5, 2)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 8, 'Sheldon', 1, 10, 1, 6)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 9, 'Hassen', 10, 10, 4, 3)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 10, 'Krossork', 7, 10, 5, 2)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (2, 11, 'Thik', 1, 10, 3, 4)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (3, 12, 'Rauks', 1, 10, 4, 3)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, 'Brubru', 1, 10, 2, 5)");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, level INTEGER, strength INTEGER, speed INTEGER, image_id INTEGER)");
             
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 1, 31, 'Petit chien', 1, 10, 10)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 2, 32, 'Gros chien', 2, 15, 12)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 3, 33, 'Meute de chien', 3, 50, 20)");
-            
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 4, 37, 'Grizzly', 1, 15, 5)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 5, 38, 'Grizzly enragé', 3, 45, 5)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 6, 38, 'Sasquatch', 5, 55, 5)");
-            
-            //c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 7, 'Hache', 1, 15, 5)");
-            
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 7, 46, 'Baton en bois', 1, 5, 0)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 8, 47, 'Pique', 3, 10, 0)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 9, 48, 'Trident', 10, 75, 0)");
-            /*
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES (2, 'Robe de lin', 1, 1, 10)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES (3, 'Anneau de la forge', 10, 100, 30)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES (5, 'Vif d''or', 5, 0, 60)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES (6, 'Robe a tutu', 5, 1, 15)");
-            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES (6, 'Jolie chapeau', 1, 8, 10)");
-            */
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 1, 31, 'Mouton', 10, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 2, 32, 'Amulette', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 3, 33, 'Dagues Gha', 0, 15, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 4, 34, 'Parchemin', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 4, 35, 'Arc Bricolo', 0, 5, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 5, 36, 'Chien', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 6, 37, 'Troll', 0, 5, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 7, 38, 'Epouventail', 20, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 8, 39, 'Squelette', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 9, 40, 'Excalibur', 0, 20, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 10, 41, 'Faux de Sang', 0, 15, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 42, 'Couteau', 0, 5, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 43, 'Koala Rasta', 0, 0, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 44, 'Sceptre', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 45, 'Tortue Luth', 15, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 46, 'Loup', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 47, 'Firechat', 0, 10, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 48, 'Martouïe', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 49, 'Martlave', 0, 20, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 50, 'Casque', 30, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 51, 'Grimoire', 0, 0, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 52, 'Vaudou', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 53, 'Vaudou', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 54, 'Vaudou', 10, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 55, 'Mineur', 0, 5, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 56, 'Zebrarc', 0, 15, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 57, 'Singe', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 58, 'Démon Loup', 5, 5, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 59, 'Mage', 0, 0, 15)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 60, 'Roc enchanté', 20, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 61, 'Canidomme', 0, 20, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 62, 'Myosotis', 5, 0, 5)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 63, 'Scorpion', 0, 15, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 64, 'Aragog', 10, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 65, 'Pelle', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 66, 'Bâton de glace', 0, 0, 10)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 67, 'Bâton de feu', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 68, 'Peluche', 15, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 69, 'Epée', 0, 10, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 70, 'Foxeur', 25, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 71, 'Ecureil', 0, 0, 20)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 72, 'Lapin affamé', 0, 15, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 73, 'Arbre', 20, 0, 0)");
+            c.createStatement().executeUpdate("INSERT INTO bonus (brute_id, image_id, name, level, strength, speed) VALUES ( 0, 74, 'Gros Lapin', 10, 0, 5)");
             
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
         } catch (SQLException ex) {
