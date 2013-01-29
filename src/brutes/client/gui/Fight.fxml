@@ -60,6 +60,22 @@
                           <children>
                             <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" HBox.margin="$x4" />
                             <Text fx:id="myLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myLifes&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                                  <fill>
+                                    <Color blue="0.000" green="0.600" red="0.047" fx:id="x7" />
+                                  </fill>
+                                </Text>
+                                <Text id="myBonusStrength" fx:id="myBonusLife" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;">
+                                  <fill>
+                                    <Color blue="0.000" green="0.600" red="0.047" fx:id="x3" />
+                                  </fill>
+                                </Text>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
                           </children>
                         </HBox>
                         <HBox spacing="2.0">
@@ -69,12 +85,8 @@
                             <HBox>
                               <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
-                                  <fill>
-                                    <Color blue="0.000" green="0.600" red="0.047" fx:id="x3" />
-                                  </fill>
-                                </Text>
-                                <Text fx:id="myBonusStrength" fill="#0c9900" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="myBonusStrength" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
                               </children>
                             </HBox>
@@ -87,8 +99,8 @@
                             <HBox>
                               <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                                <Text fx:id="myBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="myBonusSpeed" fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
                               </children>
                             </HBox>
@@ -169,6 +181,14 @@
                           <children>
                             <Text scaleX="0.999994485618493" strokeType="OUTSIDE" strokeWidth="0.0" text="Vies :" textAlignment="RIGHT" wrappingWidth="58.0" />
                             <Text id="myLifes" fx:id="chLifes" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chLifes&gt;" />
+                            <HBox>
+                              <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
+                                <Text fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text id="chBonusStrength" fx:id="chBonusLife" fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
+                              </children>
+                            </HBox>
                           </children>
                         </HBox>
                         <HBox spacing="2.0">
@@ -178,8 +198,8 @@
                             <HBox>
                               <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                                <Text fx:id="chBonusStrength" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="chBonusStrength" fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
                               </children>
                             </HBox>
@@ -192,8 +212,8 @@
                             <HBox>
                               <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(" />
-                                <Text fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
-                                <Text fx:id="chBonusSpeed" fill="$x3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
+                                <Text fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="+" />
+                                <Text fx:id="chBonusSpeed" fill="$x7" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;bonus&gt;" />
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text=")" />
                               </children>
                             </HBox>

@@ -53,6 +53,8 @@ public class FightController implements Initializable {
     @FXML
     private Text myLifes;
     @FXML
+    private Text myBonusLife;
+    @FXML
     private Text myStrength;
     @FXML
     private Text myBonusStrength;
@@ -80,6 +82,8 @@ public class FightController implements Initializable {
     private Text chLevel;
     @FXML
     private Text chLifes;
+    @FXML
+    private Text chBonusLife;
     @FXML
     private Text chStrength;
     @FXML
@@ -281,6 +285,7 @@ public class FightController implements Initializable {
         this.myName.textProperty().bind(me.getNameProperty());
         this.myLevel.textProperty().bind(me.getLevelProperty().asString());
         this.myLifes.textProperty().bind(me.getLifeProperty().asString());
+        this.myBonusLife.textProperty().bind(me.getBonusLifeProperty().asString());
         this.myStrength.textProperty().bind(me.getStrengthProperty().asString());
         this.myBonusStrength.textProperty().bind(me.getBonusStrengthProperty().asString());
         this.mySpeed.textProperty().bind(me.getSpeedProperty().asString());
@@ -297,6 +302,7 @@ public class FightController implements Initializable {
         this.chName.textProperty().bind(ch.getNameProperty());
         this.chLevel.textProperty().bind(ch.getLevelProperty().asString());
         this.chLifes.textProperty().bind(ch.getLifeProperty().asString());
+        this.chBonusLife.textProperty().bind(ch.getBonusLifeProperty().asString());
         this.chStrength.textProperty().bind(ch.getStrengthProperty().asString());
         this.chBonusStrength.textProperty().bind(ch.getBonusStrengthProperty().asString());
         this.chSpeed.textProperty().bind(ch.getSpeedProperty().asString());
