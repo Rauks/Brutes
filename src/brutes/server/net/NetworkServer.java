@@ -22,9 +22,9 @@ import java.sql.SQLException;
  * @author Karl
  * @author Thiktak
  */
-public class NetworkLocalTestServer extends Network {
+public class NetworkServer extends Network {
 
-    public NetworkLocalTestServer(Socket connection) throws IOException {
+    public NetworkServer(Socket connection) throws IOException {
         super(connection);
     }
 

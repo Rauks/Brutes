@@ -6,7 +6,7 @@ import brutes.server.db.DatasManager;
 import brutes.server.db.entity.NotFoundEntityException;
 import brutes.server.db.entity.UserEntity;
 import brutes.server.game.User;
-import brutes.server.net.NetworkLocalTestServer;
+import brutes.server.net.NetworkServer;
 import brutes.server.net.NetworkResponseException;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -44,7 +44,7 @@ public class UserResponse extends Response {
                 } else {
                     String token = UserEntity.updateToken(rs.getInt("id"));
 
-                    Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
+                    Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
                     this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
                             .writeString(token)
                             .send();

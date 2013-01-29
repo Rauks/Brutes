@@ -7,7 +7,7 @@ import brutes.client.net.NetworkClient;
 import brutes.client.user.Session;
 import brutes.net.Protocol;
 import brutes.server.db.DatasManager;
-import brutes.server.net.NetworkLocalTestServer;
+import brutes.server.net.NetworkServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -37,7 +37,7 @@ public class BrutesTestSequence {
 
                 while(true){
                     Socket sockcli = sockserv.accept();
-                    try(NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)){
+                    try(NetworkServer n = new NetworkServer(sockcli)){
                         n.read();
                     } catch (Exception ex) {
                         Logger.getLogger(BrutesTestSequence.class.getName()).log(Level.SEVERE, null, ex);

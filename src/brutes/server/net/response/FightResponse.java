@@ -11,7 +11,7 @@ import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
 import brutes.server.game.Fight;
 import brutes.server.game.User;
-import brutes.server.net.NetworkLocalTestServer;
+import brutes.server.net.NetworkServer;
 import brutes.server.net.NetworkResponseException;
 import brutes.server.ui;
 import java.io.IOException;
@@ -86,18 +86,18 @@ public class FightResponse extends Response {
         // Bonus UP
         if (ui.random()) {
             System.out.println("Bonus:");
-            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
+            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
             // S'il y a déjà 3 bonus
             Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
             if (bonusCharacter != null && ui.random()) {
-                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete (" + bonusCharacter.getName() + ")");
+                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete (" + bonusCharacter.getName() + ")");
                 DatasManager.delete(bonusCharacter);
                 System.out.println("  delete");
             }
 
             int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
 
-            Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = " + AllCharacterBonus);
+            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = " + AllCharacterBonus);
             if (AllCharacterBonus < 3 && ui.random()) {
                 // On trouve quelque chose ...
                 Bonus bonusTreasure = BonusEntity.findRandom();
@@ -110,7 +110,7 @@ public class FightResponse extends Response {
 
                 DatasManager.insert(bonusTreasure);
                 System.out.println("  insert");
-                Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
+                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
             }
         }
 

@@ -1,7 +1,7 @@
 package brutes.server;
 
 import brutes.server.db.DatasManager;
-import brutes.server.net.NetworkLocalTestServer;
+import brutes.server.net.NetworkServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -42,7 +42,7 @@ public class ServerThread extends Thread {
                     new Thread() {
                         @Override
                         public void run() {
-                            try (NetworkLocalTestServer n = new NetworkLocalTestServer(sockcli)) {
+                            try (NetworkServer n = new NetworkServer(sockcli)) {
                                 n.read();
                             } catch (Exception ex) {
                                 Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
