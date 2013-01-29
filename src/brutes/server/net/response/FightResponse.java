@@ -67,16 +67,17 @@ public class FightResponse extends Response {
         // force UP !
  
         System.out.println("Force:");
-        switch (ui.random(1, 5)) {
-            case 2:
+        switch (ui.random(1, 4)) {
+            case 1:
+            case 4:
                 brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
                 System.out.println("  Life UP");
                 break;
-            case 3:
+            case 2:
                 brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
                 System.out.println("  Speed UP");
                 break;
-            case 4:
+            case 3:
                 brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
                 System.out.println("  Strength UP");
                 break;
