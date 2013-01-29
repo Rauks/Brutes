@@ -6,6 +6,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
@@ -19,12 +20,11 @@
         <Image url="@res/Background.jpg" preserveRatio="false" smooth="false" />
       </image>
     </ImageView>
-    <Line endY="350.0" layoutX="300.0" stroke="#990000" strokeWidth="2.5" />
-    <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="275.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@LogoVS.png" preserveRatio="false" smooth="false" />
-      </image>
-    </ImageView>
+    <Line endY="350.0" layoutX="300.0" strokeWidth="2.5">
+      <stroke>
+        <Color blue="0.000" green="0.000" red="0.600" fx:id="x3" />
+      </stroke>
+    </Line>
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
         <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -168,7 +168,7 @@
               <children>
                 <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire">
                   <VBox.margin>
-                    <Insets left="100.0" />
+                    <Insets left="110.0" />
                   </VBox.margin>
                 </Text>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" padding="$x2" prefHeight="140.0" prefWidth="180.0">
@@ -229,7 +229,7 @@
                     </HBox>
                   </children>
                   <VBox.margin>
-                    <Insets left="90.0" fx:id="x3" />
+                    <Insets left="100.0" />
                   </VBox.margin>
                 </VBox>
                 <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" textAlignment="RIGHT" wrappingWidth="260.0" VBox.margin="$x8" />
@@ -295,5 +295,23 @@
         </MenuBar>
       </top>
     </BorderPane>
+    <Circle fill="$x3" layoutX="300.0" layoutY="115.0" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+      <effect>
+        <GaussianBlur />
+      </effect>
+    </Circle>
+    <Circle id="VS" fx:id="centerVS" fill="$x3" layoutX="300.0" layoutY="115.0" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
+    <Text fill="WHITE" focusTraversable="true" layoutX="288.0" layoutY="122.5" stroke="$x3" strokeType="OUTSIDE" text="VS">
+      <effect>
+        <Bloom threshold="0.8">
+          <input>
+            <InnerShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
+          </input>
+        </Bloom>
+      </effect>
+      <font>
+        <Font name="System Bold" size="20.0" />
+      </font>
+    </Text>
   </children>
 </AnchorPane>

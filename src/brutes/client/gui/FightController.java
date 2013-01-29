@@ -18,14 +18,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -103,6 +106,8 @@ public class FightController implements Initializable {
     @FXML
     private ImageView chBonus3Image;
     @FXML
+    private Circle centerVS;
+    @FXML
     private MenuItem menuFightWin;
     @FXML
     private MenuItem menuFightLoose;
@@ -159,23 +164,23 @@ public class FightController implements Initializable {
     }
     
     @FXML
-    private void handleMenuFightWin(ActionEvent e){
+    private void handleMenuFightWin(Event e){
         this.doFight(FightTask.FightType.CHEAT_WIN);
     }
     @FXML
-    private void handleMenuFightLoose(ActionEvent e){
+    private void handleMenuFightLoose(Event e){
         this.doFight(FightTask.FightType.CHEAT_LOOSE);
     }
     @FXML
-    private void handleMenuFightRandom(ActionEvent e){
+    private void handleMenuFightRandom(Event e){
         this.doFight(FightTask.FightType.CHEAT_RANDOM);
     }
     @FXML
-    private void handleMenuFightRegular(ActionEvent e){
+    private void handleMenuFightRegular(Event e){
         this.doFight(FightTask.FightType.REGULAR);
     }
     @FXML
-    private void handleMenuBruteNew(ActionEvent e){
+    private void handleMenuBruteNew(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/CreateBrute.fxml"));
             Scene scene = new Scene(root);
@@ -190,7 +195,7 @@ public class FightController implements Initializable {
         }
     }
     @FXML
-    private void handleMenuBruteUpdate(ActionEvent e){
+    private void handleMenuBruteUpdate(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/UpdateBrute.fxml"));
             Scene scene = new Scene(root);
@@ -205,7 +210,7 @@ public class FightController implements Initializable {
         }
     }
     @FXML
-    private void handleMenuBruteDelete(ActionEvent e){
+    private void handleMenuBruteDelete(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/DeleteBrute.fxml"));
             Scene scene = new Scene(root);
@@ -220,7 +225,7 @@ public class FightController implements Initializable {
         }
     }
     @FXML
-    private void handleMenuDisconnect(ActionEvent e){
+    private void handleMenuDisconnect(Event e){
         new Thread(){
             @Override
             public void run() {
@@ -239,7 +244,7 @@ public class FightController implements Initializable {
         ScenesContext.getInstance().showLogin();
     }
     @FXML
-    private void handleMenuCredits(ActionEvent e){
+    private void handleMenuCredits(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("Credits.fxml"));
             Scene scene = new Scene(root);
@@ -311,6 +316,9 @@ public class FightController implements Initializable {
         this.chBonus1Image.imageProperty().bind(ch.getBonus(0).getImageProperty());
         this.chBonus2Image.imageProperty().bind(ch.getBonus(1).getImageProperty());
         this.chBonus3Image.imageProperty().bind(ch.getBonus(2).getImageProperty());
+        
+        this.centerVS.setCursor(Cursor.HAND);
+        this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
