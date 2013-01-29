@@ -119,25 +119,29 @@
                     <Insets left="30.0" />
                   </VBox.margin>
                 </VBox>
-                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" />
+                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" wrappingWidth="260.0">
+                  <VBox.margin>
+                    <Insets top="10.0" fx:id="x8" />
+                  </VBox.margin>
+                </Text>
                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                   <children>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <Text id="bonus1" fx:id="myBonus1" scaleX="1.0000015258789063" scaleY="1.0000076480665687" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                         <ImageView fx:id="myBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="bonus1" fx:id="myBonus1" scaleX="1.0000015258789063" scaleY="1.0000076480665687" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus1&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                         <ImageView fx:id="myBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="bonus2" fx:id="myBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus2&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                         <ImageView fx:id="myBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text fx:id="myBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;myBonus3&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                   </children>
@@ -150,7 +154,7 @@
                 </HBox>
               </children>
               <padding>
-                <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
+                <Insets left="20.0" right="10.0" top="20.0" fx:id="x9" />
               </padding>
             </VBox>
           </children>
@@ -160,7 +164,7 @@
         <StackPane prefHeight="150.0" prefWidth="200.0">
           <children>
             <ImageView id="myImage" fx:id="chImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT" StackPane.margin="$x6" />
-            <VBox fx:id="chBruteStats" minWidth="-Infinity" prefWidth="300.0">
+            <VBox fx:id="chBruteStats" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
               <children>
                 <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire">
                   <VBox.margin>
@@ -228,29 +232,25 @@
                     <Insets left="90.0" fx:id="x3" />
                   </VBox.margin>
                 </VBox>
-                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus">
-                  <VBox.margin>
-                    <Insets fx:id="x4" />
-                  </VBox.margin>
-                </Text>
+                <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus" textAlignment="RIGHT" wrappingWidth="260.0" VBox.margin="$x8" />
                 <HBox padding="$x5" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                   <children>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                        <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                      </children>
-                    </VBox>
-                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                      <children>
-                        <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
-                        <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                      </children>
-                    </VBox>
-                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
-                      <children>
-                        <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                         <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <ImageView id="myBonus2Image" fx:id="chBonus2Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="bonus2" fx:id="chBonus2" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus2&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                      </children>
+                    </VBox>
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
+                      <children>
+                        <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                   </children>
@@ -259,9 +259,6 @@
                   </VBox.margin>
                 </HBox>
               </children>
-              <padding>
-                <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
-              </padding>
             </VBox>
           </children>
         </StackPane>
