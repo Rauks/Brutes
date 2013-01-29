@@ -20,7 +20,7 @@
       </image>
     </ImageView>
     <Line endY="350.0" layoutX="300.0" stroke="#990000" strokeWidth="2.5" />
-    <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="275.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="275.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@LogoVS.png" preserveRatio="false" smooth="false" />
       </image>

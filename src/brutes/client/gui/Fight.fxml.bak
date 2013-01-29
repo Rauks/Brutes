@@ -237,8 +237,8 @@
                   <children>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
@@ -249,8 +249,8 @@
                     </VBox>
                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="80.0">
                       <children>
-                        <ImageView id="myBonus3Image" fx:id="chBonus3Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text id="myBonus3" fx:id="chBonus3" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus3&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
+                        <ImageView id="myBonus1Image" fx:id="chBonus1Image" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="bonus1" fx:id="chBonus1" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;chBonus1&gt;" textAlignment="CENTER" wrappingWidth="80.0" VBox.vgrow="NEVER" />
                       </children>
                     </VBox>
                   </children>
