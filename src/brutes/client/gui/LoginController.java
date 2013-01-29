@@ -1,9 +1,5 @@
 package brutes.client.gui;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import brutes.Brutes;
 import brutes.client.ScenesContext;
