@@ -65,23 +65,21 @@ public class FightResponse extends Response {
         System.out.println("Life UP");
 
         // force UP !
-        if (ui.random()) // 50%
-        {
-            System.out.println("Force:");
-            switch (ui.random(1, 3)) {
-                case 1:
-                    brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
-                    System.out.println("  Life UP");
-                    break;
-                case 2:
-                    brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
-                    System.out.println("  Speed UP");
-                    break;
-                case 3:
-                    brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
-                    System.out.println("  Strength UP");
-                    break;
-            }
+ 
+        System.out.println("Force:");
+        switch (ui.random(1, 5)) {
+            case 2:
+                brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
+                System.out.println("  Life UP");
+                break;
+            case 3:
+                brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
+                System.out.println("  Speed UP");
+                break;
+            case 4:
+                brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
+                System.out.println("  Strength UP");
+                break;
         }
 
         // Bonus UP
@@ -99,7 +97,7 @@ public class FightResponse extends Response {
             int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
 
             Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = " + AllCharacterBonus);
-            if (AllCharacterBonus < 3) {
+            if (AllCharacterBonus < 3 && ui.random()) {
                 // On trouve quelque chose ...
                 Bonus bonusTreasure = BonusEntity.findRandom();
                 bonusTreasure.setBruteId(brute.getId());
@@ -115,44 +113,6 @@ public class FightResponse extends Response {
         }
 
         DatasManager.save(brute);
-
-        /*switch(ui.random(1, 6))
-         {
-         case 1: // Level Up
-         brute.setLevel((short)(brute.getLevel()+1));
-         Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: +1 brute level ({0})", brute.getLevel());
-         DatasManager.save(brute);
-         break;
-         case 2: // Bonus Up
-         case 3: // Bonus Up
-         Bonus bonus = BonusEntity.findRandomByBrute(brute);
-         if( bonus != null )
-         {
-         bonus.setLevel((short)(bonus.getLevel()+1));
-         bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
-         bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
-         DatasManager.save(bonus);
-         Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: +1 bonus level ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
-         }
-         else
-         {
-         bonus = BonusEntity.findRandomByBrute(fight.getBrute2());
-         if( bonus != null )
-         {
-         bonus.setLevel((short) ui.random(1, (int)(brute.getLevel()/2)));
-         bonus.setStrength((short)(((double)bonus.getStrength())*(1+Math.random())/2));
-         bonus.setSpeed((short)(((double)bonus.getSpeed())*(1+Math.random())/2));
-         bonus.setBruteId(brute.getId());
-         DatasManager.insert(bonus);
-         Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: new bonus ({0} [{1}])", new Object[]{bonus.getName(), bonus.getLevel()});
-         }
-                    
-         }
-         break;
-         default: // New
-         Logger.getLogger(NetworkLocalTestServer.class.getName()).log(Level.INFO, "Result: Nothing ...");
-         break;
-         }*/
 
         fight.setWinner(brute);
         DatasManager.save(fight);
