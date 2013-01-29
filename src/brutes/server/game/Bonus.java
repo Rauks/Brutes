@@ -13,6 +13,7 @@ public class Bonus implements Identifiable {
     private String name;
     private short level;
     private short strength;
+    private short life;
     private short speed;
     private int imageID;
     
@@ -23,15 +24,17 @@ public class Bonus implements Identifiable {
         this.id = 0;
         this.name = null;
         this.level = 0;
+        this.life = 0;
         this.strength = 0;
         this.speed = 0;
         this.imageID = 0;
     }
     
-    public Bonus(int id, String name, short level, short strength, short speed, int imageID) {
+    public Bonus(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
         this.name = name;
         this.level = level;
+        this.life = life;
         this.strength = strength;
         this.speed = speed;
         this.imageID = imageID;
@@ -46,6 +49,9 @@ public class Bonus implements Identifiable {
     }
     public short getLevel() {
         return level;
+    }
+    public short getLife() {
+        return this.life;
     }
     public short getStrength() {
         return (short) (strength*(1+ (double) this.level/2));
@@ -64,6 +70,9 @@ public class Bonus implements Identifiable {
     }
     public void setBruteId(int bruteId) {
         this.bruteId = bruteId;
+    }
+    public void setLife(short life) {
+        this.life = life;
     }
     public void setStrength(short strength) {
         this.strength = strength;

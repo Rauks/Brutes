@@ -105,6 +105,7 @@ public class FightResponse extends Response {
                 bonusTreasure.setBruteId(brute.getId());
 
                 bonusTreasure.setLevel((short) ui.randomMiddle(brute.getLevel() / 2, .5));
+                bonusTreasure.setLife((short) ui.randomMiddle(brute.getLife() / 2, .5));
                 bonusTreasure.setStrength((short) ui.randomMiddle(brute.getStrength() / 2, .5));
                 bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed() / 2, .5));
 
