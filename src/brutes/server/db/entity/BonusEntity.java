@@ -109,7 +109,7 @@ public class BonusEntity implements Entity {
     }
 
     public static Bonus findRandomShop() throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT b.* FROM Bonus as b LEFT JOIN Brute as r ON b.brute_id = r.id WHERE r.user_id <= 1 ORDER BY Random() LIMIT 1");
+        PreparedStatement psql = DatasManager.prepare("SELECT b.* FROM Bonus as b LEFT JOIN Brutes as r ON b.brute_id = r.id WHERE r.user_id <= 1 ORDER BY Random() LIMIT 1");
         ResultSet rs = psql.executeQuery();
 
         if (rs.next()) {
