@@ -13,18 +13,23 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class Brutes extends Application {
+
     private static ServerThread SERVER = new ServerThread();
-    
-    public static void exit(){
+    public static final int OPT_ID_IMG_MIN_BRUTE = 1;
+    public static final int OPT_ID_IMG_MAX_BRUTE = 13;
+    public static final int OPT_ID_IMG_MIN_BONUS = 31;
+    public static final int OPT_ID_IMG_MAX_BONUS = 74;
+
+    public static void exit() {
         Brutes.SERVER.interrupt();
         Platform.exit();
     }
-        
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Les brutes");
         stage.setResizable(false);
-        stage.setOnCloseRequest(new EventHandler(){
+        stage.setOnCloseRequest(new EventHandler() {
             @Override
             public void handle(Event t) {
                 Brutes.exit();
@@ -32,7 +37,7 @@ public class Brutes extends Application {
         });
 
         Brutes.SERVER.start();
-        
+
         ScenesContext.getInstance().setStage(stage);
         ScenesContext.getInstance().showLogin();
     }
