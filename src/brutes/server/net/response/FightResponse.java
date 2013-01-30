@@ -194,7 +194,7 @@ public class FightResponse extends Response {
                     ch1.setStrength((short) (ch1.getStrength() + 1));
                 } else {// We prepare a bonus for the special attack
                     // We prepare a bonus for the special attack
-                    Bonus bonusUsed = null;//BonusEntity.findRandomByBrute(ch1);
+                    Bonus bonusUsed = BonusEntity.findRandomByBrute(ch1);
                     if (bonusUsed != null) {
                         tmp.append("attacks with his ").append(bonusUsed);
                     } else {

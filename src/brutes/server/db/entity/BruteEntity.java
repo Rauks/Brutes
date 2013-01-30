@@ -91,24 +91,25 @@ public class BruteEntity implements Entity {
         return object;
     }
 
-    public static Brute findRandomAnotherToBattleByUser(User user, int level) throws IOException, SQLException, NotFoundEntityException {
-        int level_i = (int) Math.floor(level / 10) * 10;
-        int level_min = level_i - ui.random(0, level);
-        System.out.println(level*level_min + "<->" + (level+level_i));
+    public static Brute findRandomAnotherToBattleByUser(User user, int level, double i) throws IOException, SQLException, NotFoundEntityException {
+        int level_i = (int) Math.floor(level / 10) * 5;
+        double level_min = level*(1/i*0.75);//(int) (level - 5 - Math.sqrt(level_i))/i;
+        double level_max = level*(1+i/2);//level + 5 + level_i;
+        System.out.println(1/i*1.25 + " (" + level_min + ") AND (" + level_max + ") = ");
 
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? AND ? BETWEEN " + (level_min) + " AND " + (level_i + 10) + " ORDER BY RANDOM() LIMIT 1");
+        //PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? AND level BETWEEN " + level_min + " AND " + level_max + " ORDER BY RANDOM() LIMIT 1");
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? AND level BETWEEN (" + level_min + ") AND (" + level_max + ") ORDER BY RANDOM() LIMIT 1");
         psql.setInt(1, user.getId());
-        psql.setInt(2, level);
         ResultSet rs = psql.executeQuery();
 
         if (rs.next()) {
             return BruteEntity.create(rs);
         }
-        return level > 100 ? null : findRandomAnotherToBattleByUser(user, level + 10);
+        return level > 100 ? null : findRandomAnotherToBattleByUser(user, level, ++i);
     }
 
     public static Brute findOneRandomAnotherToBattleByUser(User user) throws IOException, SQLException, NotFoundEntityException {
-        Brute object = findRandomAnotherToBattleByUser(user, BruteEntity.findOneByUser(user).getLevel());
+        Brute object = findRandomAnotherToBattleByUser(user, BruteEntity.findOneByUser(user).getLevel(), 1);
         if (object == null) {
             throw new NotFoundEntityException(User.class);
         }
