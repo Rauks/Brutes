@@ -151,4 +151,9 @@ public class Brute implements Identifiable {
     public void setUserId(int userid) {
         this.userid = userid;
     }
+    
+    @Override
+    public String toString() {
+        return (String) this.getName();
+    }
 }

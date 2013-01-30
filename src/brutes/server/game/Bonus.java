@@ -20,7 +20,8 @@ public class Bonus implements Identifiable {
     /* more */
     private int bruteId;
     
-    private Bonus(){
+    
+    public Bonus(){
         this.id = 0;
         this.name = null;
         this.level = 0;
@@ -87,5 +88,10 @@ public class Bonus implements Identifiable {
 
     public void setImageID(int imageID) {
         this.imageID = imageID;
+    }
+    
+    @Override
+    public String toString() {
+        return (String) this.getName();
     }
 }
