@@ -8,6 +8,8 @@ import brutes.server.game.Bonus;
 import brutes.server.net.NetworkResponseException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,17 +21,21 @@ public class BonusResponse extends Response {
         super(writer);
     }
 
-    public void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        Bonus bonus = BonusEntity.findOneById(id);
-        
-        this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
-                .writeLongInt(id)
-                .writeString(bonus.getName())
-                .writeShortInt((short) bonus.getLevel())
-                .writeShortInt((short) bonus.getLife())
-                .writeShortInt((short) bonus.getStrength())
-                .writeShortInt((short) bonus.getSpeed())
-                .writeLongInt(bonus.getImageID())
-                .send();
+    public void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException {
+        try {
+            Bonus bonus = BonusEntity.findById(id);
+            
+            this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
+                    .writeLongInt(id)
+                    .writeString(bonus.getName())
+                    .writeShortInt((short) bonus.getLevel())
+                    .writeShortInt((short) bonus.getLife())
+                    .writeShortInt((short) bonus.getStrength())
+                    .writeShortInt((short) bonus.getSpeed())
+                    .writeLongInt(bonus.getImageID())
+                    .send();
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BONUS_NOT_FOUND);
+        }
     }
 }

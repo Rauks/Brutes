@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,26 +19,33 @@ import java.sql.SQLException;
 public class FightEntity implements Entity {
 
     static public Fight create(ResultSet r) throws SQLException, IOException {
-        return new Fight(r.getInt("id"), BruteEntity.findById(r.getInt("brute_id1")), BruteEntity.findById(r.getInt("brute_id2")));
+        try {
+            return new Fight(r.getInt("id"), BruteEntity.findById(r.getInt("brute_id1")), BruteEntity.findById(r.getInt("brute_id2")));
+        } catch (NotFoundEntityException ex) {
+            Logger.getLogger(FightEntity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
-    public static int save(Connection con, Fight fight) throws IOException, SQLException {
+    public static void save(Connection con, Fight fight) throws IOException, SQLException {
         PreparedStatement psql = con.prepareStatement("UPDATE Fights SET brute_id1 = ?, brute_id2 = ?, winner_id = ? WHERE id = ?");
         psql.setInt(1, fight.getBrute1().getId());
         psql.setInt(2, fight.getBrute2().getId());
         psql.setInt(3, fight.getWinner() != null ? fight.getWinner().getId() : null);
         psql.setInt(4, fight.getId());
-        return psql.executeUpdate();
+        psql.executeUpdate();
     }
 
     public static Fight insert(Connection con, Fight fight) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("INSERT INTO Fights (brute_id1, brute_id2) VALUES(?, ?)");
+        PreparedStatement psql = con.prepareStatement("INSERT INTO Fights (brute_id1, brute_id2) VALUES(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         psql.setInt(1, fight.getBrute1().getId());
         psql.setInt(2, fight.getBrute2().getId());
-        return findById(psql.executeUpdate());
+        psql.executeUpdate();
+        fight.setId(psql.getGeneratedKeys().getInt(1));
+        return fight;
     }
 
-    public static Fight findByUser(User user) throws IOException, SQLException {
+    public static Fight findByUser(User user) throws IOException, SQLException, NotFoundEntityException {
         return findByBruteId(BruteEntity.findByUser(user).getId());
     }
     

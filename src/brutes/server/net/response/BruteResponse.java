@@ -8,6 +8,7 @@ import brutes.server.db.DatasManager;
 import brutes.server.db.entity.BonusEntity;
 import brutes.server.db.entity.BruteEntity;
 import brutes.server.db.entity.NotFoundEntityException;
+import brutes.server.db.entity.UserEntity;
 import brutes.server.game.Brute;
 import brutes.server.game.Fight;
 import brutes.server.game.User;
@@ -16,6 +17,8 @@ import brutes.server.net.NetworkServer;
 import brutes.server.ui;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,24 +30,28 @@ public class BruteResponse extends Response {
         super(writer);
     }
 
-    public void readDataBrute(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        Brute brute = BruteEntity.findOneById(id);
+    public void readDataBrute(int id) throws IOException, SQLException, NetworkResponseException {
+        try {
+            Brute brute = BruteEntity.findById(id);
 
-        brute.setBonuses(BonusEntity.findAllByBrute(brute));
+            brute.setBonuses(BonusEntity.findAllByBrute(brute));
 
-        this.getWriter().writeDiscriminant(Protocol.R_DATA_BRUTE)
-                .writeLongInt(id)
-                .writeString(brute.getName())
-                .writeShortInt((short) brute.getLevel())
-                .writeShortInt((short) brute.getLife())
-                .writeShortInt((short) brute.getStrength())
-                .writeShortInt((short) brute.getSpeed())
-                .writeLongInt(brute.getImageID())
-                .writeLongIntArray(brute.getBonusesIDs())
-                .send();
+            this.getWriter().writeDiscriminant(Protocol.R_DATA_BRUTE)
+                    .writeLongInt(id)
+                    .writeString(brute.getName())
+                    .writeShortInt((short) brute.getLevel())
+                    .writeShortInt((short) brute.getLife())
+                    .writeShortInt((short) brute.getStrength())
+                    .writeShortInt((short) brute.getSpeed())
+                    .writeLongInt(brute.getImageID())
+                    .writeLongIntArray(brute.getBonusesIDs())
+                    .send();
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
+        }
     }
 
-    public void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = BruteResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
 
@@ -53,75 +60,73 @@ public class BruteResponse extends Response {
                 .send();
     }
 
-    public void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = BruteResponse.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findOneByUser(user);
+    public void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException {
+        try {
+            User user = BruteResponse.checkTokenAndReturnUser(token);
+            Brute brute = BruteEntity.findByUser(user);
 
-        this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
-                .writeLongInt(brute.getId())
-                .send();
+            this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
+                    .writeLongInt(brute.getId())
+                    .send();
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
+        }
     }
 
-    public void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
         User user = BruteResponse.checkTokenAndReturnUser(token);
-
-        // User has at least one brute
-        if (BruteEntity.findByUser(user) != null) {
+        if (name.isEmpty()) {
+            throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE); 
+        }
+        try {
+            BruteEntity.findByUser(user);
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
+        } catch (NotFoundEntityException ex) {
+            short level = 1;
+            short strength = (short) ui.random(3, 10);
+            short speed = (short) ui.random(3, 10);
+            short life = (short) (ui.random(10, 20));
+            int imageID = ui.random(NetworkServer.OPT_ID_IMG_MIN_BRUTE, NetworkServer.OPT_ID_IMG_MAX_BRUTE);
+
+            Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
+            brute = DatasManager.insert(brute);
+            user.setBrute(brute);
+            DatasManager.save(user);
+            this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
+                    .send();
         }
-
-        if (name.isEmpty()) {
-            throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
-        }
-
-        /* @TODO
-         * if( BruteEntity.findByName(name) != null ) {
-         *    throw new NetworkResponseException(Protocol.ERROR_BRUTE_ALREADY_USED);
-         * }
-         */
-
-        short level = 1;
-        short strength = (short) ui.random(3, 10);
-        short speed = (short) ui.random(3, 10);
-        short life = (short) (ui.random(10, 20) + strength / 3);
-        int imageID = ui.random(NetworkServer.OPT_ID_IMG_MIN_BRUTE, NetworkServer.OPT_ID_IMG_MAX_BRUTE);
-
-        Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
-        brute.setUserId(user.getId());
-        DatasManager.insert(brute);
-
-        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
-                .send();
     }
 
-    public void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = BruteResponse.checkTokenAndReturnUser(token);
+    public void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException {
+        try {
+            User user = BruteResponse.checkTokenAndReturnUser(token);
 
-        if (name.isEmpty()) {
-            throw new NetworkResponseException(Protocol.ERROR_UPDATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
+            if (name.isEmpty()) {
+                throw new NetworkResponseException(Protocol.ERROR_UPDATE_BRUTE);
+            }
+
+            Brute brute = BruteEntity.findByUser(user);
+            brute.setName(name);
+            DatasManager.save(brute);
+
+            this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
+                    .send();
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
         }
-
-        /* @TODO define it !
-         * if( BruteEntity.findByName(name) != null ) {
-         *    throw new NetworkResponseException(Protocol.ERROR_BRUTE_ALREADY_USED);
-         * }
-         */
-
-        Brute brute = BruteEntity.findOneByUser(user);
-        brute.setName(name);
-        DatasManager.save(brute);
-
-        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
-                .send();
     }
 
-    public void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = BruteResponse.checkTokenAndReturnUser(token);
-        Brute brute = BruteEntity.findOneByUser(user);
+    public void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException {
+        try {
+            User user = BruteResponse.checkTokenAndReturnUser(token);
+            Brute brute = BruteEntity.findByUser(user);
 
-        DatasManager.delete(brute);
+            DatasManager.delete(brute);
 
-        this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
-                .send();
+            this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
+                    .send();
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
+        }
     }
 }

@@ -29,27 +29,28 @@ public class FightResponse extends Response {
         super(writer);
     }
 
-    static public Fight getFightWithChallenger(User user) throws IOException, SQLException, NotFoundEntityException, NetworkResponseException {
-        Brute brute = BruteEntity.findOneByUser(user);
+    static public Fight getFightWithChallenger(User user) throws IOException, SQLException, NetworkResponseException {
+        try {
+            Brute brute = BruteEntity.findByUser(user);
 
-        Fight fight = FightEntity.findByUser(user); // and not findOneByUser
+            Fight fight;
+            try {
+                fight = FightEntity.findByUser(user);
+            } catch (NotFoundEntityException ex) {
+                Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
 
-        if (fight == null) {
-            Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
-
-            fight = new Fight();
-            fight.setBrute1(brute);
-            fight.setBrute2(otherBrute);
-            DatasManager.insert(fight);
+                fight = new Fight();
+                fight.setBrute1(brute);
+                fight.setBrute2(otherBrute);
+                DatasManager.insert(fight);
+            }
+            return fight;
+        } catch (NotFoundEntityException ex) {
+            throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
         }
-
-        if (fight == null) {
-            throw new NetworkResponseException(Protocol.ERROR_FIGHT);
-        }
-        return fight;
     }
 
-    public void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException {
         User user = FightResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
 
@@ -62,8 +63,7 @@ public class FightResponse extends Response {
         // level UP !
         brute.setLevel((short) Math.min(brute.getLevel() + 1, 100));
 
-        // force UP !
-
+        // stats UP !
         switch (ui.random(1, 4)) {
             case 1:
             case 4:
@@ -77,45 +77,28 @@ public class FightResponse extends Response {
                 break;
         }
 
-        // Bonus UP
-        if (ui.random()) {
-            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
-
-            Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
-            int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
-            
-            if (bonusCharacter != null && ui.random(AllCharacterBonus, 6) > 4 ) {
-                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete ({0})", bonusCharacter.getName());
-                DatasManager.delete(bonusCharacter);
-            }
-
-            AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
-
-            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = {0}", AllCharacterBonus);
-            if (AllCharacterBonus < 3 && ui.random() ) {
-                // On trouve quelque chose ...
-                Bonus bonusTreasure = BonusEntity.findRandomShop();
-                bonusTreasure.setBruteId(brute.getId());
-
-                // Level du bonus en fontion du level de la brute
-                bonusTreasure.setLevel((short) ui.randomMiddle(brute.getLevel() / 2, .5));
-
-                // On ne modifie les paramètres que s'il sont > 0
-                if (brute.getLife() > 0) {
-                    bonusTreasure.setLife((short) ui.randomMiddle(brute.getLife() / 2, .5));
-                }
-                if (brute.getStrength() > 0) {
-                    bonusTreasure.setStrength((short) ui.randomMiddle(brute.getStrength() / 2, .5));
-                }
-                if (brute.getSpeed() > 0) {
-                    bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed() / 2, .5));
-                }
-
-                DatasManager.insert(bonusTreasure);
-                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert ({0})", bonusTreasure.getName());
-            }
+        // bonus UP/RM
+        int select = 0;
+        switch (ui.random(1, 4)) {
+            case 2:
+                select = 1;
+                break;
+            case 3:
+                select = 2;
+                break;
         }
-
+        
+        Bonus[] bonuses = brute.getBonuses();
+        if(ui.random()){
+            bonuses[select] = Bonus.EMPTY_BONUS;
+            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus {0} removed", select);
+        }
+        else{
+            bonuses[select] = BonusEntity.findRandom();
+            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus {0} is new", select);
+        }
+        brute.setBonuses(bonuses);
+        
         DatasManager.save(brute);
 
         fight.setWinner(brute);
@@ -126,7 +109,7 @@ public class FightResponse extends Response {
                 .send();
     }
 
-    public void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException {
         User user = FightResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
 
@@ -142,7 +125,7 @@ public class FightResponse extends Response {
                 .send();
     }
 
-    public void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readCheatFightRandom(String token) throws IOException, SQLException, NetworkResponseException {
         if (Math.random() < 0.5) {
             this.readCheatFightLoose(token);
         } else {
@@ -150,7 +133,7 @@ public class FightResponse extends Response {
         }
     }
 
-    public void readDoFight(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readDoFight(String token) throws IOException, SQLException, NetworkResponseException {
         User user = FightResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
 
@@ -198,7 +181,23 @@ public class FightResponse extends Response {
                     ch1.setStrength((short) (ch1.getStrength() + 1));
                 } else {
                     // We prepare a bonus for the special attack
-                    Bonus bonusUsed = BonusEntity.findRandomByBrute(ch1);
+                    
+                    int select = 0;
+                    switch (ui.random(1, 4)) {
+                        case 2:
+                            select = 1;
+                            break;
+                        case 3:
+                            select = 2;
+                            break;
+                    }
+                    Bonus bonusUsed;
+                    try {
+                        bonusUsed = BonusEntity.findById(ch1.getBonuses()[select].getId());
+                    } catch (NotFoundEntityException ex) {
+                        Logger.getLogger(FightResponse.class.getName()).log(Level.SEVERE, null, ex);
+                        throw new NetworkResponseException(Protocol.ERROR_FIGHT);
+                    }
                     if (bonusUsed != null) {
                         tmp.append("attacks with his ").append(bonusUsed);
                     } else {

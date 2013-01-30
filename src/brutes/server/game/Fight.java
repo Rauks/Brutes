@@ -26,6 +26,9 @@ public class Fight implements Identifiable {
     public int getId() {
         return id;
     }
+    public void setId(int id){
+        this.id = id;
+    }
 
     public Brute getBrute1() {
         return brute1;

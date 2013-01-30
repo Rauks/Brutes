@@ -25,7 +25,7 @@ public class Response {
         return this.writer;
     }
 
-    static public User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    static public User checkTokenAndReturnUser(String token) throws IOException, SQLException, NetworkResponseException {
         User user = UserEntity.findByToken(token);
         if (user == null) {
             throw new NetworkResponseException(Protocol.ERROR_TOKEN);

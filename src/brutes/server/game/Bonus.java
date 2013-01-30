@@ -17,10 +17,6 @@ public class Bonus implements Identifiable {
     private short speed;
     private int imageID;
     
-    /* more */
-    private int bruteId;
-    
-    
     public Bonus(){
         this.id = 0;
         this.name = null;
@@ -63,14 +59,11 @@ public class Bonus implements Identifiable {
     public int getImage() {
         return imageID;
     }
+    public void setId(int id){
+        this.id = id;
+    }
     public void setLevel(short level) {
         this.level = level;
-    }
-    public int getBruteId() {
-        return bruteId;
-    }
-    public void setBruteId(int bruteId) {
-        this.bruteId = bruteId;
     }
     public void setLife(short life) {
         this.life = life;

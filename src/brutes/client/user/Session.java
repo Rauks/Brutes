@@ -51,8 +51,15 @@ public class Session {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
                         myId = connection.sendGetMyBruteId(ScenesContext.getInstance().getSession().getToken());
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ErrorResponseException ex) {
+                        if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
+                            Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No brute created");
+                        }
+                        else{
+                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } catch (InvalidResponseException ex) {
+                        Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,8 +87,15 @@ public class Session {
                 try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
                     try {
                         chId = connection.sendGetChallengerBruteId(ScenesContext.getInstance().getSession().getToken());
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ErrorResponseException ex) {
+                        if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
+                            Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No ennemy assigned");
+                        }
+                        else{
+                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } catch (InvalidResponseException ex) {
+                        Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

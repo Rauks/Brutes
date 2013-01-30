@@ -20,13 +20,14 @@ public class UserEntity {
         return user;
     }
 
-    public static int save(Connection con, User user) throws IOException, SQLException {
-        PreparedStatement psql = con.prepareStatement("UPDATE Users SET pseudo = ?, password = ?, token = ? WHERE id = ?");
+    public static void save(Connection con, User user) throws IOException, SQLException {
+        PreparedStatement psql = con.prepareStatement("UPDATE Users SET pseudo = ?, password = ?, brute_id = ?, token = ? WHERE id = ?");
         psql.setString(1, user.getPseudo());
         psql.setString(2, user.getPassword());
-        psql.setString(3, user.getToken());
-        psql.setInt(4, user.getId());
-        return psql.executeUpdate();
+        psql.setInt(3, (user.getBrute() == null)?0:user.getBrute().getId());
+        psql.setString(4, user.getToken());
+        psql.setInt(5, user.getId());
+        psql.executeUpdate();
     }
 
     public static User findById(int id) throws IOException, SQLException {

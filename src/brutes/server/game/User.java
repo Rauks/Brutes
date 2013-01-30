@@ -11,6 +11,7 @@ public class User implements Identifiable {
     private int id;
     private String pseudo;
     private String password;
+    private Brute brute;
     private String token;
 
     public User(int id, String pseudo, String password, String token) {
@@ -35,6 +36,14 @@ public class User implements Identifiable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setBrute(Brute brute) {
+        this.brute = brute;
+    }
+
+    public Brute getBrute() {
+        return brute;
     }
 
     public void setPassword(String password) {

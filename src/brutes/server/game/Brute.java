@@ -18,8 +18,6 @@ public class Brute implements Identifiable {
     private short speed;
     private int imageID;
     private Bonus[] bonuses;
-    /* more */
-    private int userid;
 
     public Brute(int id, String name, short level, short life, short strength, short speed, int imageID) {
         this.id = id;
@@ -43,6 +41,10 @@ public class Brute implements Identifiable {
     @Override
     public int getId() {
         return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getName() {
@@ -164,14 +166,6 @@ public class Brute implements Identifiable {
                 }
             }
         }
-    }
-
-    public int getUserId() {
-        return userid;
-    }
-
-    public void setUserId(int userid) {
-        this.userid = userid;
     }
 
     @Override

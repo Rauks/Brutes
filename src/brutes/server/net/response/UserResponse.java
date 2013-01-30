@@ -24,29 +24,35 @@ public class UserResponse extends Response {
         super(writer);
     }
 
-    public void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
+    public void readLogin(String login, String password) throws IOException, SQLException, NetworkResponseException {
 
         if (login.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
-        } else if (password.isEmpty()) {
+        } 
+        else if (password.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
-        } else {
+        } 
+        else {
             PreparedStatement psql = DatasManager.prepare("SELECT id, password FROM users WHERE pseudo = ?");
             psql.setString(1, login);
             ResultSet rs = psql.executeQuery();
 
             if (!rs.next()) {
                 throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
-            } else {
+            } 
+            else {
                 if (!password.equals(rs.getString("password"))) {
                     throw new NetworkResponseException(Protocol.ERROR_WRONG_PASSWORD);
-                } else {
-                    String token = UserEntity.updateToken(rs.getInt("id"));
-
-                    Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
-                    this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
-                            .writeString(token)
-                            .send();
+                } 
+                else {
+                    try {
+                        String token = UserEntity.updateToken(rs.getInt("id"));Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "New token [{0}] for user [{1}]", new Object[]{token, rs.getInt("id")});
+                        this.getWriter().writeDiscriminant(Protocol.R_LOGIN_SUCCESS)
+                                .writeString(token)
+                                .send();
+                    } catch (NotFoundEntityException ex) {
+                        throw new NetworkResponseException(Protocol.ERROR_LOGIN_NOT_FOUND);
+                    }
                 }
             }
         }
