@@ -60,17 +60,18 @@ public class UserResponse extends Response {
                 .send();
     }
 
-    private void readCreateUser(String pseudo, String password) throws IOException, SQLException, NetworkResponseException {
+    /*
+     private void readCreateUser(String pseudo, String password) throws IOException, SQLException, NetworkResponseException {
         if (pseudo.isEmpty() || password.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR); // @TODO Protocol.ERROR_INPUT_DATAS
         }
 
 
-        /* @TODO define it !
+        / * @TODO define it !
          * if( UserEntity.findByPseudo(pseudo) != null ) {
          *    throw new NetworkResponseException(Protocol.ERROR_USER_ALREADY_USED);
          * }
-         */
+         * /
 
         User user = new User(0, pseudo, password, null);
         DatasManager.insert(user);
@@ -81,10 +82,11 @@ public class UserResponse extends Response {
     }
 
     private void readDeleteUser(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = UserResponse.checkTokenAndReturnUser(token);
         DatasManager.delete(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                 .send();
     }
+    */
 }
