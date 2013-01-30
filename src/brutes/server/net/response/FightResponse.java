@@ -35,13 +35,10 @@ public class FightResponse extends Response {
 
             Fight fight;
             try {
-                System.out.println("FIND BY USER");
                 return FightEntity.findByUser(user);
             } catch (NotFoundEntityException ex) {
-                System.out.println("NO FIGHT FOUND BY USER");
                 Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
 
-                System.out.println("OTHER BRUTE LOADED");
                 fight = new Fight();
                 fight.setBrute1(brute);
                 fight.setBrute2(otherBrute);
@@ -91,18 +88,17 @@ public class FightResponse extends Response {
         }
         
         Bonus[] bonuses = brute.getBonuses();
-        if(ui.random()){
-            bonuses[select] = Bonus.EMPTY_BONUS;
-            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus {0} removed", select);
+        switch (ui.random(1, 3)) {
+            case 1:
+                bonuses[select] = Bonus.EMPTY_BONUS;
+                break;
+            case 2:
+            case 3:
+                bonuses[select] = BonusEntity.findRandom();
+                break;
         }
-        else{
-            bonuses[select] = BonusEntity.findRandom();
-            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus {0} is new", select);
-        }
-        brute.setBonuses(bonuses);
         
         DatasManager.save(brute);
-
         fight.setWinner(brute);
         DatasManager.save(fight);
 

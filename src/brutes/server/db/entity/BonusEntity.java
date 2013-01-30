@@ -62,14 +62,14 @@ public class BonusEntity implements Entity {
     }
 
     public static Bonus[] findAllByBrute(Brute brute) throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Shop WHERE brute_id = ?");
+        PreparedStatement psql = DatasManager.prepare("SELECT b.* FROM Shop s LEFT JOIN Bonus b ON (s.bonus_id = b.id) WHERE s.brute_id = ?");
         psql.setInt(1, brute.getId());
         ResultSet rs = psql.executeQuery();
 
         Bonus[] bonus = new Bonus[Brute.MAX_BONUSES];
 
         int i = 0;
-        while (rs.next() && i < 3) {
+        while (rs.next() && i < Brute.MAX_BONUSES) {
             bonus[i++] = BonusEntity.create(rs);
         }
 
