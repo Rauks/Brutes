@@ -92,8 +92,8 @@ public class BruteEntity implements Entity {
     }
 
     public static Brute findRandomAnotherToBattleByUser(User user, int level, double i) throws IOException, SQLException, NotFoundEntityException {
-        double level_min = level*(1/i*0.75);//(int) (level - 5 - Math.sqrt(level_i))/i;
-        double level_max = level*(1+i/2);//level + 5 + level_i;
+        double level_min = 0; //level/(i+1);//(int) (level - 5 - Math.sqrt(level_i))/i;
+        double level_max = 200;//level*(i+1);//level + 5 + level_i;
         
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE user_id <> ? AND level BETWEEN (" + level_min + ") AND (" + level_max + ") ORDER BY RANDOM() LIMIT 1");
         psql.setInt(1, user.getId());
