@@ -50,36 +50,30 @@ public class FightResponse extends Response {
     }
 
     public void readCheatFightWin(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
-        Fight fight = this.getFightWithChallenger(user);
+        User user = FightResponse.checkTokenAndReturnUser(token);
+        Fight fight = FightResponse.getFightWithChallenger(user);
 
         if (fight == null) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
 
         Brute brute = fight.getBrute1();
-        System.out.println("!! win !!");
 
         // level UP !
         brute.setLevel((short) Math.min(brute.getLevel() + 1, 100));
-        System.out.println("Life UP");
 
         // force UP !
- 
-        System.out.println("Force:");
+
         switch (ui.random(1, 4)) {
             case 1:
             case 4:
                 brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
-                System.out.println("  Life UP");
                 break;
             case 2:
                 brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
-                System.out.println("  Speed UP");
                 break;
             case 3:
                 brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
-                System.out.println("  Strength UP");
                 break;
         }
 
@@ -87,17 +81,17 @@ public class FightResponse extends Response {
         if (ui.random()) {
             System.out.println("Bonus:");
             Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
-            // S'il y a déjà 3 bonus
+
             Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
             if (bonusCharacter != null && ui.random()) {
-                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete (" + bonusCharacter.getName() + ")");
+                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete ({0})", bonusCharacter.getName());
                 DatasManager.delete(bonusCharacter);
                 System.out.println("  delete");
             }
 
             int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
 
-            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = " + AllCharacterBonus);
+            Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = {0}", AllCharacterBonus);
             if (AllCharacterBonus < 3 && ui.random()) {
                 // On trouve quelque chose ...
                 Bonus bonusTreasure = BonusEntity.findRandom();
@@ -125,8 +119,8 @@ public class FightResponse extends Response {
     }
 
     public void readCheatFightLoose(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
-        Fight fight = this.getFightWithChallenger(user);
+        User user = FightResponse.checkTokenAndReturnUser(token);
+        Fight fight = FightResponse.getFightWithChallenger(user);
 
         if (fight == null) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
@@ -149,37 +143,90 @@ public class FightResponse extends Response {
     }
 
     public void readDoFight(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
-        Fight fight = this.getFightWithChallenger(user);
+        User user = FightResponse.checkTokenAndReturnUser(token);
+        Fight fight = FightResponse.getFightWithChallenger(user);
 
-        int i = 0;
-        int lost;
+        StringBuilder tmp = new StringBuilder();
+        tmp.append("Fight between ").append(fight.getBrute1()).append(" and ").append(fight.getBrute2());
+
+        int round = 0;
+        int k = ui.random(-fight.getBrute1().getBonusSpeed(), fight.getBrute2().getBonusSpeed());
+
         while (fight.getBrute1().getLife() > 0 && fight.getBrute2().getLife() > 0) {
+            tmp.append("\n\tROUND ").append(++round);
+            tmp.append(": ").append(fight.getBrute1()).append(" (").append(fight.getBrute1().getLife()).append(" pv) VS ").append(fight.getBrute2()).append(" (").append(fight.getBrute2().getLife()).append(" pv)");
 
             for (int j = 0; j < 2; j++) {
-                Brute ch1 = j == 0 ? fight.getBrute1() : fight.getBrute2();
-                Brute ch2 = j == 0 ? fight.getBrute2() : fight.getBrute1();
+                    Brute ch1 = j == 0 ? fight.getBrute1() : fight.getBrute2();
+                    Brute ch2 = j == 0 ? fight.getBrute2() : fight.getBrute1();
+
+                tmp.append("\n\t- Player ").append(ch1).append(" ");
+
+                // ATK or not ?
                 int random = ui.random(0, 10);
                 if (random == 0) {
+                    switch (ui.random(1, 3)) {
+                        case 1:
+                            tmp.append("falls asleep ...");
+                            break;
+                        case 2:
+                            tmp.append("is stunned ...");
+                            break;
+                        case 3:
+                            tmp.append("forgetting what he does ...");
+                            break;
+                        case 4:
+                            tmp.append("look at the pretty cloud ...");
+                            break;
+                    }
                 } else if (random == 1) {
+                    // Nothing happens ...
+                    tmp.append("is really, really mad (and win +1 in VIT and STR) !!!");
                     ch1.setSpeed((short) (ch1.getSpeed() + 1));
                     ch1.setStrength((short) (ch1.getStrength() + 1));
-                } else {
-                    double pWin = ((double) (10 * ch1.getLevel() + ch1.getStrength()));
-                    pWin *= ((double) ch1.getSpeed() / ((double) (1 + ch1.getSpeed() + ch2.getSpeed())));
-                    pWin *= ((double) ch1.getStrength() / ((double) (1 + ch1.getStrength() + ch2.getStrength())));
+                } else {// We prepare a bonus for the special attack
+                    // We prepare a bonus for the special attack
+                    Bonus bonusUsed = null;//BonusEntity.findRandomByBrute(ch1);
+                    if (bonusUsed != null) {
+                        tmp.append("attacks with his ").append(bonusUsed);
+                    } else {
+                        bonusUsed = new Bonus(); // for pWin
+                        tmp.append("attacks with bare hands.");
+                    }
+
+                    // and attaks !!!
+                    double pWin = 1 + ((double) (5 * ch1.getLevel() + ch1.getWithBonusStrength()));
+                    pWin *= 1 + ((((double) bonusUsed.getSpeed()) + ((double) ch1.getWithBonusSpeed())) / ((double) (1 + ch1.getWithBonusSpeed() + ch2.getWithBonusSpeed())));
+                    pWin *= 1 + ((((double) bonusUsed.getStrength()) + ((double) ch1.getWithBonusStrength())) / ((double) (1 + ch1.getWithBonusStrength() + ch2.getWithBonusStrength())));
                     pWin *= 1 + ((double) ch1.getLife() / ((double) (1 + ch1.getLife() + ch2.getLife())));
-                    // DEBUG
-                    //System.out.println("@@" + pWin);
-                    //System.out.println("@@ 100*(10*" + ch1.getLevel() + "+" + ch1.getStrength() + ")*(" + ch1.getSpeed() + "/(1+" + ch1.getSpeed() + "+" + ch2.getSpeed() + ")");
-                    //System.out.println(ch1.getLife() + "/(1+" + ch1.getLife() + "+" + ch2.getLife() + ")");
-                    ch2.setLife((short) (ch2.getLife() - pWin));
+                    pWin /= 4;
+                    pWin = Math.max(0, pWin);
+                    // @TODO getBonusLife()
+
+                    tmp.append("\t\t").append((short) pWin).append(" DEG");
+
+                    ch2.setLife((short) (ch2.getLife() - pWin)); // and the opponent loses life
                 }
             }
         }
-        if (fight.getBrute1().getLife() > 0) {
+        
+        int win = 0;
+        
+        // We choose the winner
+        if( fight.getBrute1().getLife() < 0 && fight.getBrute1().getLife() < 0 ) {
+            win = k > 0 ? 1 : 0;
+        }
+        else if( fight.getBrute1().getLife() > 0 ) {
+            win = 1;
+        }
+            System.out.println(k);
+        
+        // save it !
+        if (win == 1) {
+            tmp.append("\n").append(fight.getBrute1()).append(" (you) win !");
             this.readCheatFightWin(token);
         } else {
+            tmp.append("\n").append(fight.getBrute2()).append(" win ! (you lose)");
             this.readCheatFightLoose(token);
         }
     }
