@@ -35,16 +35,18 @@ public class FightResponse extends Response {
 
             Fight fight;
             try {
-                fight = FightEntity.findByUser(user);
+                System.out.println("FIND BY USER");
+                return FightEntity.findByUser(user);
             } catch (NotFoundEntityException ex) {
+                System.out.println("NO FIGHT FOUND BY USER");
                 Brute otherBrute = BruteEntity.findOneRandomAnotherToBattleByUser(user);
 
+                System.out.println("OTHER BRUTE LOADED");
                 fight = new Fight();
                 fight.setBrute1(brute);
                 fight.setBrute2(otherBrute);
-                DatasManager.insert(fight);
+                return DatasManager.insert(fight);
             }
-            return fight;
         } catch (NotFoundEntityException ex) {
             throw new NetworkResponseException(Protocol.ERROR_BRUTE_NOT_FOUND);
         }
@@ -194,14 +196,9 @@ public class FightResponse extends Response {
                     Bonus bonusUsed;
                     try {
                         bonusUsed = BonusEntity.findById(ch1.getBonuses()[select].getId());
-                    } catch (NotFoundEntityException ex) {
-                        Logger.getLogger(FightResponse.class.getName()).log(Level.SEVERE, null, ex);
-                        throw new NetworkResponseException(Protocol.ERROR_FIGHT);
-                    }
-                    if (bonusUsed != null) {
                         tmp.append("attacks with his ").append(bonusUsed);
-                    } else {
-                        bonusUsed = new Bonus(); // for pWin
+                    } catch (NotFoundEntityException ex) {
+                        bonusUsed = Bonus.EMPTY_BONUS; // for pWin
                         tmp.append("attacks with bare hands.");
                     }
 

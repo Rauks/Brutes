@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UserEntity {
 
     public static User create(ResultSet r) throws SQLException {
-        User user = new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getString("token"));
+        User user = new User(r.getInt("id"), r.getString("pseudo"), r.getString("password"), r.getInt("brute_id"), r.getString("token"));
         return user;
     }
 
@@ -24,7 +24,7 @@ public class UserEntity {
         PreparedStatement psql = con.prepareStatement("UPDATE Users SET pseudo = ?, password = ?, brute_id = ?, token = ? WHERE id = ?");
         psql.setString(1, user.getPseudo());
         psql.setString(2, user.getPassword());
-        psql.setInt(3, (user.getBrute() == null)?0:user.getBrute().getId());
+        psql.setInt(3, user.getBrute());
         psql.setString(4, user.getToken());
         psql.setInt(5, user.getId());
         psql.executeUpdate();

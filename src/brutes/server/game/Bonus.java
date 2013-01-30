@@ -17,7 +17,7 @@ public class Bonus implements Identifiable {
     private short speed;
     private int imageID;
     
-    public Bonus(){
+    private Bonus(){
         this.id = 0;
         this.name = null;
         this.level = 0;

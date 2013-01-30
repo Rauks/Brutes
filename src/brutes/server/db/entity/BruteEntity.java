@@ -89,10 +89,10 @@ public class BruteEntity implements Entity {
     }
 
     public static Brute findRandomAnotherToBattleByUser(User user) throws IOException, SQLException, NotFoundEntityException {
-        PreparedStatement psql = DatasManager.prepare("SELECT b.* FROM Brutes b LEFT JOIN users u ON (u.brute_id = b.id) WHERE u.id <> ? ORDER BY RANDOM() LIMIT 1");
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Brutes WHERE id <> ? ORDER BY RANDOM() LIMIT 1");
         psql.setInt(1, user.getId());
         ResultSet rs = psql.executeQuery();
-
+        
         if (rs.next()) {
             return BruteEntity.create(rs);
         }

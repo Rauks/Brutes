@@ -11,13 +11,14 @@ public class User implements Identifiable {
     private int id;
     private String pseudo;
     private String password;
-    private Brute brute;
+    private int brute;
     private String token;
 
-    public User(int id, String pseudo, String password, String token) {
+    public User(int id, String pseudo, String password, int brute, String token) {
         this.id = id;
         this.pseudo = pseudo;
         this.password = password;
+        this.brute = brute;
         this.token = token;
     }
 
@@ -38,11 +39,11 @@ public class User implements Identifiable {
         return password;
     }
 
-    public void setBrute(Brute brute) {
+    public void setBrute(int brute) {
         this.brute = brute;
     }
 
-    public Brute getBrute() {
+    public int getBrute() {
         return brute;
     }
 

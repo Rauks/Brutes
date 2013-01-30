@@ -54,7 +54,6 @@ public class BruteResponse extends Response {
     public void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException {
         User user = BruteResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
-
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
                 .writeLongInt(fight.getBrute2().getId())
                 .send();
@@ -90,7 +89,7 @@ public class BruteResponse extends Response {
 
             Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
             brute = DatasManager.insert(brute);
-            user.setBrute(brute);
+            user.setBrute(brute.getId());
             DatasManager.save(user);
             this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
                     .send();
