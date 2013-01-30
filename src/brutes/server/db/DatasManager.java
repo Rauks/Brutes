@@ -45,7 +45,7 @@ public class DatasManager {
             c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Thiktak', 'root1')");
             c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Kirauks', 'root2')");
             c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('Bruno', 'mdp')");
-            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('User', '')");
+            c.createStatement().executeUpdate("INSERT INTO users (pseudo, password) VALUES ('User', 'user')");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS brutes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, image_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 1, 'Rukia', 5, 34, 8, 13)");
