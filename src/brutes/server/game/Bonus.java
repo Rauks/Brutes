@@ -55,7 +55,7 @@ public class Bonus implements Identifiable {
         return this.life;
     }
     public short getStrength() {
-        return (short) (strength*(1+ (double) this.level/2));
+        return strength;
     }
     public short getSpeed() {
         return speed;
