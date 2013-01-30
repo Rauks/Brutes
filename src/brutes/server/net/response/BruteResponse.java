@@ -42,7 +42,7 @@ public class BruteResponse extends Response {
     }
 
     public void readGetChallengerBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = BruteResponse.checkTokenAndReturnUser(token);
         Fight fight = FightResponse.getFightWithChallenger(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
@@ -51,7 +51,7 @@ public class BruteResponse extends Response {
     }
 
     public void readGetMyBruteId(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = BruteResponse.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findOneByUser(user);
 
         this.getWriter().writeDiscriminant(Protocol.R_BRUTE)
@@ -60,7 +60,7 @@ public class BruteResponse extends Response {
     }
 
     public void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = BruteResponse.checkTokenAndReturnUser(token);
 
         // Brute already exists !
         /*if( BruteEntity.findByUser(user) != null ) {
@@ -93,7 +93,7 @@ public class BruteResponse extends Response {
     }
 
     public void readUpdateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = BruteResponse.checkTokenAndReturnUser(token);
 
         if (name.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_UPDATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
@@ -114,7 +114,7 @@ public class BruteResponse extends Response {
     }
 
     public void readDeleteBrute(String token) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
-        User user = this.checkTokenAndReturnUser(token);
+        User user = BruteResponse.checkTokenAndReturnUser(token);
         Brute brute = BruteEntity.findOneByUser(user);
 
         DatasManager.delete(brute);
