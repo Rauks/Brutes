@@ -13,11 +13,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation.Status;
+import javafx.animation.ScaleTransition;
+import javafx.animation.ScaleTransitionBuilder;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -40,6 +43,7 @@ import javafx.stage.Stage;
 public class FightController implements Initializable {
     private Stage currentDialogStage;
     private ReadOnlyBooleanWrapper isFighting;
+    private ScaleTransition centerVsshadowScaleTransition;
     
     @FXML
     private VBox myBruteStats;
@@ -108,6 +112,8 @@ public class FightController implements Initializable {
     @FXML
     private Circle centerVS;
     @FXML
+    private Circle centerVSshadow;
+    @FXML
     private MenuItem menuFightWin;
     @FXML
     private MenuItem menuFightLoose;
@@ -122,6 +128,13 @@ public class FightController implements Initializable {
     @FXML
     private MenuItem menuOptDelete;
     
+    @FXML
+    private void handleVSover(Event e){
+        if(this.centerVsshadowScaleTransition.getStatus() != Status.RUNNING){
+            this.centerVsshadowScaleTransition.play();
+        }
+    }
+    
     private void doFight(FightTask.FightType type){
         final FightTask fightTask = new FightTask(type);
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
@@ -129,8 +142,6 @@ public class FightController implements Initializable {
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     Session s = ScenesContext.getInstance().getSession();
-                    s.getMyBrute().unload();
-                    s.getChallengerBrute().unload();
                     s.netLoadMyBrute();
                     s.netLoadChallengerBrute();
                     isFighting.set(false);
@@ -274,6 +285,17 @@ public class FightController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.centerVsshadowScaleTransition = ScaleTransitionBuilder.create()
+                .node(this.centerVSshadow)
+                .duration(Duration.seconds(1))
+                .fromX(1)
+                .fromY(1)
+                .toX(1.2)
+                .toY(1.2)
+                .autoReverse(true)
+                .cycleCount(2)
+                .build();
+        
         this.isFighting = new ReadOnlyBooleanWrapper();
         this.isFighting.set(false);
         

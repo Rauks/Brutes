@@ -295,12 +295,12 @@
         </MenuBar>
       </top>
     </BorderPane>
-    <Circle fill="$x3" layoutX="300.0" layoutY="115.0" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+    <Circle id="" fx:id="centerVSshadow" fill="$x3" layoutX="300.0" layoutY="115.0" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
       <effect>
         <GaussianBlur />
       </effect>
     </Circle>
-    <Circle id="VS" fx:id="centerVS" fill="$x3" layoutX="300.0" layoutY="115.0" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
+    <Circle id="VS" fx:id="centerVS" fill="$x3" layoutX="300.0" layoutY="115.0" onMouseClicked="#handleMenuFightRegular" onMouseEntered="#handleVSover" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
     <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="288.0" layoutY="122.5" stroke="$x3" strokeType="OUTSIDE" text="VS">
       <effect>
         <Bloom threshold="0.8">
