@@ -21,7 +21,7 @@ public class BonusResponse extends Response {
 
     public void readDataBonus(int id) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         Bonus bonus = BonusEntity.findOneById(id);
-        System.out.println("readDataBonus(" + id + ") : imageID=" + bonus.getImageID());
+        
         this.getWriter().writeDiscriminant(Protocol.R_DATA_BONUS)
                 .writeLongInt(id)
                 .writeString(bonus.getName())
