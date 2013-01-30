@@ -137,7 +137,7 @@
         <image>47</image>
     </bonus>
     <bonus>
-        <name>Martouïe</name>
+        <name>MartouÃ¯e</name>
         <level>1</level>
         <life>0</life>
         <strength>10</strength>
@@ -217,7 +217,7 @@
         <image>57</image>
     </bonus>
     <bonus>
-        <name>Démon Loup</name>
+        <name>DÃ©mon Loup</name>
         <level>1</level>
         <life>5</life>
         <strength>5</strength>
@@ -233,7 +233,7 @@
         <image>59</image>
     </bonus>
     <bonus>
-        <name>Roc enchanté</name>
+        <name>Roc enchantÃ©</name>
         <level>1</level>
         <life>20</life>
         <strength>10</strength>
@@ -281,7 +281,7 @@
         <image>65</image>
     </bonus>
     <bonus>
-        <name>Bâton de glace</name>
+        <name>BÃ¢ton de glace</name>
         <level>1</level>
         <life>0</life>
         <strength>0</strength>
@@ -289,7 +289,7 @@
         <image>66</image>
     </bonus>
     <bonus>
-        <name>Bâton de feu</name>
+        <name>BÃ¢ton de feu</name>
         <level>1</level>
         <life>0</life>
         <strength>10</strength>
@@ -305,7 +305,7 @@
         <image>68</image>
     </bonus>
     <bonus>
-        <name>Epée</name>
+        <name>EpÃ©e</name>
         <level>1</level>
         <life>0</life>
         <strength>10</strength>
@@ -329,7 +329,7 @@
         <image>71</image>
     </bonus>
     <bonus>
-        <name>Lapin affamé</name>
+        <name>Lapin affamÃ©</name>
         <level>1</level>
         <life>0</life>
         <strength>15</strength>
@@ -385,7 +385,7 @@
         <image>78</image>
     </bonus>
     <bonus>
-        <name>Epée double</name>
+        <name>EpÃ©e double</name>
         <level>1</level>
         <life>0</life>
         <strength>20</strength>
@@ -393,7 +393,7 @@
         <image>79</image>
     </bonus>
     <bonus>
-        <name>Tortue guerrière</name>
+        <name>Tortue guerriÃ¨re</name>
         <level>1</level>
         <life>10</life>
         <strength>10</strength>
@@ -417,7 +417,7 @@
         <image>82</image>
     </bonus>
     <bonus>
-        <name>Gelée verte</name>
+        <name>GelÃ©e verte</name>
         <level>1</level>
         <life>15</life>
         <strength>0</strength>
@@ -425,7 +425,7 @@
         <image>83</image>
     </bonus>
     <bonus>
-        <name>Gelée rouge</name>
+        <name>GelÃ©e rouge</name>
         <level>1</level>
         <life>0</life>
         <strength>5</strength>
@@ -433,7 +433,7 @@
         <image>84</image>
     </bonus>
     <bonus>
-        <name>Poupée</name>
+        <name>PoupÃ©e</name>
         <level>1</level>
         <life>20</life>
         <strength>0</strength>
