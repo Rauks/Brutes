@@ -157,6 +157,10 @@ public class FightResponse extends Response {
         StringBuilder tmp = new StringBuilder();
         tmp.append("Fight between ").append(fight.getBrute1()).append(" and ").append(fight.getBrute2());
 
+        // On n'oublie pas de rectifier la vie en fonction des bonus
+        fight.getBrute1().setLife(fight.getBrute1().getWithBonusLife());
+        fight.getBrute2().setLife(fight.getBrute2().getWithBonusLife());
+        
         int round = 0;
         int k = ui.random(-fight.getBrute1().getBonusSpeed(), fight.getBrute2().getBonusSpeed());
 
@@ -192,7 +196,7 @@ public class FightResponse extends Response {
                     tmp.append("is really, really mad (and win +1 in VIT and STR) !!!");
                     ch1.setSpeed((short) (ch1.getSpeed() + 1));
                     ch1.setStrength((short) (ch1.getStrength() + 1));
-                } else {// We prepare a bonus for the special attack
+                } else {
                     // We prepare a bonus for the special attack
                     Bonus bonusUsed = BonusEntity.findRandomByBrute(ch1);
                     if (bonusUsed != null) {
@@ -206,9 +210,9 @@ public class FightResponse extends Response {
                     double pWin = 1 + ((double) (5 * ch1.getLevel() + ch1.getWithBonusStrength()));
                     pWin *= 1 + ((((double) bonusUsed.getSpeed()) + ((double) ch1.getWithBonusSpeed())) / ((double) (1 + ch1.getWithBonusSpeed() + ch2.getWithBonusSpeed())));
                     pWin *= 1 + ((((double) bonusUsed.getStrength()) + ((double) ch1.getWithBonusStrength())) / ((double) (1 + ch1.getWithBonusStrength() + ch2.getWithBonusStrength())));
-                    pWin *= 1 + ((double) ch1.getLife() / ((double) (1 + ch1.getLife() + ch2.getLife())));
-                    pWin /= ch2.getStrength() + ch2.getBonusStrength()/2 + ch2.getLife();
-                    pWin = Math.max(0, pWin);
+                    pWin *= 1 + ((((double) bonusUsed.getLife()) + ((double) ch1.getWithBonusLife())) / ((double) (1 + ch1.getLife() + ch2.getLife())));
+                    pWin /= ch2.getStrength() + ch2.getBonusStrength()/2 + ch2.getWithBonusLife();
+                    pWin = Math.max(0, pWin/2);
                     // @TODO getBonusLife()
 
                     tmp.append("\t\t").append((short) pWin).append(" DEG");
