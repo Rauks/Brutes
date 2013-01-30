@@ -65,6 +65,8 @@ public abstract class Protocol {
     public static final byte ERROR_BRUTE_NOT_FOUND = (byte)0x46;
     public static final byte ERROR_IMAGE_NOT_FOUND = (byte)0x47;
     public static final byte ERROR_BONUS_NOT_FOUND = (byte)0x48;
+    public static final byte ERROR_FIGHT_NOT_FOUND = (byte)0x4C; // added
+    public static final byte ERROR_USER_NOT_FOUND = (byte)0x4D; // added
     public static final byte ERROR_FIGHT = (byte)0x49;
     public static final byte ERROR_TOKEN = (byte)0x4A;
     public static final byte ERROR_SRLY_WTF = (byte)0x4B;
