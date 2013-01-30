@@ -39,10 +39,10 @@ public class ObservableBonus {
     public void loadBonus(Bonus b){
         this.id.set(b.getId());
         this.name.set(b.getName());
-        this.level.set(b.getLevel() & 0xffff);
-        this.life.set(b.getLife() & 0xffff);
-        this.strength.set(b.getStrength() & 0xffff);
-        this.speed.set(b.getSpeed() & 0xffff);
+        this.level.set(b.getLevel());
+        this.life.set(b.getLife());
+        this.strength.set(b.getStrength());
+        this.speed.set(b.getSpeed());
         this.image.set(b.getDataImage().getImage());
     }
     public void unload(){
