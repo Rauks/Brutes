@@ -51,10 +51,10 @@ public class ObservableBrute {
         this.isLoaded.set(true);
         this.id.set(c.getId());
         this.name.set(c.getName());
-        this.level.set(c.getLevel());
-        this.life.set(c.getLife());
-        this.strength.set(c.getStrength());
-        this.speed.set(c.getSpeed());
+        this.level.set(c.getLevel() & 0xffff);
+        this.life.set(c.getLife() & 0xffff);
+        this.strength.set(c.getStrength() & 0xffff);
+        this.speed.set(c.getSpeed() & 0xffff);
         this.bonusLife.set(c.getBonusLife());
         this.bonusStrength.set(c.getBonusStrength());
         this.bonusSpeed.set(c.getBonusSpeed());

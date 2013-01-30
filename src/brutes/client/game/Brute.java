@@ -60,7 +60,7 @@ public class Brute {
         short sum = 0;
         for (int i = 0; i < this.bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
-                sum += this.bonuses[i].getLife();
+                sum += this.bonuses[i].getLife() & 0xffff;
             }
         }
         return sum;
@@ -74,7 +74,7 @@ public class Brute {
         short sum = 0;
         for (int i = 0; i < this.bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
-                sum += this.bonuses[i].getStrength();
+                sum += this.bonuses[i].getStrength() & 0xffff;
             }
         }
         return sum;
@@ -88,7 +88,7 @@ public class Brute {
         short sum = 0;
         for (int i = 0; i < bonuses.length; i++) {
             if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
-                sum += bonuses[i].getSpeed();
+                sum += bonuses[i].getSpeed() & 0xffff;
             }
         }
         return sum;
