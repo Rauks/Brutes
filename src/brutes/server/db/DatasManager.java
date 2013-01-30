@@ -57,7 +57,7 @@ public class DatasManager {
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 8, 'Sheldon', 1, 10, 1, 6)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 9, 'Hassen', 10, 10, 4, 3)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (1, 10, 'Krossork', 7, 10, 5, 2)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (2, 11, 'Thik', 90, 10, 3, 4)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (2, 11, 'Thik', 90, 100, 3, 4)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (3, 12, 'Rauks', 1, 10, 4, 3)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4,  1, 'Brubru', 1, 10, 2, 5)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, 'Bot1',   1, 10, 2, 5)");
@@ -69,7 +69,7 @@ public class DatasManager {
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, 'Bot60', 60, 10, 2, 5)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, 'Bot70', 70, 10, 2, 5)");
             c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, 'Bot80', 80, 10, 2, 5)");
-            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, '\\o/', 150, 6, 6, 6)");
+            c.createStatement().executeUpdate("INSERT INTO brutes (user_id, image_id, name, level, life, strength, speed) VALUES (4, 13, '\\o/', 150, 150, 6, 6)");
 
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS bonus (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id INTEGER, name TEXT, level INTEGER, life INTEGER, strength INTEGER, speed INTEGER, image_id INTEGER)");
             
