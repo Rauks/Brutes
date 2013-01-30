@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<user>
+		<login>Thiktak</login>
+		<password>root1</password>
+	</user>
+	<user>
+		<login>Kirauks</login>
+		<password>root2</password>
+	</user>
+	<user>
+		<login>Bruno</login>
+		<password>mdp</password>
+	</user>
+	<user>
+		<login>User</login>
+		<password>user</password>
+	</user>
+</root>
