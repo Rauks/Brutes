@@ -12,6 +12,7 @@ import brutes.server.game.Brute;
 import brutes.server.game.Fight;
 import brutes.server.game.User;
 import brutes.server.net.NetworkResponseException;
+import brutes.server.net.NetworkServer;
 import brutes.server.ui;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -83,7 +84,7 @@ public class BruteResponse extends Response {
         short strength = (short) ui.random(3, 10);
         short speed = (short) ui.random(3, 10);
         short life = (short) (ui.random(10, 20) + strength / 3);
-        int imageID = ui.random(Brutes.OPT_ID_IMG_MIN_BRUTE, Brutes.OPT_ID_IMG_MAX_BRUTE);
+        int imageID = ui.random(NetworkServer.OPT_ID_IMG_MIN_BRUTE, NetworkServer.OPT_ID_IMG_MAX_BRUTE);
 
         Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
         brute.setUserId(user.getId());
