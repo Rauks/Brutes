@@ -71,8 +71,16 @@ public class Brute implements Identifiable {
         return sum;
     }
 
+    public short getWithBonusStrength() {
+        return (short) (this.getStrength() + this.getBonusStrength());
+    }
+
     public short getSpeed() {
         return this.speed;
+    }
+
+    public short getWithBonusSpeed() {
+        return (short) (this.getSpeed() + this.getBonusSpeed());
     }
 
     public short getBonusSpeed() {
@@ -151,7 +159,7 @@ public class Brute implements Identifiable {
     public void setUserId(int userid) {
         this.userid = userid;
     }
-    
+
     @Override
     public String toString() {
         return (String) this.getName();
