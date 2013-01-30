@@ -15,10 +15,6 @@ import javafx.stage.Stage;
 public class Brutes extends Application {
 
     private static ServerThread SERVER = new ServerThread();
-    public static final int OPT_ID_IMG_MIN_BRUTE = 1;
-    public static final int OPT_ID_IMG_MAX_BRUTE = 13;
-    public static final int OPT_ID_IMG_MIN_BONUS = 31;
-    public static final int OPT_ID_IMG_MAX_BONUS = 85;
 
     public static void exit() {
         Brutes.SERVER.interrupt();
