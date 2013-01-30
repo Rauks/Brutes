@@ -1,7 +1,9 @@
 package brutes.server.net.response;
 
+import brutes.Brutes;
 import brutes.net.NetworkWriter;
 import brutes.net.Protocol;
+import brutes.server.ServerThread;
 import brutes.server.db.DatasManager;
 import brutes.server.db.entity.BonusEntity;
 import brutes.server.db.entity.BruteEntity;
@@ -62,10 +64,10 @@ public class BruteResponse extends Response {
     public void readCreateBrute(String token, String name) throws IOException, SQLException, NetworkResponseException, NotFoundEntityException {
         User user = BruteResponse.checkTokenAndReturnUser(token);
 
-        // Brute already exists !
-        /*if( BruteEntity.findByUser(user) != null ) {
-         throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
-         }*/
+        // User has at least one brute
+        if (BruteEntity.findByUser(user) != null) {
+            throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
+        }
 
         if (name.isEmpty()) {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE); // @TODO Protocol.ERROR_INPUT_DATAS
@@ -81,11 +83,10 @@ public class BruteResponse extends Response {
         short strength = (short) ui.random(3, 10);
         short speed = (short) ui.random(3, 10);
         short life = (short) (ui.random(10, 20) + strength / 3);
-        int imageID = ui.random(1, 13);
+        int imageID = ui.random(Brutes.OPT_ID_IMG_MIN_BRUTE, Brutes.OPT_ID_IMG_MAX_BRUTE);
 
         Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
         brute.setUserId(user.getId());
-        //brute.setImageID(imageID);
         DatasManager.insert(brute);
 
         this.getWriter().writeDiscriminant(Protocol.R_ACTION_SUCCESS)
