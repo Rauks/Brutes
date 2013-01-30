@@ -5,7 +5,6 @@ import brutes.net.Protocol;
 import brutes.server.db.DatasManager;
 import brutes.server.db.entity.NotFoundEntityException;
 import brutes.server.db.entity.UserEntity;
-import brutes.server.game.User;
 import brutes.server.net.NetworkServer;
 import brutes.server.net.NetworkResponseException;
 import java.io.IOException;
