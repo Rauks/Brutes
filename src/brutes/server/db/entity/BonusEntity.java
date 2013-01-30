@@ -107,4 +107,14 @@ public class BonusEntity implements Entity {
         }
         return null;
     }
+
+    public static Bonus findRandomShop() throws IOException, SQLException {
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus WHERE brute_id <= 1 ORDER BY Random() LIMIT 1");
+        ResultSet rs = psql.executeQuery();
+
+        if (rs.next()) {
+            return BonusEntity.create(rs);
+        }
+        return null;
+    }
 }

@@ -79,32 +79,40 @@ public class FightResponse extends Response {
 
         // Bonus UP
         if (ui.random()) {
-            System.out.println("Bonus:");
             Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - random = yes");
 
             Bonus bonusCharacter = BonusEntity.findRandomByBrute(brute);
-            if (bonusCharacter != null && ui.random()) {
+            int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
+            
+            if (bonusCharacter != null && ui.random(AllCharacterBonus, 6) > 4 ) {
                 Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - delete ({0})", bonusCharacter.getName());
                 DatasManager.delete(bonusCharacter);
-                System.out.println("  delete");
             }
 
-            int AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
+            AllCharacterBonus = ui.lengthObjects(BonusEntity.findAllByBrute(brute));
 
             Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - length = {0}", AllCharacterBonus);
-            if (AllCharacterBonus < 3 && ui.random()) {
+            if (AllCharacterBonus < 3 && ui.random() ) {
                 // On trouve quelque chose ...
-                Bonus bonusTreasure = BonusEntity.findRandom();
+                Bonus bonusTreasure = BonusEntity.findRandomShop();
                 bonusTreasure.setBruteId(brute.getId());
 
+                // Level du bonus en fontion du level de la brute
                 bonusTreasure.setLevel((short) ui.randomMiddle(brute.getLevel() / 2, .5));
-                bonusTreasure.setLife((short) ui.randomMiddle(brute.getLife() / 2, .5));
-                bonusTreasure.setStrength((short) ui.randomMiddle(brute.getStrength() / 2, .5));
-                bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed() / 2, .5));
+
+                // On ne modifie les paramètres que s'il sont > 0
+                if (brute.getLife() > 0) {
+                    bonusTreasure.setLife((short) ui.randomMiddle(brute.getLife() / 2, .5));
+                }
+                if (brute.getStrength() > 0) {
+                    bonusTreasure.setStrength((short) ui.randomMiddle(brute.getStrength() / 2, .5));
+                }
+                if (brute.getSpeed() > 0) {
+                    bonusTreasure.setSpeed((short) ui.randomMiddle(brute.getSpeed() / 2, .5));
+                }
 
                 DatasManager.insert(bonusTreasure);
-                System.out.println("  insert");
-                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert (" + bonusTreasure.getName() + ")");
+                Logger.getLogger(NetworkServer.class.getName()).log(Level.INFO, "readCheatFightWin : bonus - insert ({0})", bonusTreasure.getName());
             }
         }
 
@@ -157,8 +165,8 @@ public class FightResponse extends Response {
             tmp.append(": ").append(fight.getBrute1()).append(" (").append(fight.getBrute1().getLife()).append(" pv) VS ").append(fight.getBrute2()).append(" (").append(fight.getBrute2().getLife()).append(" pv)");
 
             for (int j = 0; j < 2; j++) {
-                    Brute ch1 = j == 0 ? fight.getBrute1() : fight.getBrute2();
-                    Brute ch2 = j == 0 ? fight.getBrute2() : fight.getBrute1();
+                Brute ch1 = j == 0 ? fight.getBrute1() : fight.getBrute2();
+                Brute ch2 = j == 0 ? fight.getBrute2() : fight.getBrute1();
 
                 tmp.append("\n\t- Player ").append(ch1).append(" ");
 
@@ -199,7 +207,7 @@ public class FightResponse extends Response {
                     pWin *= 1 + ((((double) bonusUsed.getSpeed()) + ((double) ch1.getWithBonusSpeed())) / ((double) (1 + ch1.getWithBonusSpeed() + ch2.getWithBonusSpeed())));
                     pWin *= 1 + ((((double) bonusUsed.getStrength()) + ((double) ch1.getWithBonusStrength())) / ((double) (1 + ch1.getWithBonusStrength() + ch2.getWithBonusStrength())));
                     pWin *= 1 + ((double) ch1.getLife() / ((double) (1 + ch1.getLife() + ch2.getLife())));
-                    pWin /= 4;
+                    pWin /= ch2.getStrength() + ch2.getBonusStrength()/2 + ch2.getLife();
                     pWin = Math.max(0, pWin);
                     // @TODO getBonusLife()
 
@@ -209,18 +217,16 @@ public class FightResponse extends Response {
                 }
             }
         }
-        
+
         int win = 0;
-        
+
         // We choose the winner
-        if( fight.getBrute1().getLife() < 0 && fight.getBrute1().getLife() < 0 ) {
+        if (fight.getBrute1().getLife() < 0 && fight.getBrute1().getLife() < 0) {
             win = k > 0 ? 1 : 0;
-        }
-        else if( fight.getBrute1().getLife() > 0 ) {
+        } else if (fight.getBrute1().getLife() > 0) {
             win = 1;
         }
-            System.out.println(k);
-        
+
         // save it !
         if (win == 1) {
             tmp.append("\n").append(fight.getBrute1()).append(" (you) win !");
@@ -229,5 +235,6 @@ public class FightResponse extends Response {
             tmp.append("\n").append(fight.getBrute2()).append(" win ! (you lose)");
             this.readCheatFightLoose(token);
         }
+        System.out.println(tmp.toString());
     }
 }
