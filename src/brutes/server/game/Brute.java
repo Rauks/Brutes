@@ -57,6 +57,20 @@ public class Brute implements Identifiable {
         return this.life;
     }
 
+    public short getBonusLife() {
+        short sum = 0;
+        for (int i = 0; i < this.bonuses.length; i++) {
+            if (!this.bonuses[i].equals(Bonus.EMPTY_BONUS)) {
+                sum += this.bonuses[i].getLife();
+            }
+        }
+        return sum;
+    }
+
+    public short getWithBonusLife() {
+        return (short) (this.getLife() + this.getBonusLife());
+    }
+
     public short getStrength() {
         return this.strength;
     }
