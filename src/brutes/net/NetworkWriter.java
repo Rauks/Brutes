@@ -125,7 +125,7 @@ public class NetworkWriter {
         byte[] trace = baos.toByteArray();
         StringBuilder hexString = new StringBuilder();
         hexString.append("SEND{");
-        for (int i = 0; i < trace.length; i++) {
+        for (int i = 0; i < ((trace.length < 30)?trace.length:30); i++) {
             String hex = Integer.toHexString(0xFF & trace[i]);
             if (hex.length() == 1) {
                 hexString.append('0');
@@ -133,6 +133,9 @@ public class NetworkWriter {
             hexString.append(hex);
             if(i != trace.length - 1){
                 hexString.append(".");
+            }
+            if(i == 29 && trace.length != 30){
+                hexString.append("....");
             }
         }
         hexString.append("}");
