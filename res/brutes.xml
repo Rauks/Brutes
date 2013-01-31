@@ -7,6 +7,10 @@
 		<strength>8</strength>
 		<speed>13</speed>
 		<image>1</image>
+		<bonus>
+			<id>71</id>
+			<id>38</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Skitt</name>
@@ -15,6 +19,9 @@
 		<strength>4</strength>
 		<speed>3</speed>
 		<image>2</image>
+		<bonus>
+			<id>51</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Tulipe</name>
@@ -31,6 +38,11 @@
 		<strength>14</strength>
 		<speed>3</speed>
 		<image>4</image>
+		<bonus>
+			<id>47</id>
+			<id>77</id>
+			<id>62</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Gwenn</name>
@@ -39,6 +51,10 @@
 		<strength>5</strength>
 		<speed>21</speed>
 		<image>5</image>
+		<bonus>
+			<id>41</id>
+			<id>55</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Ruelle</name>
@@ -47,6 +63,9 @@
 		<strength>4</strength>
 		<speed>10</speed>
 		<image>6</image>
+		<bonus>
+			<id>68</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Sybelle</name>
@@ -55,6 +74,9 @@
 		<strength>10</strength>
 		<speed>4</speed>
 		<image>7</image>
+		<bonus>
+			<id>48</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Sheldon</name>
@@ -63,6 +85,9 @@
 		<strength>1</strength>
 		<speed>6</speed>
 		<image>8</image>
+		<bonus>
+			<id>50</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Larcen</name>
@@ -71,6 +96,10 @@
 		<strength>32</strength>
 		<speed>17</speed>
 		<image>9</image>
+		<bonus>
+			<id>32</id>
+			<id>52</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Krossork</name>
@@ -79,13 +108,17 @@
 		<strength>48</strength>
 		<speed>32</speed>
 		<image>10</image>
+		<bonus>
+			<id>65</id>
+			<id>75</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Schmurtz</name>
-		<level>5</level>
-		<life>42</life>
-		<strength>38</strength>
-		<speed>27</speed>
+		<level>1</level>
+		<life>10</life>
+		<strength>7</strength>
+		<speed>5</speed>
 		<image>11</image>
 	</brute>
 	<brute>
@@ -95,6 +128,10 @@
 		<strength>73</strength>
 		<speed>68</speed>
 		<image>12</image>
+		<bonus>
+			<id>41</id>
+			<id>78</id>
+		</bonus>
 	</brute>
 	<brute>
 		<name>Valdor</name>
@@ -103,5 +140,10 @@
 		<strength>137</strength>
 		<speed>198</speed>
 		<image>13</image>
+		<bonus>
+			<id>76</id>
+			<id>52</id>
+			<id>63</id>
+		</bonus>
 	</brute>
 </root>
