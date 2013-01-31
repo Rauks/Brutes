@@ -172,4 +172,8 @@ public class Brute implements Identifiable {
     public String toString() {
         return (String) this.getName();
     }
+
+    public void setBonus(int i, Bonus bonus) {
+        this.bonuses[i] = bonus;
+    }
 }
