@@ -18,7 +18,7 @@ public class FightResultLooseController implements Initializable {
     private final String[] sentences = {
         "On est rarement plus modeste après une défaite.", 
         "La honte est dans la fuite, non dans la défaite.", 
-        "Il y a des défaites trionphantes.", 
+        "Il y a des défaites triomphantes.", 
         "On apprend plus de ses propres défaites que des défaites des autres.", 
         "Qui ira donc compter les batailles perdues - Le jour de la victoire ?", 
         "La vérité ne vainc que dans la défaite.", 
