@@ -8,8 +8,6 @@ import brutes.server.game.Bonus;
 import brutes.server.net.NetworkResponseException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
