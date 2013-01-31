@@ -63,41 +63,27 @@ public class FightResponse extends Response {
         brute.setLevel((short) Math.min(brute.getLevel() + 1, 100));
 
         // stats UP !
-        switch (ui.random(1, 4)) {
-            case 1:
-            case 4:
+        switch (ui.random(2)) {
+            case 0:
                 brute.setLife((short) (brute.getLife() + ui.random(1, 10)));
                 break;
-            case 2:
+            case 1:
                 brute.setSpeed((short) (brute.getSpeed() + ui.random(1, 5)));
                 break;
-            case 3:
+            case 2:
                 brute.setStrength((short) (brute.getStrength() + ui.random(1, 5)));
                 break;
         }
 
         // bonus UP/RM
-        int select = 0;
-        switch (ui.random(1, 4)) {
-            case 2:
-                select = 1;
-                break;
-            case 3:
-                select = 2;
-                break;
+        // Une chance sur 2
+        if (ui.random()) {
+            int select = ui.random(1, 2);
+
+            // Une chance sur 3 de perdre un bonus
+            brute.setBonus(select, ui.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findRandom());
         }
-        
-        Bonus[] bonuses = brute.getBonuses();
-        switch (ui.random(1, 3)) {
-            case 1:
-                bonuses[select] = Bonus.EMPTY_BONUS;
-                break;
-            case 2:
-            case 3:
-                bonuses[select] = BonusEntity.findRandom();
-                break;
-        }
-        
+
         DatasManager.save(brute);
         fight.setWinner(brute);
         DatasManager.save(fight);
@@ -141,7 +127,7 @@ public class FightResponse extends Response {
         // On n'oublie pas de rectifier la vie en fonction des bonus
         fight.getBrute1().setLife(fight.getBrute1().getWithBonusLife());
         fight.getBrute2().setLife(fight.getBrute2().getWithBonusLife());
-        
+
         int round = 0;
         int k = ui.random(-fight.getBrute1().getBonusSpeed(), fight.getBrute2().getBonusSpeed());
 
@@ -179,7 +165,7 @@ public class FightResponse extends Response {
                     ch1.setStrength((short) (ch1.getStrength() + 1));
                 } else {
                     // We prepare a bonus for the special attack
-                    
+
                     int select = 0;
                     switch (ui.random(1, 4)) {
                         case 2:
@@ -203,8 +189,8 @@ public class FightResponse extends Response {
                     pWin *= 1 + ((((double) bonusUsed.getSpeed()) + ((double) ch1.getWithBonusSpeed())) / ((double) (1 + ch1.getWithBonusSpeed() + ch2.getWithBonusSpeed())));
                     pWin *= 1 + ((((double) bonusUsed.getStrength()) + ((double) ch1.getWithBonusStrength())) / ((double) (1 + ch1.getWithBonusStrength() + ch2.getWithBonusStrength())));
                     pWin *= 1 + ((((double) bonusUsed.getLife()) + ((double) ch1.getWithBonusLife())) / ((double) (1 + ch1.getLife() + ch2.getLife())));
-                    pWin /= ch2.getStrength() + ch2.getBonusStrength()/2 + ch2.getWithBonusLife();
-                    pWin = Math.max(0, pWin/2);
+                    pWin /= ch2.getStrength() + ch2.getBonusStrength() / 2 + ch2.getWithBonusLife();
+                    pWin = Math.max(0, pWin / 2);
                     // @TODO getBonusLife()
 
                     tmp.append("\t\t").append((short) pWin).append(" DEG");
