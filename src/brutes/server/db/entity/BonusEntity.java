@@ -77,7 +77,7 @@ public class BonusEntity implements Entity {
     }
 
     public static Bonus findRandom() throws IOException, SQLException {
-        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus ORDER BY Random()*(1/level) LIMIT 1");
+        PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus ORDER BY Random()*(10/level) LIMIT 1");
         ResultSet rs = psql.executeQuery();
 
         if (rs.next()) {
