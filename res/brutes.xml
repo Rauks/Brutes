@@ -8,7 +8,7 @@
 		<speed>13</speed>
 		<image>1</image>
 		<bonus>
-			<id>71</id>
+			<id>34</id>
 			<id>38</id>
 		</bonus>
 	</brute>
@@ -20,7 +20,7 @@
 		<speed>3</speed>
 		<image>2</image>
 		<bonus>
-			<id>51</id>
+			<id>2</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -40,8 +40,8 @@
 		<image>4</image>
 		<bonus>
 			<id>47</id>
-			<id>77</id>
-			<id>62</id>
+			<id>38</id>
+			<id>18</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -53,7 +53,7 @@
 		<image>5</image>
 		<bonus>
 			<id>41</id>
-			<id>55</id>
+			<id>45</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -64,7 +64,7 @@
 		<speed>10</speed>
 		<image>6</image>
 		<bonus>
-			<id>68</id>
+			<id>20</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -75,7 +75,7 @@
 		<speed>4</speed>
 		<image>7</image>
 		<bonus>
-			<id>48</id>
+			<id>30</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -86,7 +86,7 @@
 		<speed>6</speed>
 		<image>8</image>
 		<bonus>
-			<id>50</id>
+			<id>49</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -98,7 +98,7 @@
 		<image>9</image>
 		<bonus>
 			<id>32</id>
-			<id>52</id>
+			<id>16</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -109,8 +109,8 @@
 		<speed>32</speed>
 		<image>10</image>
 		<bonus>
-			<id>65</id>
-			<id>75</id>
+			<id>22</id>
+			<id>15</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -125,12 +125,12 @@
 		<name>Tarcrey</name>
 		<level>24</level>
 		<life>183</life>
-		<strength>73</strength>
-		<speed>68</speed>
+		<strength>28</strength>
+		<speed>43</speed>
 		<image>12</image>
 		<bonus>
 			<id>41</id>
-			<id>78</id>
+			<id>10</id>
 		</bonus>
 	</brute>
 	<brute>
@@ -141,9 +141,9 @@
 		<speed>198</speed>
 		<image>13</image>
 		<bonus>
-			<id>76</id>
-			<id>52</id>
-			<id>63</id>
+			<id>32</id>
+			<id>8</id>
+			<id>5</id>
 		</bonus>
 	</brute>
 </root>

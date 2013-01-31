@@ -29,6 +29,8 @@ public class DatasManager {
     private static final String XML_TAG_BRUTES_STRENGTH = "strength";
     private static final String XML_TAG_BRUTES_SPEED = "speed";
     private static final String XML_TAG_BRUTES_IMAGE = "image";
+    private static final String XML_TAG_BRUTES_BONUS = "bonus";
+    private static final String XML_TAG_BRUTES_BONUS_ID = "id";
     private static final String XML_BONUS = "res/bonus.xml";
     private static final String XML_TAG_BONUS = "bonus";
     private static final String XML_TAG_BONUS_NAME = "name";
@@ -72,30 +74,15 @@ public class DatasManager {
             c.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS fights (id INTEGER PRIMARY KEY AUTOINCREMENT, brute_id1 INTEGER, brute_id2 INTEGER, winner_id INTEGER, date_created DATETIME DEFAULT current_timestamp)");
             
             SAXBuilder sxb = new SAXBuilder();
-            Element current;
             PreparedStatement psql;
             
             Document xmlUsers = sxb.build(DatasManager.XML_USERS);
             Element rootUsers = xmlUsers.getRootElement();
             psql = c.prepareStatement("INSERT INTO users (pseudo, password) VALUES (?, ?)");
             for(Iterator<Element> i = rootUsers.getChildren(DatasManager.XML_TAG_USERS).iterator(); i.hasNext();){
-                current = i.next();
+                Element current = i.next();
                 psql.setString(1, current.getChild(DatasManager.XML_TAG_USERS_LOGIN).getText());
                 psql.setString(2, current.getChild(DatasManager.XML_TAG_USERS_PASSWORD).getText());
-                psql.executeUpdate();
-            }
-            
-            Document xmlBrutes = sxb.build(DatasManager.XML_BRUTES);
-            Element rootBrutes = xmlBrutes.getRootElement();
-            psql = c.prepareStatement("INSERT INTO brutes (name, level, life, strength, speed, image_id) VALUES (?, ?, ?, ?, ?, ?)");
-            for(Iterator<Element> i = rootBrutes.getChildren(DatasManager.XML_TAG_BRUTES).iterator(); i.hasNext();){
-                current = i.next();
-                psql.setString(1, current.getChild(DatasManager.XML_TAG_BRUTES_NAME).getText());
-                psql.setInt(2, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_LEVEL).getText()));
-                psql.setInt(3, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_LIFE).getText()));
-                psql.setInt(4, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_STRENGTH).getText()));
-                psql.setInt(5, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_SPEED).getText()));
-                psql.setInt(6, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_IMAGE).getText()));
                 psql.executeUpdate();
             }
             
@@ -103,7 +90,7 @@ public class DatasManager {
             Element rootBonus = xmlBonus.getRootElement();
             psql = c.prepareStatement("INSERT INTO bonus (name, level, life, strength, speed, image_id) VALUES (?, ?, ?, ?, ?, ?)");
             for(Iterator<Element> i = rootBonus.getChildren(DatasManager.XML_TAG_BONUS).iterator(); i.hasNext();){
-                current = i.next();
+                Element current = i.next();
                 psql.setString(1, current.getChild(DatasManager.XML_TAG_BONUS_NAME).getText());
                 psql.setInt(2, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BONUS_LEVEL).getText()));
                 psql.setInt(3, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BONUS_LIFE).getText()));
@@ -111,6 +98,31 @@ public class DatasManager {
                 psql.setInt(5, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BONUS_SPEED).getText()));
                 psql.setInt(6, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BONUS_IMAGE).getText()));
                 psql.executeUpdate();
+            }
+            
+            Document xmlBrutes = sxb.build(DatasManager.XML_BRUTES);
+            Element rootBrutes = xmlBrutes.getRootElement();
+            psql = c.prepareStatement("INSERT INTO brutes (name, level, life, strength, speed, image_id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement psqlb = c.prepareStatement("INSERT INTO shop (brute_id, bonus_id) VALUES (?, ?)");
+            for(Iterator<Element> i = rootBrutes.getChildren(DatasManager.XML_TAG_BRUTES).iterator(); i.hasNext();){
+                Element current = i.next();
+                psql.setString(1, current.getChild(DatasManager.XML_TAG_BRUTES_NAME).getText());
+                psql.setInt(2, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_LEVEL).getText()));
+                psql.setInt(3, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_LIFE).getText()));
+                psql.setInt(4, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_STRENGTH).getText()));
+                psql.setInt(5, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_SPEED).getText()));
+                psql.setInt(6, Integer.parseInt(current.getChild(DatasManager.XML_TAG_BRUTES_IMAGE).getText()));
+                psql.executeUpdate();
+                int id = psql.getGeneratedKeys().getInt(1);
+                Element bonus = current.getChild(DatasManager.XML_TAG_BRUTES_BONUS);
+                if(bonus != null) {
+                    for(Iterator<Element> ib = bonus.getChildren(DatasManager.XML_TAG_BRUTES_BONUS_ID).iterator(); ib.hasNext();){
+                        Element currentb = ib.next();
+                        psqlb.setInt(1, id);
+                        psqlb.setInt(2, Integer.parseInt(currentb.getText()));
+                        psqlb.executeUpdate();
+                    }
+                }
             }
         } catch (JDOMException | SQLException ex) {
             Logger.getLogger(DatasManager.class.getName()).log(Level.SEVERE, null, ex);
