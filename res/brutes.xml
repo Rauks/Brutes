@@ -3,9 +3,9 @@
 	<brute>
 		<name>Rukia</name>
 		<level>5</level>
-		<life>34</life>
-		<strength>8</strength>
-		<speed>13</speed>
+		<life>21</life>
+		<strength>14</strength>
+		<speed>9</speed>
 		<image>1</image>
 		<bonus>
 			<id>34</id>
@@ -15,9 +15,9 @@
 	<brute>
 		<name>Skitt</name>
 		<level>1</level>
-		<life>10</life>
-		<strength>4</strength>
-		<speed>3</speed>
+		<life>18</life>
+		<strength>11</strength>
+		<speed>9</speed>
 		<image>2</image>
 		<bonus>
 			<id>2</id>
@@ -27,8 +27,8 @@
 		<name>Tulipe</name>
 		<level>3</level>
 		<life>22</life>
-		<strength>19</strength>
-		<speed>6</speed>
+		<strength>5</strength>
+		<speed>7</speed>
 		<image>3</image>
 	</brute>
 	<brute>
@@ -52,7 +52,7 @@
 		<speed>21</speed>
 		<image>5</image>
 		<bonus>
-			<id>41</id>
+			<id>37</id>
 			<id>45</id>
 		</bonus>
 	</brute>
@@ -92,9 +92,9 @@
 	<brute>
 		<name>Larcen</name>
 		<level>10</level>
-		<life>67</life>
-		<strength>32</strength>
-		<speed>17</speed>
+		<life>40</life>
+		<strength>18</strength>
+		<speed>19</speed>
 		<image>9</image>
 		<bonus>
 			<id>32</id>
@@ -104,9 +104,9 @@
 	<brute>
 		<name>Krossork</name>
 		<level>12</level>
-		<life>78</life>
-		<strength>48</strength>
-		<speed>32</speed>
+		<life>26</life>
+		<strength>20</strength>
+		<speed>22</speed>
 		<image>10</image>
 		<bonus>
 			<id>22</id>
@@ -124,26 +124,26 @@
 	<brute>
 		<name>Tarcrey</name>
 		<level>24</level>
-		<life>183</life>
-		<strength>28</strength>
-		<speed>43</speed>
+		<life>56</life>
+		<strength>35</strength>
+		<speed>50</speed>
 		<image>12</image>
 		<bonus>
-			<id>41</id>
+			<id>44</id>
 			<id>10</id>
 		</bonus>
 	</brute>
 	<brute>
 		<name>Valdor</name>
 		<level>57</level>
-		<life>453</life>
-		<strength>137</strength>
-		<speed>198</speed>
+		<life>158</life>
+		<strength>59</strength>
+		<speed>57</speed>
 		<image>13</image>
 		<bonus>
+			<id>41</id>
 			<id>32</id>
-			<id>8</id>
-			<id>5</id>
+			<id>82</id>
 		</bonus>
 	</brute>
   <brute>
