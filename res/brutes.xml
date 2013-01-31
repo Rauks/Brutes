@@ -150,7 +150,7 @@
     <name>Meryre</name>
     <level>4</level>
     <life>23</life>
-    <strengt>14</strengt>
+    <strength>14</strength>
     <speed>8</speed>
     <image>1</image>
     <bonus>
@@ -161,7 +161,7 @@
       <name>Khyu</name>
       <level>7</level>
       <life>28</life>
-      <strengt>13</strengt>
+      <strength>13</strength>
       <speed>14</speed>
       <image>2</image>
   </brute>
@@ -169,7 +169,7 @@
       <name>Iramor</name>
       <level>1</level>
       <life>15</life>
-      <strengt>7</strengt>
+      <strength>7</strength>
       <speed>9</speed>
       <image>3</image>
       <bonus>
@@ -181,7 +181,7 @@
       <name>Perahon</name>
       <level>8</level>
       <life>21</life>
-      <strengt>16</strengt>
+      <strength>16</strength>
       <speed>11</speed>
       <image>4</image>
       <bonus>
@@ -192,7 +192,7 @@
       <name>Dautisse</name>
       <level>2</level>
       <life>19</life>
-      <strengt>5</strengt>
+      <strength>5</strength>
       <speed>12</speed>
       <image>5</image>
       <bonus>
@@ -203,7 +203,7 @@
       <name>Boror</name>
       <level>1</level>
       <life>16</life>
-      <strengt>7</strengt>
+      <strength>7</strength>
       <speed>6</speed>
       <image>6</image>
       <bonus>
@@ -214,7 +214,7 @@
       <name>Gunney</name>
       <level>4</level>
       <life>27</life>
-      <strengt>14</strengt>
+      <strength>14</strength>
       <speed>8</speed>
       <image>7</image>
       <bonus>
@@ -226,7 +226,7 @@
       <name>Nunik</name>
       <level>9</level>
       <life>34</life>
-      <strengt>17</strengt>
+      <strength>17</strength>
       <speed>13</speed>
       <image>8</image>
   </brute>
@@ -234,7 +234,7 @@
       <name>Ermahgerd</name>
       <level>8</level>
       <life>21</life>
-      <strengt>12</strengt>
+      <strength>12</strength>
       <speed>15</speed>
       <image>9</image>
       <bonus>
@@ -245,7 +245,7 @@
       <name>Istolil</name>
       <level>3</level>
       <life>21</life>
-      <strengt>5</strengt>
+      <strength>5</strength>
       <speed>13</speed>
       <image>10</image>
   </brute>
@@ -253,7 +253,7 @@
       <name>Drizzt</name>
       <level>7</level>
       <life>33</life>
-      <strengt>13</strengt>
+      <strength>13</strength>
       <speed>18</speed>
       <image>11</image>
   </brute>
@@ -261,7 +261,7 @@
       <name>Celas</name>
       <level>2</level>
       <life>12</life>
-      <strengt>5</strengt>
+      <strength>5</strength>
       <speed>12</speed>
       <image>12</image>
   </brute>
@@ -269,7 +269,7 @@
       <name>Iarbas</name>
       <level>10</level>
       <life>38</life>
-      <strengt>13</strengt>
+      <strength>13</strength>
       <speed>18</speed>
       <image>13</image>
   </brute>
