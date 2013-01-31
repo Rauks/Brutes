@@ -11,6 +11,10 @@ public class ui {
     public static int random(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
+    
+    public static int random(int max) {
+        return ui.random(0, max);
+    }
 
     public static boolean random() {
         return ui.random(0, 1) == 1;
@@ -35,4 +39,9 @@ public class ui {
     public static int randomMiddle(int i, double d) {
         return ui.random((int) (i - d * i), (int) (i + d * i));
     }
+
+    public static boolean randomChance(int i) {
+        int random = ui.random(0, i);
+        return random == 0;
+    }    
 }
