@@ -11,13 +11,10 @@ import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
 import brutes.server.game.Fight;
 import brutes.server.game.User;
-import brutes.server.net.NetworkServer;
 import brutes.server.net.NetworkResponseException;
 import brutes.server.ui;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
