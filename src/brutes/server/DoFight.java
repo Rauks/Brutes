@@ -4,9 +4,13 @@
  */
 package brutes.server;
 
+import brutes.server.db.entity.BonusEntity;
+import brutes.server.db.entity.NotFoundEntityException;
 import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
 import brutes.server.game.Fight;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  *
@@ -24,10 +28,9 @@ public class DoFight {
 
     protected DoFight addLogs(String text) {
         this.logs.append(text);
-        System.out.print(text);
         return this;
     }
-    
+
     public StringBuilder getLogs() {
         return this.logs;
     }
@@ -36,7 +39,7 @@ public class DoFight {
         return this.addLogs(text).addLogs("\n");
     }
 
-    protected void round(int round, Brute brute, Brute against) {
+    protected void round(int round, Brute brute, Brute against) throws IOException, SQLException {
         this.addLogs("\t[" + brute + "] ");
         int pv = 0;
 
@@ -75,17 +78,17 @@ public class DoFight {
         }
 
         Bonus bonusUsed = Bonus.EMPTY_BONUS;
-        //try {
-        //bonusUsed = BonusEntity.findById(brute.getBonuses()[ui.random(3-1)].getId());
-        //} catch (NotFoundEntityException ex) {
-        bonusUsed = Bonus.EMPTY_BONUS;
-        //}
+        try {
+            bonusUsed = BonusEntity.findById(brute.getBonuses()[ui.random(3 - 1)].getId());
+        } catch (NotFoundEntityException ex) {
+            bonusUsed = Bonus.EMPTY_BONUS;
+        }
 
         double d = brute.getWithBonusStrength() * against.getWithBonusSpeed() - brute.getWithBonusStrength() * against.getWithBonusSpeed();
         d = Math.min(0, d) + ui.random(1, 50) / 10 + ui.random(brute.getLevel());
 
         // If he uses a bonus
-        if (bonusUsed != null) {
+        if (bonusUsed != Bonus.EMPTY_BONUS) {
             d += ui.random(bonusUsed.getSpeed() * bonusUsed.getStrength());
         }
 
@@ -93,7 +96,7 @@ public class DoFight {
         power *= 1 + d;
         pv = (int) Math.ceil(power);
 
-        if (bonusUsed != null) {
+        if (bonusUsed != Bonus.EMPTY_BONUS) {
             this.addLogsLn("attacks with " + bonusUsed + " (-" + pv + ")");
         } else {
             this.addLogsLn("attacks (-" + pv + ")");
@@ -108,7 +111,7 @@ public class DoFight {
         }
     }
 
-    public Brute exec() {
+    public Brute exec() throws IOException, SQLException {
         for (int i = 0; i < 10; i++) {
             if (this.fight.getBrute1().getLife() <= 0 || this.fight.getBrute2().getLife() <= 0) {
                 break;
