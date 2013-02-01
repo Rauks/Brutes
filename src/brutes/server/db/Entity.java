@@ -2,7 +2,7 @@ package brutes.server.db;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public interface Entity {
 }

@@ -4,7 +4,7 @@ import brutes.server.db.Identifiable;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class User implements Identifiable {
 

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class Response {
 

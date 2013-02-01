@@ -20,7 +20,7 @@ import java.sql.SQLException;
  *
  * Server class for Brute. CRUD model
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class BruteResponse extends Response {
 

@@ -20,7 +20,7 @@ import java.sql.SQLException;
 /**
  *
  * @author Karl
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class NetworkServer extends Network {
     public static final int OPT_ID_IMG_MIN_BRUTE = 1;

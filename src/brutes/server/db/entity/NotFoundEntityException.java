@@ -2,7 +2,7 @@ package brutes.server.db.entity;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class NotFoundEntityException extends Exception {
 

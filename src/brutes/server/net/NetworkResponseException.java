@@ -2,7 +2,7 @@ package brutes.server.net;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class NetworkResponseException extends Exception {
     private final byte error;

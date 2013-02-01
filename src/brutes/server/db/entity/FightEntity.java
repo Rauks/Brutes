@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class FightEntity implements Entity {
 

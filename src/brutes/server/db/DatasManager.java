@@ -14,7 +14,7 @@ import org.jdom2.input.SAXBuilder;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class DatasManager {
     private static final String XML_USERS = "res/users.xml";

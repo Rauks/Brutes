@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  *
- * @author Thiktak
+ * @author Olivares Georges <dev@olivares-georges.fr>
  */
 public class UserEntity {
 
