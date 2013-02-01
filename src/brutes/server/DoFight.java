@@ -41,7 +41,7 @@ public class DoFight {
 
     protected void round(int round, Brute brute, Brute against) throws IOException, SQLException {
         this.addLogs("\t[" + brute + "] ");
-        int pv = 0;
+        int pv;
 
         if (brute.getWithBonusLife() < 0 || against.getWithBonusLife() < 0) {
             return;
@@ -77,7 +77,7 @@ public class DoFight {
             }
         }
 
-        Bonus bonusUsed = Bonus.EMPTY_BONUS;
+        Bonus bonusUsed;
         try {
             bonusUsed = BonusEntity.findById(brute.getBonuses()[ui.random(3 - 1)].getId());
         } catch (NotFoundEntityException ex) {
