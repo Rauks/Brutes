@@ -113,7 +113,7 @@ public class DoFight {
 
     public Brute exec() throws IOException, SQLException {
         for (int i = 0; i < 10; i++) {
-            if (this.fight.getBrute1().getLife() <= 0 || this.fight.getBrute2().getLife() <= 0) {
+            if (this.fight.getBrute1().getWithBonusLife() <= 0 || this.fight.getBrute2().getWithBonusLife() <= 0) {
                 break;
             }
 
