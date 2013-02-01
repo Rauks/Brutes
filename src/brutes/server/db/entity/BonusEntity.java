@@ -93,9 +93,7 @@ public class BonusEntity implements Entity {
     }
 
     public static Bonus findMathematicalRandom() throws IOException, SQLException {
-        double level10 = 1322;
-        double rd = ui.random(1322);
-        int level = BonusEntity.f_level(rd);
+        int level = BonusEntity.f_level(ui.random(1322)); // 1322 = max{f^(-1)} pour le niveau 10
         System.out.println("Find BENUS radomly level=" + level);
         
         String sql = 
