@@ -78,7 +78,7 @@ public class FightResponse extends Response {
             int select = ui.random(1, 2);
 
             // Une chance sur 3 de perdre un bonus
-            brute.setBonus(select, ui.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findRandom());
+            brute.setBonus(select, ui.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findMathematicalRandom());
         }
 
         DatasManager.save(brute);

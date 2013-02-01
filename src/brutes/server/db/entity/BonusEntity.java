@@ -4,6 +4,7 @@ import brutes.server.db.DatasManager;
 import brutes.server.db.Entity;
 import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
+import brutes.server.ui;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,6 +79,34 @@ public class BonusEntity implements Entity {
 
     public static Bonus findRandom() throws IOException, SQLException {
         PreparedStatement psql = DatasManager.prepare("SELECT * FROM Bonus ORDER BY Random()*(10/level) LIMIT 1");
+        ResultSet rs = psql.executeQuery();
+
+        if (rs.next()) {
+            return BonusEntity.create(rs);
+        }
+        return null;
+    }
+
+    // public, for the moment ...
+    public static int f_level(double x) throws IOException, SQLException {
+        return (int) Math.round(Math.exp((x-301)/1000*Math.log(10)));
+    }
+
+    public static Bonus findMathematicalRandom() throws IOException, SQLException {
+        double level10 = 1322;
+        double rd = ui.random(1322);
+        int level = BonusEntity.f_level(rd);
+        System.out.println("Find BENUS radomly level=" + level);
+        
+        String sql = 
+                 "SELECT t1.* FROM (SELECT * FROM Bonus WHERE level = ? ORDER BY RANDOM() LIMIT 1) as t1"
+               + " UNION ALL "
+               + "SELECT t2.* FROM (SELECT * FROM Bonus WHERE level >= ?1 ORDER BY RANDOM() LIMIT 1) as t2"
+               + " UNION ALL "
+               + "SELECT t3.* FROM (SELECT * FROM Bonus ORDER BY RANDOM() LIMIT 1) as t3";
+        
+        PreparedStatement psql = DatasManager.prepare(sql);
+        psql.setInt(1, level);
         ResultSet rs = psql.executeQuery();
 
         if (rs.next()) {
