@@ -96,12 +96,13 @@ public class BonusEntity implements Entity {
         int level = BonusEntity.f_level(ui.random(1322)); // 1322 = max{f^(-1)} pour le niveau 10
         System.out.println("Find BENUS radomly level=" + level);
         
-        String sql = 
-                 "SELECT t1.* FROM (SELECT * FROM Bonus WHERE level = ? ORDER BY RANDOM() LIMIT 1) as t1"
+        String sql = "SELECT t.* FROM ("
+               + "SELECT t1.* FROM (SELECT * FROM Bonus WHERE level = ? ORDER BY RANDOM() LIMIT 1) as t1"
                + " UNION ALL "
                + "SELECT t2.* FROM (SELECT * FROM Bonus WHERE level >= ?1 ORDER BY RANDOM() LIMIT 1) as t2"
                + " UNION ALL "
-               + "SELECT t3.* FROM (SELECT * FROM Bonus ORDER BY RANDOM() LIMIT 1) as t3";
+               + "SELECT t3.* FROM (SELECT * FROM Bonus ORDER BY RANDOM() LIMIT 1) as t3"
+               + ") as t LIMIT 1";
         
         PreparedStatement psql = DatasManager.prepare(sql);
         psql.setInt(1, level);
