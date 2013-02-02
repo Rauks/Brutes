@@ -166,16 +166,12 @@ public class FightController implements Initializable {
                         window.setResizable(false);
                         if(fightTask.getResultProperty().get()){
                             root = FXMLLoader.load(this.getClass().getResource("result/FightResultWin.fxml"));
-                            window.setTitle("Victoire !");
+                            setCurrentDialogStage(new Scene(root), "Victoire !");
                         }
                         else{
                             root = FXMLLoader.load(this.getClass().getResource("result/FightResultLoose.fxml"));
-                            window.setTitle("Défaite !");
+                            setCurrentDialogStage(new Scene(root), "Défaite !");
                         }
-                        Scene scene = new Scene(root);
-                        window.setScene(scene);
-                        setCurrentDialogStage(window);
-                        window.show();
                     } catch (IOException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -209,13 +205,7 @@ public class FightController implements Initializable {
     private void handleMenuBruteNew(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/CreateBrute.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = new Stage();
-            window.setScene(scene);
-            window.setTitle("Nouvelle brute");
-            window.setResizable(false);
-            this.setCurrentDialogStage(window);
-            window.show();
+            this.setCurrentDialogStage(new Scene(root), "Nouvelle brute");
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -224,13 +214,7 @@ public class FightController implements Initializable {
     private void handleMenuBruteUpdate(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/UpdateBrute.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = new Stage();
-            window.setScene(scene);
-            window.setTitle("Modifier la brute");
-            window.setResizable(false);
-            this.setCurrentDialogStage(window);
-            window.show();
+            this.setCurrentDialogStage(new Scene(root), "Modifier la brute");
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -239,13 +223,7 @@ public class FightController implements Initializable {
     private void handleMenuBruteDelete(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("brute/DeleteBrute.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = new Stage();
-            window.setScene(scene);
-            window.setTitle("Supprimer la brute");
-            window.setResizable(false);
-            this.setCurrentDialogStage(window);
-            window.show();
+            this.setCurrentDialogStage(new Scene(root), "Supprimer la brute");
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -276,26 +254,20 @@ public class FightController implements Initializable {
     private void handleMenuCredits(Event e){
         try {
             Parent root = FXMLLoader.load(this.getClass().getResource("Credits.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = new Stage();
-            window.setScene(scene);
-            window.setTitle("À propos...");
-            window.setResizable(false);
-            this.setCurrentDialogStage(window);
-            window.show();
+            this.setCurrentDialogStage(new Scene(root), "À propos...");
         } catch (IOException ex) {
             Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void setCurrentDialogStage(Stage stage){
+    private void setCurrentDialogStage(Scene scene, String title){
         this.closeCurrentDialogStage();
-        this.currentDialogStage = stage;
+        this.currentDialogStage.setScene(scene);
+        this.currentDialogStage.setTitle(title);
+        this.currentDialogStage.show();
     }
     private void closeCurrentDialogStage(){
-        if(this.currentDialogStage != null){
-            this.currentDialogStage.close();
-        }
+        this.currentDialogStage.hide();
     }
     
     /**
@@ -334,6 +306,8 @@ public class FightController implements Initializable {
                 .cycleCount(Timeline.INDEFINITE)
                 .build().play();
         
+        this.currentDialogStage = new Stage();
+        this.currentDialogStage.setResizable(false);
         
         this.isFighting = new ReadOnlyBooleanWrapper();
         this.isFighting.set(false);
@@ -382,8 +356,8 @@ public class FightController implements Initializable {
         this.centerVS.setCursor(Cursor.HAND);
         this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         
-        this.arrowBruteMenu.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty().not()));
-        this.arrowBruteNew.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty()));
+        this.arrowBruteMenu.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty().not()).and(this.currentDialogStage.showingProperty().not()));
+        this.arrowBruteNew.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty()).and(this.currentDialogStage.showingProperty().not()));
         
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
