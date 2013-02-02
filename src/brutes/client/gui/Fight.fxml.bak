@@ -34,7 +34,7 @@
                 <Insets left="10.0" right="10.0" top="10.0" fx:id="x6" />
               </StackPane.margin>
             </ImageView>
-            <VBox fx:id="myBruteStats" minWidth="-Infinity" prefWidth="300.0">
+            <VBox fx:id="myBruteStats" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0">
               <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ma Brute">
                   <font>
@@ -164,7 +164,7 @@
         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="300.0">
           <children>
             <ImageView id="myImage" fx:id="chImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT" StackPane.margin="$x6" />
-            <VBox fx:id="chBruteStats" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
+            <VBox fx:id="chBruteStats" maxWidth="-Infinity" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
               <children>
                 <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire">
                   <VBox.margin>
@@ -266,7 +266,7 @@
       <top>
         <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="600.0">
           <menus>
-            <Menu mnemonicParsing="false" text="Brute">
+            <Menu mnemonicParsing="false" text="Brute" fx:id="menuBrute">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
@@ -317,7 +317,36 @@
         </Text>
       </children>
     </Group>
-    <Group id="Group" fx:id="arrow" layoutX="45.0" layoutY="35.0" rotate="326.0">
+    <Group id="Group" fx:id="arrowBruteMenu" focusTraversable="true" layoutX="45.0" layoutY="35.0" rotate="326.0">
+      <children>
+        <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
+          <effect>
+            <Glow level="0.1">
+              <input>
+                <DropShadow color="$x3" />
+              </input>
+            </Glow>
+          </effect>
+          <points>
+            <Double fx:value="-10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="-5.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="-5.0" />
+            <Double fx:value="20.0" />
+            <Double fx:value="5.0" />
+            <Double fx:value="20.0" />
+            <Double fx:value="5.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="0.0" />
+            <Double fx:value="-5.0" />
+          </points>
+        </Polygon>
+      </children>
+    </Group>
+    <Group id="Group" fx:id="arrowBruteNew" focusTraversable="true" layoutX="120.0" layoutY="32.0" rotate="270.0">
       <children>
         <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
           <effect>

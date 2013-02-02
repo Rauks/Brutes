@@ -33,6 +33,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -136,7 +137,11 @@ public class FightController implements Initializable {
     @FXML
     private MenuItem menuOptDelete;
     @FXML
-    private Group arrow;
+    private Menu menuBrute;
+    @FXML
+    private Group arrowBruteMenu;
+    @FXML
+    private Group arrowBruteNew;
     
     @FXML
     private void handleVSover(Event e){
@@ -309,10 +314,20 @@ public class FightController implements Initializable {
                 .cycleCount(2)
                 .build();
         TranslateTransitionBuilder.create()
-                .node(this.arrow)
+                .node(this.arrowBruteNew)
                 .duration(Duration.millis(500))
-                .fromX(1)
-                .fromY(1)
+                .fromX(0)
+                .fromY(0)
+                .toX(18)
+                .toY(0)
+                .autoReverse(true)
+                .cycleCount(Timeline.INDEFINITE)
+                .build().play();
+        TranslateTransitionBuilder.create()
+                .node(this.arrowBruteMenu)
+                .duration(Duration.millis(500))
+                .fromX(0)
+                .fromY(0)
                 .toX(10)
                 .toY(16)
                 .autoReverse(true)
@@ -367,7 +382,8 @@ public class FightController implements Initializable {
         this.centerVS.setCursor(Cursor.HAND);
         this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         
-        this.arrow.visibleProperty().bind(me.isLoadedProperty().not());
+        this.arrowBruteMenu.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty().not()));
+        this.arrowBruteNew.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty()));
         
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
