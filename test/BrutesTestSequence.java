@@ -9,7 +9,7 @@ import brutes.server.db.DatasManager;
 import brutes.server.db.entity.BonusEntity;
 import brutes.server.game.Bonus;
 import brutes.server.net.NetworkServer;
-import brutes.server.ui;
+import brutes.server.ServerMath;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -138,7 +138,7 @@ public class BrutesTestSequence {
         int n = 100000000;
 
         for (int k = 0; k < n; k++) {
-            int l = (int) ui.random(0, 3);
+            int l = (int) ServerMath.random(0, 3);
             i[l]++;
         }
         System.out.println("0 = " + i[0] + "x -> " + (i[0] / n * 100) + " %");
