@@ -61,7 +61,8 @@ public class LoginTask extends Task{
             this.hostError.set(true);
             throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginController.class.getName()).log(Level.WARNING, null, ex);
+            this.hostError.set(true);
             throw ex;
         } catch(ErrorResponseException ex){
             if(ex.getErrorCode() == Protocol.ERROR_LOGIN_NOT_FOUND){
@@ -73,6 +74,7 @@ public class LoginTask extends Task{
             throw ex;
         } catch(InvalidResponseException ex){
             Logger.getLogger(LoginController.class.getName()).log(Level.WARNING, null, ex);
+            this.hostError.set(true);
             throw ex;
         } catch(Exception ex){
             ex.printStackTrace();
