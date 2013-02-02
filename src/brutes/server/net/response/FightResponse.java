@@ -74,13 +74,8 @@ public class FightResponse extends Response {
         }
 
         // bonus UP/RM
-        // Une chance sur 2
-        if (ui.random()) {
-            int select = ui.random(1, 2);
-
-            // Une chance sur 3 de perdre un bonus
-            brute.setBonus(select, ui.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findMathematicalRandom());
-        }
+        // 1/3 : perte # 2/3 nouveau # action sur un des trois bonus, existant ou non.
+        brute.setBonus(ui.random(0, Brute.MAX_BONUSES - 1), ui.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findMathematicalRandom());
 
         DatasManager.save(brute);
         fight.setWinner(brute);
