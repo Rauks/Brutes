@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.concurrent.Task;
 
 /**
@@ -26,11 +28,13 @@ public class LoginTask extends Task{
     private ReadOnlyBooleanWrapper loginError;
     private ReadOnlyBooleanWrapper passwordError;
     private ReadOnlyBooleanWrapper hostError;
+    private ReadOnlyObjectWrapper<Session> session;
 
     public LoginTask(String host, String login, String password) {
         this.loginError = new ReadOnlyBooleanWrapper();
         this.passwordError = new ReadOnlyBooleanWrapper();
         this.hostError = new ReadOnlyBooleanWrapper();
+        this.session = new ReadOnlyObjectWrapper<>();
         this.login = login;
         this.password = password;
         this.host = host;
@@ -45,13 +49,16 @@ public class LoginTask extends Task{
     public ReadOnlyBooleanProperty getHostErrorProperty(){
         return this.hostError.getReadOnlyProperty();
     }
+    public ReadOnlyObjectProperty<Session> getLoadedSessionProperty(){
+        return this.session.getReadOnlyProperty();
+    }
     
     @Override
     protected Void call() throws Exception {
         try (NetworkClient connection = new NetworkClient(new Socket(this.host, Protocol.CONNECTION_PORT))) {
             String token;
             token = connection.sendLogin(this.login, this.password);
-            ScenesContext.getInstance().setSession(new Session(this.host, token));
+            this.session.set(new Session(this.host, token));
         } catch (UnknownHostException ex) {
             this.hostError.set(true);
             throw ex;

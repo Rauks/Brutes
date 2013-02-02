@@ -244,12 +244,14 @@ public class FightController implements Initializable {
     }
     @FXML
     private void handleMenuDisconnect(Event e){
+        final String token = ScenesContext.getInstance().getSession().getToken();
+        final String host = ScenesContext.getInstance().getSession().getServer();
         new Thread(){
             @Override
             public void run() {
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try (NetworkClient connection = new NetworkClient(new Socket(host, Protocol.CONNECTION_PORT))) {
                     try {
-                        connection.sendLogout(ScenesContext.getInstance().getSession().getToken());
+                        connection.sendLogout(token);
                     } catch (InvalidResponseException | ErrorResponseException ex) {
                         Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
                     }
@@ -259,6 +261,7 @@ public class FightController implements Initializable {
             }
         }.start();
         this.closeCurrentDialogStage();
+        ScenesContext.getInstance().destroySession();
         ScenesContext.getInstance().showLogin();
     }
     @FXML

@@ -25,16 +25,16 @@
         <Color blue="0.000" green="0.000" red="0.600" fx:id="x3" />
       </stroke>
     </Line>
-    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="300.0">
           <children>
             <ImageView fx:id="myImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
               <StackPane.margin>
                 <Insets left="10.0" right="10.0" top="10.0" fx:id="x6" />
               </StackPane.margin>
             </ImageView>
-            <VBox fx:id="myBruteStats" minWidth="-Infinity" prefWidth="300.0">
+            <VBox fx:id="myBruteStats" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0">
               <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ma Brute">
                   <font>
@@ -161,10 +161,10 @@
         </StackPane>
       </left>
       <right>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="300.0">
           <children>
             <ImageView id="myImage" fx:id="chImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT" StackPane.margin="$x6" />
-            <VBox fx:id="chBruteStats" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
+            <VBox fx:id="chBruteStats" maxWidth="-Infinity" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
               <children>
                 <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon Adversaire">
                   <VBox.margin>
@@ -264,7 +264,7 @@
         </StackPane>
       </right>
       <top>
-        <MenuBar>
+        <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="600.0">
           <menus>
             <Menu mnemonicParsing="false" text="Brute">
               <items>

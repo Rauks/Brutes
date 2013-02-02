@@ -29,6 +29,9 @@ public class ScenesContext {
     public void setSession(Session session){
         this.session = session;
     }
+    public void destroySession(){
+        this.session = null;
+    }
     public Session getSession(){
         return this.session;
     }

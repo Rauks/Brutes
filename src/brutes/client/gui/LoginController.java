@@ -4,6 +4,7 @@ package brutes.client.gui;
 import brutes.Brutes;
 import brutes.client.ScenesContext;
 import brutes.client.net.NetworkClient;
+import brutes.client.user.Session;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -74,6 +75,7 @@ public class LoginController implements Initializable {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
                     NetworkClient.clearCache();
+                    ScenesContext.getInstance().setSession(loginTask.getLoadedSessionProperty().getValue());
                     ScenesContext.getInstance().showFight();
                     setDisableForm(false);
                 }

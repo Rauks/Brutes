@@ -25,9 +25,9 @@
         <Color blue="0.000" green="0.000" red="0.600" fx:id="x3" />
       </stroke>
     </Line>
-    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="300.0">
           <children>
             <ImageView fx:id="myImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
               <StackPane.margin>
@@ -161,7 +161,7 @@
         </StackPane>
       </left>
       <right>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="300.0">
           <children>
             <ImageView id="myImage" fx:id="chImage" fitHeight="180.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT" StackPane.margin="$x6" />
             <VBox fx:id="chBruteStats" minWidth="-Infinity" padding="$x9" prefWidth="300.0">
@@ -264,7 +264,7 @@
         </StackPane>
       </right>
       <top>
-        <MenuBar>
+        <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="600.0">
           <menus>
             <Menu mnemonicParsing="false" text="Brute">
               <items>
@@ -295,7 +295,7 @@
         </MenuBar>
       </top>
     </BorderPane>
-    <Group id="Group" fx:id="VS" layoutX="300.0" layoutY="115.0" visible="false">
+    <Group id="Group" fx:id="VS" layoutX="300.0" layoutY="115.0">
       <children>
         <Circle id="" fx:id="centerVSshadow" fill="$x3" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
           <effect>
@@ -317,7 +317,7 @@
         </Text>
       </children>
     </Group>
-    <Group id="Group" fx:id="arrow" layoutX="45.0" layoutY="35.0" rotate="326.0" visible="false">
+    <Group id="Group" fx:id="arrow" layoutX="45.0" layoutY="35.0" rotate="326.0">
       <children>
         <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
           <effect>
