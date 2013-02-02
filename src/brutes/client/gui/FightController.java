@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -112,6 +113,8 @@ public class FightController implements Initializable {
     @FXML
     private ImageView chBonus3Image;
     @FXML
+    private Group VS;
+    @FXML
     private Circle centerVS;
     @FXML
     private Circle centerVSshadow;
@@ -129,6 +132,8 @@ public class FightController implements Initializable {
     private MenuItem menuOptRename;
     @FXML
     private MenuItem menuOptDelete;
+    @FXML
+    private Group arrow;
     
     @FXML
     private void handleVSover(Event e){
@@ -341,8 +346,11 @@ public class FightController implements Initializable {
         this.chBonus2Image.imageProperty().bind(ch.getBonus(1).getImageProperty());
         this.chBonus3Image.imageProperty().bind(ch.getBonus(2).getImageProperty());
         
+        this.VS.visibleProperty().bind(me.isLoadedProperty());
         this.centerVS.setCursor(Cursor.HAND);
         this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        
+        this.arrow.visibleProperty().bind(me.isLoadedProperty().not());
         
         this.menuFightWin.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
         this.menuFightLoose.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));

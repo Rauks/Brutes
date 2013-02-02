@@ -295,23 +295,56 @@
         </MenuBar>
       </top>
     </BorderPane>
-    <Circle id="" fx:id="centerVSshadow" fill="$x3" layoutX="300.0" layoutY="115.0" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-      <effect>
-        <GaussianBlur />
-      </effect>
-    </Circle>
-    <Circle id="VS" fx:id="centerVS" fill="$x3" layoutX="300.0" layoutY="115.0" onMouseClicked="#handleMenuFightRegular" onMouseEntered="#handleVSover" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
-    <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="288.0" layoutY="122.5" stroke="$x3" strokeType="OUTSIDE" text="VS">
-      <effect>
-        <Bloom threshold="0.8">
-          <input>
-            <InnerShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
-          </input>
-        </Bloom>
-      </effect>
-      <font>
-        <Font name="System Bold" size="20.0" />
-      </font>
-    </Text>
+    <Group id="Group" fx:id="VS" layoutX="300.0" layoutY="115.0" visible="false">
+      <children>
+        <Circle id="" fx:id="centerVSshadow" fill="$x3" opacity="0.6" radius="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+          <effect>
+            <GaussianBlur />
+          </effect>
+        </Circle>
+        <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" onMouseEntered="#handleVSover" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
+        <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="-12.0" layoutY="8.0" stroke="$x3" strokeType="OUTSIDE" text="VS">
+          <effect>
+            <Bloom threshold="0.8">
+              <input>
+                <InnerShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
+              </input>
+            </Bloom>
+          </effect>
+          <font>
+            <Font name="System Bold" size="20.0" />
+          </font>
+        </Text>
+      </children>
+    </Group>
+    <Group id="Group" fx:id="arrow" layoutX="45.0" layoutY="35.0" rotate="326.0" visible="false">
+      <children>
+        <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
+          <effect>
+            <Glow level="0.1">
+              <input>
+                <DropShadow color="$x3" />
+              </input>
+            </Glow>
+          </effect>
+          <points>
+            <Double fx:value="-10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="-5.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="-5.0" />
+            <Double fx:value="20.0" />
+            <Double fx:value="5.0" />
+            <Double fx:value="20.0" />
+            <Double fx:value="5.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="10.0" />
+            <Double fx:value="0.0" />
+            <Double fx:value="-5.0" />
+          </points>
+        </Polygon>
+      </children>
+    </Group>
   </children>
 </AnchorPane>
