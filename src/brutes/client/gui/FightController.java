@@ -13,9 +13,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.ScaleTransition;
 import javafx.animation.ScaleTransitionBuilder;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransitionBuilder;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -305,6 +308,17 @@ public class FightController implements Initializable {
                 .autoReverse(true)
                 .cycleCount(2)
                 .build();
+        TranslateTransitionBuilder.create()
+                .node(this.arrow)
+                .duration(Duration.millis(500))
+                .fromX(1)
+                .fromY(1)
+                .toX(10)
+                .toY(16)
+                .autoReverse(true)
+                .cycleCount(Timeline.INDEFINITE)
+                .build().play();
+        
         
         this.isFighting = new ReadOnlyBooleanWrapper();
         this.isFighting.set(false);
