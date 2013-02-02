@@ -57,20 +57,22 @@ public class FightResponse extends Response {
 
         Brute brute = fight.getBrute1();
 
-        // level UP !
-        brute.setLevel((short) Math.min(brute.getLevel() + 1, 100));
+        if (brute.getLevel() <= 100) {
+            // level UP !
+            brute.setLevel((short) (brute.getLevel() + 1));
 
-        // stats UP !
-        switch (ServerMath.random(2)) {
-            case 0:
-                brute.setLife((short) (brute.getLife() + ServerMath.random(1, 10)));
-                break;
-            case 1:
-                brute.setSpeed((short) (brute.getSpeed() + ServerMath.random(1, 5)));
-                break;
-            case 2:
-                brute.setStrength((short) (brute.getStrength() + ServerMath.random(1, 5)));
-                break;
+            // stats UP !
+            switch (ServerMath.random(2)) {
+                case 0:
+                    brute.setLife((short) (brute.getLife() + ServerMath.random(1, 5)));
+                    break;
+                case 1:
+                    brute.setSpeed((short) (brute.getSpeed() + ServerMath.random(1, 5)));
+                    break;
+                case 2:
+                    brute.setStrength((short) (brute.getStrength() + ServerMath.random(1, 5)));
+                    break;
+            }
         }
 
         // bonus UP/RM
