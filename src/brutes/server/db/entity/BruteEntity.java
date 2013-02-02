@@ -5,7 +5,7 @@ import brutes.server.db.Entity;
 import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
 import brutes.server.game.User;
-import brutes.server.ui;
+import brutes.server.ServerMath;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -4,7 +4,7 @@ import brutes.server.db.DatasManager;
 import brutes.server.db.Entity;
 import brutes.server.game.Bonus;
 import brutes.server.game.Brute;
-import brutes.server.ui;
+import brutes.server.ServerMath;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,7 +93,7 @@ public class BonusEntity implements Entity {
     }
 
     public static Bonus findMathematicalRandom() throws IOException, SQLException {
-        int level = BonusEntity.f_level(ui.random(1322)); // 1322 = max{f^(-1)} pour le niveau 10
+        int level = BonusEntity.f_level(ServerMath.random(1322)); // 1322 = max{f^(-1)} pour le niveau 10
         System.out.println("Find BENUS radomly level=" + level);
         
         String sql = "SELECT t.* FROM ("

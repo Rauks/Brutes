@@ -47,14 +47,14 @@ public class DoFight {
             return;
         }
 
-        if (ui.random(0, 75) == ui.random(25, 100 + round)) {
+        if (ServerMath.random(0, 75) == ServerMath.random(25, 100 + round)) {
             this.addLogsLn(" ... slips and dies ...");
             brute.setLife((short) 0);
             return;
         }
 
-        if (ui.random(5) == 0) {
-            switch (ui.random(5)) {
+        if (ServerMath.random(5) == 0) {
+            switch (ServerMath.random(5)) {
                 case 0:
                     this.addLogsLn("miss his attacks");
                     return;
@@ -69,7 +69,7 @@ public class DoFight {
                     return;
                 case 4:
                 case 5:
-                    pv = ui.random(0, brute.getLife() / 4);
+                    pv = ServerMath.random(0, brute.getLife() / 4);
                     brute.setLife((short) (brute.getLife() - pv));
 
                     this.addLogsLn("attaks himself :s and lose " + pv + " PV ");
@@ -79,20 +79,20 @@ public class DoFight {
 
         Bonus bonusUsed;
         try {
-            bonusUsed = BonusEntity.findById(brute.getBonuses()[ui.random(3 - 1)].getId());
+            bonusUsed = BonusEntity.findById(brute.getBonuses()[ServerMath.random(3 - 1)].getId());
         } catch (NotFoundEntityException ex) {
             bonusUsed = Bonus.EMPTY_BONUS;
         }
 
         double d = brute.getWithBonusStrength() * against.getWithBonusSpeed() - brute.getWithBonusStrength() * against.getWithBonusSpeed();
-        d = Math.min(0, d) + ui.random(1, 50) / 10 + ui.random(brute.getLevel());
+        d = Math.min(0, d) + ServerMath.random(1, 50) / 10 + ServerMath.random(brute.getLevel());
 
         // If he uses a bonus
         if (bonusUsed != Bonus.EMPTY_BONUS) {
-            d += ui.random(bonusUsed.getSpeed() * bonusUsed.getStrength());
+            d += ServerMath.random(bonusUsed.getSpeed() * bonusUsed.getStrength());
         }
 
-        double power = ((double) ui.random(30, 40) / 40); // coefficient aléatoire entre .75 et 1
+        double power = ((double) ServerMath.random(30, 40) / 40); // coefficient aléatoire entre .75 et 1
         power *= 1 + d;
         pv = (int) Math.ceil(power);
 
@@ -104,7 +104,7 @@ public class DoFight {
 
         against.setLife((short) (against.getLife() - pv));
 
-        if (ui.random(0, 6) == 0) {
+        if (ServerMath.random(0, 6) == 0) {
             this.addLogsLn("\t[" + against + "] is really, really mad (and win +1 in VIT and STR) !!!");
             against.setSpeed((short) (against.getSpeed() + 1));
             against.setStrength((short) (against.getStrength() + 1));
@@ -125,7 +125,7 @@ public class DoFight {
                     .addLogs(", " + this.fight.getBrute2().getWithBonusSpeed() + " & " + this.fight.getBrute2().getWithBonusStrength() + ")")
                     .addLogsLn("");
             // Who attack first ?
-            if (ui.random(this.fight.getBrute1().getWithBonusSpeed()) > ui.random(this.fight.getBrute2().getWithBonusSpeed())) {
+            if (ServerMath.random(this.fight.getBrute1().getWithBonusSpeed()) > ServerMath.random(this.fight.getBrute2().getWithBonusSpeed())) {
                 // The Brute1 is more speed than Brute2
                 this.round(i, this.fight.getBrute1(), this.fight.getBrute2());
                 this.round(i, this.fight.getBrute2(), this.fight.getBrute1());
@@ -137,7 +137,7 @@ public class DoFight {
 
         if (this.fight.getBrute1().getLife() > 0 && this.fight.getBrute2().getLife() > 0) {
             this.addLogsLn("YOU CAN'T CHOOSE ? GOD CAN !");
-            return ui.random() ? this.fight.getBrute1() : this.fight.getBrute2();
+            return ServerMath.random() ? this.fight.getBrute1() : this.fight.getBrute2();
         }
         return this.fight.getBrute1().getLife() > 0 ? this.fight.getBrute1() : this.fight.getBrute2(); // return the winner
     }

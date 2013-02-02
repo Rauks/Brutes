@@ -11,7 +11,7 @@ import brutes.server.game.Fight;
 import brutes.server.game.User;
 import brutes.server.net.NetworkResponseException;
 import brutes.server.net.NetworkServer;
-import brutes.server.ui;
+import brutes.server.ServerMath;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -49,10 +49,10 @@ public class BruteResponse extends Response {
             throw new NetworkResponseException(Protocol.ERROR_CREATE_BRUTE);
         } catch (NotFoundEntityException ex) {
             short level = 1;
-            short strength = (short) ui.random(3, 10);
-            short speed = (short) ui.random(3, 10);
-            short life = (short) (ui.random(10, 20));
-            int imageID = ui.random(NetworkServer.OPT_ID_IMG_MIN_BRUTE, NetworkServer.OPT_ID_IMG_MAX_BRUTE);
+            short strength = (short) ServerMath.random(3, 10);
+            short speed = (short) ServerMath.random(3, 10);
+            short life = (short) (ServerMath.random(10, 20));
+            int imageID = ServerMath.random(NetworkServer.OPT_ID_IMG_MIN_BRUTE, NetworkServer.OPT_ID_IMG_MAX_BRUTE);
 
             Brute brute = new Brute(0, name, level, life, strength, speed, imageID);
             brute = DatasManager.insert(brute);

@@ -1,6 +1,6 @@
 package brutes.server.db;
 
-import brutes.server.ui;
+import brutes.server.ServerMath;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -150,7 +150,7 @@ public class DatasManager {
 
     public static <T> void save(T obj) throws IOException {
         try {
-            Class classObj = Class.forName(ui.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
+            Class classObj = Class.forName(ServerMath.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
 
             Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call *.entity.{0}Entity::save", obj.getClass().getSimpleName());
 
@@ -163,7 +163,7 @@ public class DatasManager {
 
     public static <T> T insert(T obj) throws IOException {
         try {
-            Class classObj = Class.forName(ui.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
+            Class classObj = Class.forName(ServerMath.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
 
             Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call *.entity.{0}Entity::insert", obj.getClass().getSimpleName());
 
@@ -177,7 +177,7 @@ public class DatasManager {
 
     public static <T> void delete(T obj) throws IOException {
         try {
-            Class classObj = Class.forName(ui.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
+            Class classObj = Class.forName(ServerMath.getClassPath(DatasManager.class) + ".entity." + obj.getClass().getSimpleName() + "Entity");
 
             Logger.getLogger(DatasManager.class.getName()).log(Level.INFO, "Call *.entity.{0}Entity::delete", obj.getClass().getSimpleName());
 
