@@ -143,13 +143,6 @@ public class FightController implements Initializable {
     @FXML
     private Group arrowBruteNew;
     
-    @FXML
-    private void handleVSover(Event e){
-        if(this.centerVsshadowScaleTransition.getStatus() != Status.RUNNING){
-            this.centerVsshadowScaleTransition.play();
-        }
-    }
-    
     private void doFight(FightTask.FightType type){
         final FightTask fightTask = new FightTask(type);
         fightTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
@@ -275,16 +268,16 @@ public class FightController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.centerVsshadowScaleTransition = ScaleTransitionBuilder.create()
+        ScaleTransitionBuilder.create()
                 .node(this.centerVSshadow)
                 .duration(Duration.seconds(1))
                 .fromX(1)
                 .fromY(1)
-                .toX(1.2)
-                .toY(1.2)
+                .toX(1.1)
+                .toY(1.1)
                 .autoReverse(true)
-                .cycleCount(2)
-                .build();
+                .cycleCount(Timeline.INDEFINITE)
+                .build().play();
         TranslateTransitionBuilder.create()
                 .node(this.arrowBruteNew)
                 .duration(Duration.millis(500))

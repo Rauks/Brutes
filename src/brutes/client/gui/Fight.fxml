@@ -302,7 +302,7 @@
             <GaussianBlur />
           </effect>
         </Circle>
-        <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" onMouseEntered="#handleVSover" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
+        <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
         <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="-12.0" layoutY="8.0" stroke="$x3" strokeType="OUTSIDE" text="VS">
           <effect>
             <Bloom threshold="0.8">
