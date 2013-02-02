@@ -17,6 +17,8 @@ import javafx.animation.Animation.Status;
 import javafx.animation.ScaleTransition;
 import javafx.animation.ScaleTransitionBuilder;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
