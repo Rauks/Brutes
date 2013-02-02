@@ -28,13 +28,11 @@ public class LoginTask extends Task{
     private ReadOnlyBooleanWrapper loginError;
     private ReadOnlyBooleanWrapper passwordError;
     private ReadOnlyBooleanWrapper hostError;
-    private ReadOnlyObjectWrapper<Session> session;
 
     public LoginTask(String host, String login, String password) {
         this.loginError = new ReadOnlyBooleanWrapper();
         this.passwordError = new ReadOnlyBooleanWrapper();
         this.hostError = new ReadOnlyBooleanWrapper();
-        this.session = new ReadOnlyObjectWrapper<>();
         this.login = login;
         this.password = password;
         this.host = host;
@@ -49,16 +47,16 @@ public class LoginTask extends Task{
     public ReadOnlyBooleanProperty getHostErrorProperty(){
         return this.hostError.getReadOnlyProperty();
     }
-    public ReadOnlyObjectProperty<Session> getLoadedSessionProperty(){
-        return this.session.getReadOnlyProperty();
-    }
     
     @Override
     protected Void call() throws Exception {
         try (NetworkClient connection = new NetworkClient(new Socket(this.host, Protocol.CONNECTION_PORT))) {
             String token;
             token = connection.sendLogin(this.login, this.password);
-            this.session.set(new Session(this.host, token));
+            NetworkClient.clearCache();
+            ScenesContext.getInstance().setSession(new Session(this.host, token));
+            ScenesContext.getInstance().getSession().netLoadMyBrute();
+            ScenesContext.getInstance().getSession().netLoadChallengerBrute();
         } catch (UnknownHostException ex) {
             this.hostError.set(true);
             throw ex;
@@ -75,6 +73,9 @@ public class LoginTask extends Task{
             throw ex;
         } catch(InvalidResponseException ex){
             Logger.getLogger(LoginController.class.getName()).log(Level.WARNING, null, ex);
+            throw ex;
+        } catch(Exception ex){
+            ex.printStackTrace();
             throw ex;
         }
         return null;

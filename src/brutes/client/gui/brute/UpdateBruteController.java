@@ -49,7 +49,7 @@ public class UpdateBruteController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ScenesContext.getInstance().getSession().netLoadMyBrute();
+                ScenesContext.getInstance().getSession().netThreadedLoadMyBrute();
             }
         }.start();
         this.closeStage(e);

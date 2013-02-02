@@ -74,8 +74,6 @@ public class LoginController implements Initializable {
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     loginTask.cancel();
-                    NetworkClient.clearCache();
-                    ScenesContext.getInstance().setSession(loginTask.getLoadedSessionProperty().getValue());
                     ScenesContext.getInstance().showFight();
                     setDisableForm(false);
                 }

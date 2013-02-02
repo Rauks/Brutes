@@ -43,76 +43,82 @@ public class Session {
         return this.chalenger;
     }
     
-    public void netLoadMyBrute(){
+    public void netThreadedLoadMyBrute(){
         new Thread(){
             @Override
             public void run() {
-                int myId = -1;
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
-                        myId = connection.sendGetMyBruteId(ScenesContext.getInstance().getSession().getToken());
-                    } catch (ErrorResponseException ex) {
-                        if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
-                            Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No brute created");
-                        }
-                        else{
-                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (InvalidResponseException ex) {
-                        Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if(myId != -1){
-                    try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                        try {
-                            me.loadBrute(connection.getDataBrute(myId));
-                        } catch (InvalidResponseException | ErrorResponseException ex) {
-                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                netLoadMyBrute();
             }
         }.start();
-        
+    }
+    public void netThreadedLoadChallengerBrute(){
+        new Thread(){
+            @Override
+            public void run() {
+                netLoadChallengerBrute();
+            }
+        }.start();
+    }
+    
+    
+    public void netLoadMyBrute(){
+        int myId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                myId = connection.sendGetMyBruteId(ScenesContext.getInstance().getSession().getToken());
+            } catch (ErrorResponseException ex) {
+                if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
+                    Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No brute created");
+                }
+                else{
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (InvalidResponseException ex) {
+                Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(myId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    me.loadBrute(connection.getDataBrute(myId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     public void netLoadChallengerBrute(){
-        new Thread(){
-            @Override
-            public void run() {
-                int chId = -1;
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
-                        chId = connection.sendGetChallengerBruteId(ScenesContext.getInstance().getSession().getToken());
-                    } catch (ErrorResponseException ex) {
-                        if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
-                            Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No ennemy assigned");
-                        }
-                        else{
-                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (InvalidResponseException ex) {
-                        Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        int chId = -1;
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                chId = connection.sendGetChallengerBruteId(ScenesContext.getInstance().getSession().getToken());
+            } catch (ErrorResponseException ex) {
+                if(ex.getErrorCode() == Protocol.ERROR_BRUTE_NOT_FOUND){
+                    Logger.getLogger(FightController.class.getName()).log(Level.INFO, "No ennemy assigned");
                 }
-                if(chId != -1){
-                    try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                        try {
-                            chalenger.loadBrute(connection.getDataBrute(chId));
-                        } catch (InvalidResponseException | ErrorResponseException ex) {
-                            Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                else{
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } catch (InvalidResponseException ex) {
+                Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }.start();
-                
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(chId != -1){
+            try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+                try {
+                    chalenger.loadBrute(connection.getDataBrute(chId));
+                } catch (InvalidResponseException | ErrorResponseException ex) {
+                    Logger.getLogger(FightController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

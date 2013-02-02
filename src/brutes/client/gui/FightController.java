@@ -149,8 +149,8 @@ public class FightController implements Initializable {
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
                 if(newState == Worker.State.SUCCEEDED){
                     Session s = ScenesContext.getInstance().getSession();
-                    s.netLoadMyBrute();
-                    s.netLoadChallengerBrute();
+                    s.netThreadedLoadMyBrute();
+                    s.netThreadedLoadChallengerBrute();
                     isFighting.set(false);
                     try {
                         Parent root;
@@ -363,8 +363,5 @@ public class FightController implements Initializable {
         this.menuOptCreate.disableProperty().bind(me.isLoadedProperty());
         this.menuOptRename.disableProperty().bind(me.isLoadedProperty().not());
         this.menuOptDelete.disableProperty().bind(me.isLoadedProperty().not());
-        
-        ScenesContext.getInstance().getSession().netLoadMyBrute();
-        ScenesContext.getInstance().getSession().netLoadChallengerBrute();
     }    
 }

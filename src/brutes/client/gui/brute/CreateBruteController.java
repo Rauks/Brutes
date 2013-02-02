@@ -49,8 +49,8 @@ public class CreateBruteController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ScenesContext.getInstance().getSession().netLoadMyBrute();
-                ScenesContext.getInstance().getSession().netLoadChallengerBrute();
+                ScenesContext.getInstance().getSession().netThreadedLoadMyBrute();
+                ScenesContext.getInstance().getSession().netThreadedLoadChallengerBrute();
             }
         }.start();
         this.closeStage(e);
