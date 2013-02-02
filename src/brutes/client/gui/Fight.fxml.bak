@@ -268,27 +268,99 @@
           <menus>
             <Menu mnemonicParsing="false" text="Brute" fx:id="menuBrute">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuBruteNew.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuBruteUpdate.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuBruteDelete.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Combattre">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" fx:id="menuFightLoose" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" fx:id="menuFightRandom" />
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuFightWin.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" fx:id="menuFightLoose">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuFightLose.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" fx:id="menuFightRandom">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuFightRandom.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuFightRegular.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Compte">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuAccoundDisconnect.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="?">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos..." />
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos...">
+                  <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@res/MenuCredits.png" preserveRatio="false" smooth="false" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
               </items>
             </Menu>
           </menus>
@@ -302,7 +374,7 @@
             <GaussianBlur />
           </effect>
         </Circle>
-        <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" onMouseEntered="#handleVSover" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
+        <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
         <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="-12.0" layoutY="8.0" stroke="$x3" strokeType="OUTSIDE" text="VS">
           <effect>
             <Bloom threshold="0.8">
@@ -346,7 +418,7 @@
         </Polygon>
       </children>
     </Group>
-    <Group id="Group" fx:id="arrowBruteNew" focusTraversable="true" layoutX="145.0" layoutY="32.0" rotate="270.0">
+    <Group id="Group" fx:id="arrowBruteNew" focusTraversable="true" layoutX="170.0" layoutY="32.0" rotate="270.0">
       <children>
         <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
           <effect>
