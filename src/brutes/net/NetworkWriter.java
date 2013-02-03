@@ -121,33 +121,34 @@ public class NetworkWriter {
     }
     
     public void send(){
-        //Begin debug trace
-        byte[] trace = baos.toByteArray();
-        StringBuilder hexString = new StringBuilder();
-        hexString.append("SEND{");
-        for (int i = 0; i < ((trace.length < 30)?trace.length:30); i++) {
-            String hex = Integer.toHexString(0xFF & trace[i]);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-            if(i != trace.length - 1){
-                hexString.append(".");
-            }
-            if(i == 29 && trace.length != 30){
-                hexString.append("....");
-            }
-        }
-        hexString.append("}");
-        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, hexString.toString());
-        //End debug trace
-        
         try {
             ByteArrayOutputStream message = new ByteArrayOutputStream();
             int messageSize = baos.size();
             message.write(ByteBuffer.allocate(Protocol.SIZE_LONGINT).putInt(messageSize).array());
             message.write(baos.toByteArray());
             byte[] send = message.toByteArray();
+            
+        //Begin debug trace
+        StringBuilder hexString = new StringBuilder();
+        hexString.append("SEND{");
+        final int maxBytesPrinted = 50;
+        for (int i = 0; i < ((send.length < maxBytesPrinted)?send.length:maxBytesPrinted); i++) {
+            String hex = Integer.toHexString(0xFF & send[i]);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+            if(i != send.length - 1){
+                hexString.append(".");
+            }
+            if(i == maxBytesPrinted - 1 && send.length != maxBytesPrinted){
+                hexString.append("....");
+            }
+        }
+        hexString.append("}");
+        Logger.getLogger(NetworkWriter.class.getName()).log(Level.INFO, hexString.toString());
+        //End debug trace
+            
             this.os.write(send);
             this.flush();
         } catch (IOException ex) {
