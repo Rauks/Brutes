@@ -24,16 +24,14 @@ public class ServerThread extends Thread {
         try (ServerSocket sockserv = new ServerSocket(42666)) {
             sockserv.setSoTimeout(ServerThread.TIMEOUT_ACCEPT);
 
-            // DEBUG
-            (new File("~$bdd.db")).delete();
-            //File file = new File("~$bdd.db");
-            //boolean toPopulate = !file.exists();
+            File dbFile = new File("~$bdd.db");
+            boolean needPopulate = !dbFile.exists();
 
             DatasManager.getInstance("sqlite", "~$bdd.db");
 
-            //if( toPopulate ) {
-            DatasManager.populate();
-            //}
+            if(needPopulate){
+                DatasManager.populate();
+            }
 
             while (!this.isInterrupted()) {
                 try {
