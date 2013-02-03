@@ -1,11 +1,13 @@
 package brutes;
 
-import brutes.client.ScenesContext;
 import brutes.server.ServerThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -23,8 +25,11 @@ public class Brutes extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Les brutes");
+        stage.setTitle("Les brutes - Server");
         stage.setResizable(false);
+        StackPane root = new StackPane();
+        root.getChildren().add(new Text("Server running..."));
+        stage.setScene(new Scene(root));
         stage.setOnCloseRequest(new EventHandler() {
             @Override
             public void handle(Event t) {
@@ -34,8 +39,7 @@ public class Brutes extends Application {
 
         Brutes.SERVER.start();
 
-        ScenesContext.getInstance().setStage(stage);
-        ScenesContext.getInstance().showLogin();
+        stage.show();
     }
 
     /**
