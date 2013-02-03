@@ -77,7 +77,7 @@ public class LoginTask extends Task{
             this.hostError.set(true);
             throw ex;
         } catch(Exception ex){
-            ex.printStackTrace();
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         }
         return null;
