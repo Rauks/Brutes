@@ -374,7 +374,7 @@
             <GaussianBlur />
           </effect>
         </Circle>
-        <ProgressIndicator fx:id="loadingVS" focusTraversable="true" layoutX="-27.0" layoutY="-27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="54.0" prefWidth="54.0" rotate="18.0" style="-fx-progress-color: #cc0000;">
+        <ProgressIndicator fx:id="loadingVS" focusTraversable="true" layoutX="-27.0" layoutY="-27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="54.0" prefWidth="54.0" rotate="18.0" style="-fx-progress-color: #cc0000;" visible="false">
           <effect>
             <DropShadow color="$x3" />
           </effect>
