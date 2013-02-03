@@ -35,6 +35,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -118,6 +119,8 @@ public class FightController implements Initializable {
     private ImageView chBonus3Image;
     @FXML
     private Group VS;
+    @FXML
+    private ProgressIndicator loadingVS;
     @FXML
     private Circle centerVS;
     @FXML
@@ -346,8 +349,9 @@ public class FightController implements Initializable {
         this.chBonus3Image.imageProperty().bind(ch.getBonus(2).getImageProperty());
         
         this.VS.visibleProperty().bind(me.isLoadedProperty());
+        this.loadingVS.visibleProperty().bind(this.isFighting.getReadOnlyProperty());
         this.centerVS.setCursor(Cursor.HAND);
-        this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty().or(me.isLoadedProperty().not()));
+        this.centerVS.disableProperty().bind(this.isFighting.getReadOnlyProperty());
         
         this.arrowBruteMenu.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty().not()).and(this.currentDialogStage.showingProperty().not()));
         this.arrowBruteNew.visibleProperty().bind(me.isLoadedProperty().not().and(this.menuBrute.showingProperty()).and(this.currentDialogStage.showingProperty().not()));

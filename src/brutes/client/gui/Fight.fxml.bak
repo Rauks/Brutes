@@ -270,7 +270,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteNew" text="Nouvelle Brute" fx:id="menuOptCreate">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuBruteNew.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -279,7 +279,7 @@
                 </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteUpdate" text="Renommer la Brute" fx:id="menuOptRename">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuBruteUpdate.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -288,7 +288,7 @@
                 </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuBruteDelete" text="Supprimer la Brute" fx:id="menuOptDelete">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuBruteDelete.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -301,7 +301,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightWin" text="Gagner" fx:id="menuFightWin">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuFightWin.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -310,7 +310,7 @@
                 </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightLoose" text="Perdre" fx:id="menuFightLoose">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuFightLose.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -319,7 +319,7 @@
                 </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRandom" text="Aléatoire" fx:id="menuFightRandom">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuFightRandom.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -328,7 +328,7 @@
                 </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuFightRegular" text="Loyale" fx:id="menuFightRegular">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuFightRegular.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -341,7 +341,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuAccoundDisconnect.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -354,7 +354,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos...">
                   <graphic>
-                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@res/MenuCredits.png" preserveRatio="false" smooth="false" />
                       </image>
@@ -374,6 +374,11 @@
             <GaussianBlur />
           </effect>
         </Circle>
+        <ProgressIndicator fx:id="loadingVS" focusTraversable="true" layoutX="-27.0" layoutY="-27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="54.0" prefWidth="54.0" rotate="18.0" style="-fx-progress-color: #cc0000;">
+          <effect>
+            <DropShadow color="$x3" />
+          </effect>
+        </ProgressIndicator>
         <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
         <Text disable="true" fill="WHITE" focusTraversable="true" layoutX="-12.0" layoutY="8.0" stroke="$x3" strokeType="OUTSIDE" text="VS">
           <effect>
