@@ -152,9 +152,6 @@ public class FightController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newState) {
                 if(newState == Worker.State.SUCCEEDED){
-                    Session s = ScenesContext.getInstance().getSession();
-                    s.netThreadedLoadMyBrute();
-                    s.netThreadedLoadChallengerBrute();
                     isFighting.set(false);
                     try {
                         Parent root;

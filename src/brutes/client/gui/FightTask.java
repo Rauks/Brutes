@@ -4,6 +4,7 @@ import brutes.client.ScenesContext;
 import brutes.client.net.ErrorResponseException;
 import brutes.client.net.InvalidResponseException;
 import brutes.client.net.NetworkClient;
+import brutes.client.user.Session;
 import brutes.net.Protocol;
 import java.io.IOException;
 import java.net.Socket;
@@ -34,62 +35,35 @@ public class FightTask extends Task{
     
     @Override
     protected Object call() throws Exception {
-        switch(this.type){
-            case CHEAT_WIN:
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
+        try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
+            try {
+                switch(this.type){
+                    case CHEAT_WIN:
                         this.result.set(connection.sendCheatFightWin(ScenesContext.getInstance().getSession().getToken()));
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
-                        throw ex;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    throw ex;
-                }
-                break;
-            case CHEAT_LOOSE:
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
+                        break;
+                    case CHEAT_LOOSE:
                         this.result.set(connection.sendCheatFightLoose(ScenesContext.getInstance().getSession().getToken()));
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
-                        throw ex;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    throw ex;
-                }
-                break;
-            case CHEAT_RANDOM:
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
+                        break;
+                    case CHEAT_RANDOM:
                         this.result.set(connection.sendCheatFightRandom(ScenesContext.getInstance().getSession().getToken()));
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
-                        throw ex;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    throw ex;
-                }
-                break;
-            case REGULAR:
-                try (NetworkClient connection = new NetworkClient(new Socket(ScenesContext.getInstance().getSession().getServer(), Protocol.CONNECTION_PORT))) {
-                    try {
+                        break;
+                    case REGULAR:
                         this.result.set(connection.sendDoFight(ScenesContext.getInstance().getSession().getToken()));
-                    } catch (InvalidResponseException | ErrorResponseException ex) {
-                        Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
-                        throw ex;
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    throw ex;
+                        break;
+                    default:
+                        throw new Exception("Unknow fight type");
                 }
-                break;
-            default:
-                throw new Exception("Unknow fight type");
+            } catch (InvalidResponseException | ErrorResponseException ex) {
+                Logger.getLogger(FightController.class.getName()).log(Level.WARNING, null, ex);
+                throw ex;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         }
+        Session s = ScenesContext.getInstance().getSession();
+        s.netLoadMyBrute();
+        s.netLoadChallengerBrute();
         return null;
     }
     
