@@ -1,7 +1,6 @@
 package brutes;
 
 import brutes.client.ScenesContext;
-import brutes.server.ServerThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -13,11 +12,7 @@ import javafx.stage.Stage;
  * @author Karl
  */
 public class Brutes extends Application {
-
-    private static ServerThread SERVER = new ServerThread();
-
     public static void exit() {
-        Brutes.SERVER.interrupt();
         Platform.exit();
     }
 
@@ -31,8 +26,6 @@ public class Brutes extends Application {
                 Brutes.exit();
             }
         });
-
-        Brutes.SERVER.start();
 
         ScenesContext.getInstance().setStage(stage);
         ScenesContext.getInstance().showLogin();
