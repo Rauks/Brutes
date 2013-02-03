@@ -57,7 +57,7 @@ public class FightResponse extends Response {
 
         Brute brute = fight.getBrute1();
 
-        if (brute.getLevel() <= 100) {
+        if (brute.getLevel() < 100) {
             // level UP !
             brute.setLevel((short) (brute.getLevel() + 1));
 
