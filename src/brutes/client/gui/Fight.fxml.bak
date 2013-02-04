@@ -339,7 +339,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Compte">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion">
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuDisconnect" text="Deconnexion" fx:id="menuDisconnect">
                   <graphic>
                     <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
@@ -352,7 +352,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="?">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos...">
+                <MenuItem mnemonicParsing="false" onAction="#handleMenuCredits" text="À propos..." fx:id="menuCredits">
                   <graphic>
                     <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                       <image>
@@ -374,9 +374,13 @@
             <GaussianBlur />
           </effect>
         </Circle>
-        <ProgressIndicator fx:id="loadingVS" focusTraversable="true" layoutX="-27.0" layoutY="-27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="54.0" prefWidth="54.0" rotate="18.0" style="-fx-progress-color: #cc0000;" visible="false">
+        <ProgressIndicator fx:id="loadingVS" blendMode="SOFT_LIGHT" focusTraversable="true" layoutX="-27.0" layoutY="-27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="54.0" rotate="18.0" style="-fx-progress-color: #cc0000;">
           <effect>
-            <DropShadow color="$x3" />
+            <BoxBlur>
+              <input>
+                <Bloom threshold="0.0" />
+              </input>
+            </BoxBlur>
           </effect>
         </ProgressIndicator>
         <Circle id="VS" fx:id="centerVS" fill="$x3" onMouseClicked="#handleMenuFightRegular" radius="16.0" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5" />
@@ -423,7 +427,7 @@
         </Polygon>
       </children>
     </Group>
-    <Group id="Group" fx:id="arrowBruteNew" focusTraversable="true" layoutX="170.0" layoutY="32.0" rotate="270.0">
+    <Group id="Group" fx:id="arrowBruteNew" focusTraversable="true" layoutX="200.0" layoutY="32.0" rotate="270.0">
       <children>
         <Polygon fill="$x3" stroke="$x3" strokeType="INSIDE" strokeWidth="0.5">
           <effect>

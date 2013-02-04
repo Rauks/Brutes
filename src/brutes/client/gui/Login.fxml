@@ -48,7 +48,7 @@
         </BorderPane>
         <BorderPane>
           <bottom>
-            <TextField id="login" fx:id="server" text="localhost" />
+            <TextField id="login" fx:id="server" />
           </bottom>
           <left>
             <Label labelFor="$server" text="Serveur" />

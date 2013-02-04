@@ -26,6 +26,9 @@ import javafx.scene.text.Text;
  * @author Karl
  */
 public class LoginController implements Initializable {
+    private static String previousLogin = "";
+    private static String previousHost = "localhost";
+    
     @FXML
     private Button connexion;
     @FXML
@@ -65,6 +68,8 @@ public class LoginController implements Initializable {
         this.setDisableForm(true);
         
         final LoginTask loginTask = new LoginTask(this.server.getText(), this.login.getText(), this.password.getText());
+        LoginController.previousLogin = this.login.getText();
+        LoginController.previousHost = this.server.getText();
         this.loginError.visibleProperty().bind(loginTask.getLoginErrorProperty());
         this.passwordError.visibleProperty().bind(loginTask.getPasswordErrorProperty());
         this.serverError.visibleProperty().bind(loginTask.getHostErrorProperty());
@@ -91,6 +96,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.login.setText(LoginController.previousLogin);
+        this.server.setText(LoginController.previousHost);
     }    
 }
