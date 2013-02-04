@@ -57,27 +57,7 @@ public class FightResponse extends Response {
 
         Brute brute = fight.getBrute1();
 
-        if (brute.getLevel() < 100) {
-            // level UP !
-            brute.setLevel((short) (brute.getLevel() + 1));
-
-            // stats UP !
-            switch (ServerMath.random(2)) {
-                case 0:
-                    brute.setLife((short) (brute.getLife() + ServerMath.random(1, 5)));
-                    break;
-                case 1:
-                    brute.setSpeed((short) (brute.getSpeed() + ServerMath.random(1, 5)));
-                    break;
-                case 2:
-                    brute.setStrength((short) (brute.getStrength() + ServerMath.random(1, 5)));
-                    break;
-            }
-        }
-
-        // bonus UP/RM
-        // 1/3 : perte # 2/3 nouveau # action sur un des trois bonus, existant ou non.
-        brute.setBonus(ServerMath.random(0, Brute.MAX_BONUSES - 1), ServerMath.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findMathematicalRandom());
+        this.getBonusToBrute(brute);
 
         DatasManager.save(brute);
         fight.setWinner(brute);
@@ -95,10 +75,10 @@ public class FightResponse extends Response {
         if (fight == null) {
             throw new NetworkResponseException(Protocol.ERROR_FIGHT);
         }
-
+        
         fight.setWinner(fight.getBrute2());
         DatasManager.save(fight);
-
+        
         this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
                 .writeBoolean(false)
                 .send();
@@ -120,13 +100,42 @@ public class FightResponse extends Response {
         Brute winner = f.exec();
         fight.setWinner(winner);
         DatasManager.save(fight);
-
-        if (winner == fight.getBrute1()) {
-            this.readCheatFightWin(token);
-        } else {
-            this.readCheatFightLoose(token);
+        
+        if( winner == fight.getBrute1() ) {
+            this.getBonusToBrute(winner);
         }
 
-        System.out.println(f.getLogs());
+        //System.out.println(f.getLogs());
+        
+        this.getWriter().writeDiscriminant(Protocol.R_FIGHT_RESULT)
+                .writeBoolean(winner == fight.getBrute1())
+                .send();
+    }
+
+    private Brute getBonusToBrute(Brute brute) throws IOException, SQLException {
+
+        if (brute.getLevel() < 100) {
+            // level UP !
+            brute.setLevel((short) (brute.getLevel() + 1));
+
+            // stats UP !
+            switch (ServerMath.random(2)) {
+                case 0:
+                    brute.setLife((short) (brute.getLife() + ServerMath.random(1, 5)));
+                    break;
+                case 1:
+                    brute.setSpeed((short) (brute.getSpeed() + ServerMath.random(1, 5)));
+                    break;
+                case 2:
+                    brute.setStrength((short) (brute.getStrength() + ServerMath.random(1, 5)));
+                    break;
+            }
+        }
+
+        // bonus UP/RM
+        // 1/3 : perte # 2/3 nouveau # action sur un des trois bonus, existant ou non.
+        brute.setBonus(ServerMath.random(0, Brute.MAX_BONUSES - 1), ServerMath.random(1, 3) == 1 ? Bonus.EMPTY_BONUS : BonusEntity.findMathematicalRandom());
+        
+        return brute;
     }
 }
