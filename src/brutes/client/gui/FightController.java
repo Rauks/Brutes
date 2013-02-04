@@ -37,6 +37,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -139,6 +140,10 @@ public class FightController implements Initializable {
     private MenuItem menuOptRename;
     @FXML
     private MenuItem menuOptDelete;
+    @FXML
+    private MenuItem menuDisconnect;
+    @FXML
+    private MenuItem menuCredits;
     @FXML
     private Menu menuBrute;
     @FXML
@@ -299,6 +304,16 @@ public class FightController implements Initializable {
                 .cycleCount(Timeline.INDEFINITE)
                 .build().play();
         
+        this.menuFightRegular.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
+        this.menuFightWin.setAccelerator(KeyCombination.keyCombination("Ctrl+W"));
+        this.menuFightLoose.setAccelerator(KeyCombination.keyCombination("Ctrl+L"));
+        this.menuFightRandom.setAccelerator(KeyCombination.keyCombination("Ctrl+R"));
+        this.menuOptCreate.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
+        this.menuOptRename.setAccelerator(KeyCombination.keyCombination("Ctrl+U"));
+        this.menuOptDelete.setAccelerator(KeyCombination.keyCombination("Ctrl+D"));
+        this.menuDisconnect.setAccelerator(KeyCombination.keyCombination("Ctrl+Q"));
+        this.menuCredits.setAccelerator(KeyCombination.keyCombination("Ctrl+I"));
+
         this.currentDialogStage = new Stage();
         this.currentDialogStage.setResizable(false);
         
