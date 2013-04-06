@@ -15,8 +15,7 @@ Lancer le programme
 Simplement exécuter le jar.
 Il script comporte un client et un serveur (création automatique d'une base de donnée) permettant de se connecter en **localhost**
 
-Pour lancer les tests associés au programme, faites un `Clean & Build` puis `Run File` sur `test/BrutesTestSequence`
-
+![Fenêtre des combats](sample.png)
 
 Le protocole
 ============
